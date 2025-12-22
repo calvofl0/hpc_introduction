@@ -1,0 +1,112 @@
+\mode<presentation>
+
+% Required packages
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{fontspec}
+
+% Remove default navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% Define UNIL blue color
+\definecolor{unilblue}{HTML}{008CCC}
+
+% Font setup - Frutiger LT Std 55 Roman
+\setsansfont{Frutiger LT Std 55 Roman}[
+BoldFont = Frutiger LT Std 65 Bold,
+ItalicFont = Frutiger LT Std 56 Italic
+]
+
+% Set default font
+\usefonttheme{professionalfonts}
+\setbeamerfont{normal text}{family=\sffamily}
+
+\renewcommand{\baselinestretch}{1.2}
+
+% Title slide template
+\defbeamertemplate*{title page}{unil}{
+	\begin{minipage}[c][\textheight][c]{\textwidth}
+		\raggedright
+		\vfill
+		
+		% Title
+		\usebeamerfont{title}
+		\usebeamercolor[fg]{title}
+		{\fontsize{28}{34}\selectfont\color{unilblue}\inserttitle\par}
+		
+		% Subtitle
+		\ifx\insertsubtitle\@empty
+		\else
+		\vskip0.5em
+		{\fontsize{18}{22}\selectfont\color{black}\insertsubtitle\par}
+		\fi
+		
+		% Author
+		\vskip0.5em
+		{\fontsize{14}{18}\selectfont\color{gray}\insertauthor\par}
+		
+		\vfill
+		
+		% Date at bottom left
+		\raggedright
+		\vskip1em
+		{\fontsize{12}{14}\selectfont\color{black}\insertdate\vspace{0.3cm}\par}
+	\end{minipage}
+	
+	% Logo placeholder - bottom right
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[anchor=south east] at ([xshift=-0.5cm,yshift=0.3cm]current page.south east) {
+			\includegraphics[height=0.5cm]{logo.png} % Replace 'logo' with your logo file
+		};
+	\end{tikzpicture}
+}
+
+% Regular slide template
+\defbeamertemplate*{frametitle}{unil}{
+	\begin{beamercolorbox}[wd=\paperwidth,ht=1.2cm,dp=0.3cm,left]{frametitle}
+		\usebeamerfont{frametitle}
+		\raggedright
+		\vbox to 0.9cm{
+			\vfill
+			\hskip1cm
+	        \begin{minipage}{\dimexpr\textwidth-1cm\relax}
+				\raggedright
+				{\fontsize{20}{24}\selectfont\color{unilblue}\insertframetitle}
+			\end{minipage}
+			\vfill
+		}
+	\end{beamercolorbox}
+}
+
+% Footer template with logo
+\defbeamertemplate*{footline}{unil}{
+	\begin{tikzpicture}[remember picture,overlay]
+		\node[anchor=south east] at ([xshift=-0.556cm,yshift=0.357cm]current page.south east) {
+			\includegraphics[height=0.5cm]{logo.png} % Replace 'logo' with your logo file
+		};
+	\end{tikzpicture}
+	\vskip0pt
+
+    % Frame numbers (only on regular slides, not title)
+	\ifnum\insertframenumber>1
+		\begin{tikzpicture}[remember picture,overlay]
+			\node[anchor=south west] at ([xshift=0.05cm,yshift=0.1cm]current page.south west) {
+				{\fontsize{6}{8}\selectfont\color{gray}\insertframenumber/\inserttotalframenumber}
+			};
+		\end{tikzpicture}
+	\fi
+}
+
+% Color theme
+\setbeamercolor{title}{fg=unilblue}
+\setbeamercolor{frametitle}{fg=unilblue}
+\setbeamercolor{structure}{fg=unilblue}
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{background canvas}{bg=white}
+
+% Font sizes
+\setbeamerfont{title}{size=\Large}
+\setbeamerfont{frametitle}{size=\large}
+\setbeamerfont{normal text}{size=\normalsize}
+
+\mode<all>
