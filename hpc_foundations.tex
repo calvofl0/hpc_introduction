@@ -18,7 +18,7 @@
 \usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds,decorations.pathreplacing}
 
 % PGFPlots version
-\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.17}
 
 % Code listing style
 \lstset{
@@ -515,7 +515,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Multi-Threading (Shared Memory)}
+\begin{frame}[fragile]{Multi-Threading (Shared Memory)}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Thread-Level Parallelism:}
@@ -683,7 +683,7 @@ for (int i = 0; i < N; i++) {
     \textbf{Example:} 2 nodes × 4 threads = 8 total cores, but only 2 MPI processes
 \end{frame}
 
-\begin{frame}{Amdahl's Law: The Speedup Limit}
+\begin{frame}[fragile]{Amdahl's Law: The Speedup Limit}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Key Insight:}
@@ -1007,7 +1007,7 @@ mpirun ./my_hybrid_program
     \end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Job Arrays: Running Many Similar Jobs}
+\begin{frame}[fragile]{Job Arrays: Running Many Similar Jobs}
     \textbf{Scenario:} Need to run same program with different parameters
     \vskip1em
     \begin{columns}[T]
@@ -1056,7 +1056,7 @@ python process.py --id $PARAM
     \end{columns}
 \end{frame}
 
-\begin{frame}{Interactive Jobs with srun and salloc}
+\begin{frame}[fragile]{Interactive Jobs with srun and salloc}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{srun - Run single command:}
@@ -1455,7 +1455,7 @@ cl <- makeCluster(ncores)
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Scaling Studies}
+\begin{frame}[fragile]{Scaling Studies}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Strong Scaling:}
@@ -1501,7 +1501,7 @@ cl <- makeCluster(ncores)
             \textbf{Key Metrics:}
             \begin{itemize}
                 \item Parallel efficiency = Speedup / N\_cores
-                \item Aim for >80\% efficiency
+                \item Aim for $>$80\% efficiency
             \end{itemize}
         \end{column}
     \end{columns}
