@@ -1348,7 +1348,6 @@ with Pool(processes=4) as pool:
             \end{itemize}
             \vskip0.8em
             \textbf{SLURM Configuration:}
-            }
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 # In your Python script:
 from multiprocessing import cpu_count
@@ -1358,6 +1357,7 @@ n_cores = int(os.getenv(
     'SLURM_CPUS_PER_TASK', 
     cpu_count()))
             \end{lstlisting}
+            }
         \end{column}
     \end{columns}
 \end{frame}
