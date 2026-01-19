@@ -1341,13 +1341,15 @@ with Pool(processes=4) as pool:
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
+            {\small
             \textbf{Key Differences:}
             \begin{itemize}
                 \item \textbf{Threading:} Shared memory, limited by GIL
                 \item \textbf{Multiprocessing:} Separate processes, true parallelism
             \end{itemize}
-            \vskip1em
+            \vskip0.8em
             \textbf{SLURM Configuration:}
+            }
             \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 # For multiprocessing
 #SBATCH --ntasks=1
@@ -1405,7 +1407,8 @@ module load openmpi python/3.9
 
 mpirun python my_mpi_script.py
             \end{lstlisting}
-            \vskip0.5em
+            \vskip0.3em
+            {\small
             \textbf{Key Points:}
             \begin{itemize}
                 \item Use \texttt{mpirun} to launch
@@ -1413,6 +1416,7 @@ mpirun python my_mpi_script.py
                 \item Communication via MPI functions
                 \item Scales across multiple nodes
             \end{itemize}
+            }
         \end{column}
     \end{columns}
 \end{frame}
@@ -1548,6 +1552,7 @@ cl <- makeCluster(ncores)
 \end{frame}
 
 \begin{frame}{Debugging Parallel Programs}
+    {\small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Common Issues:}
@@ -1558,7 +1563,7 @@ cl <- makeCluster(ncores)
                 \item Load imbalance
                 \item Communication bottlenecks
             \end{itemize}
-            \vskip1em
+            \vskip0.8em
             \textbf{Debugging Strategies:}
             \begin{itemize}
                 \item Start with serial version
@@ -1597,48 +1602,60 @@ cl <- makeCluster(ncores)
             \end{enumerate}
         \end{column}
     \end{columns}
+    }
 \end{frame}
 
 \begin{frame}{Performance Optimization Tips}
-    \begin{enumerate}
-        \item \textbf{Profile Before Optimizing}
-        \begin{itemize}
-            \item Identify bottlenecks
-            \item Focus on hot spots
-            \item Measure, don't guess
-        \end{itemize}
-        
-        \item \textbf{Optimize Serial Code First}
-        \begin{itemize}
-            \item Algorithm improvements
-            \item Data structures
-            \item Memory access patterns
-        \end{itemize}
-        
-        \item \textbf{Minimize Communication}
-        \begin{itemize}
-            \item Reduce MPI calls
-            \item Batch communications
-            \item Overlap compute and communication
-        \end{itemize}
-        
-        \item \textbf{Balance Load}
-        \begin{itemize}
-            \item Equal work distribution
-            \item Dynamic load balancing
-            \item Avoid idle processes
-        \end{itemize}
-        
-        \item \textbf{Use Appropriate Tools}
-        \begin{itemize}
-            \item Vectorized operations
-            \item Efficient libraries (BLAS, LAPACK)
-            \item Compiler optimizations
-        \end{itemize}
-    \end{enumerate}
+    {\small
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{enumerate}
+                \item \textbf{Profile Before Optimizing}
+                \begin{itemize}
+                    \item Identify bottlenecks
+                    \item Focus on hot spots
+                    \item Measure, don't guess
+                \end{itemize}
+                
+                \item \textbf{Optimize Serial Code First}
+                \begin{itemize}
+                    \item Algorithm improvements
+                    \item Data structures
+                    \item Memory access patterns
+                \end{itemize}
+                
+                \item \textbf{Minimize Communication}
+                \begin{itemize}
+                    \item Reduce MPI calls
+                    \item Batch communications
+                    \item Overlap compute and communication
+                \end{itemize}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{enumerate}
+                \setcounter{enumi}{3}
+                \item \textbf{Balance Load}
+                \begin{itemize}
+                    \item Equal work distribution
+                    \item Dynamic load balancing
+                    \item Avoid idle processes
+                \end{itemize}
+                
+                \item \textbf{Use Appropriate Tools}
+                \begin{itemize}
+                    \item Vectorized operations
+                    \item Efficient libraries (BLAS, LAPACK)
+                    \item Compiler optimizations
+                \end{itemize}
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+    }
 \end{frame}
 
 \begin{frame}[fragile]{Scaling Studies}
+    {\small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Strong Scaling:}
@@ -1648,7 +1665,7 @@ cl <- makeCluster(ncores)
                 \item Measure time to solution
                 \item Goal: Linear speedup
             \end{itemize}
-            \vskip0.5em
+            \vskip0.3em
             \textbf{Weak Scaling:}
             \begin{itemize}
                 \item Fixed problem size per processor
@@ -1680,7 +1697,7 @@ cl <- makeCluster(ncores)
                 \addlegendentry{Poor scaling}
                 \end{axis}
             \end{tikzpicture}
-            \vskip0.5em
+            \vskip0.3em
             \textbf{Key Metrics:}
             \begin{itemize}
                 \item Parallel efficiency = Speedup / N\_cores
@@ -1688,6 +1705,7 @@ cl <- makeCluster(ncores)
             \end{itemize}
         \end{column}
     \end{columns}
+    }
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1759,31 +1777,63 @@ cl <- makeCluster(ncores)
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Common Pitfalls and Solutions}
-    \begin{tabular}{p{5cm}p{6cm}}
+\begin{frame}{Common Pitfalls and Solutions (Part 1)}
+    {\small
+    \textbf{Job Management Issues:}
+    \vskip0.5em
+    \begin{tabular}{p{5cm}p{5.5cm}}
         \toprule
         \textbf{Pitfall} & \textbf{Solution} \\
         \midrule
         Job stuck in queue & Check node availability with \texttt{sinfo}; reduce resource requests \\
         Out of memory & Monitor with \texttt{sacct}; increase \texttt{--mem} \\
         Timeout & Increase \texttt{--time} or optimize code \\
+        \bottomrule
+    \end{tabular}
+    }
+\end{frame}
+
+\begin{frame}{Common Pitfalls and Solutions (Part 2)}
+    {\small
+    \textbf{Configuration Issues:}
+    \vskip0.5em
+    \begin{tabular}{p{5cm}p{5.5cm}}
+        \toprule
+        \textbf{Pitfall} & \textbf{Solution} \\
+        \midrule
         Wrong module & Use \texttt{module avail} and \texttt{module load} \\
         Poor parallel performance & Profile code; check CPU utilization \\
         Can't find output files & Check working directory; use absolute paths \\
         \bottomrule
     \end{tabular}
-    \vskip1em
+    }
+\end{frame}
+
+\begin{frame}{Common Pitfalls and Solutions (Part 3)}
+    {\small
     \textbf{Debugging Tips:}
     \begin{itemize}
         \item Always check error logs first
         \item Test interactively with \texttt{salloc} or \texttt{srun}
         \item Start small, then scale up
+        \item Use \texttt{scontrol show job <jobid>} for detailed info
+        \item Monitor resource usage with \texttt{sacct -j <jobid> --format=JobID,MaxRSS,Elapsed}
     \end{itemize}
+    \vskip1em
+    \textbf{Prevention:}
+    \begin{itemize}
+        \item Test with small data first
+        \item Estimate resources accurately
+        \item Use job dependencies for workflows
+        \item Set appropriate time limits
+    \end{itemize}
+    }
 \end{frame}
 
 \begin{frame}{Resource Estimation Guidelines}
+    {\small
     \textbf{How to estimate resources needed:}
-    \vskip1em
+    \vskip0.5em
     \begin{enumerate}
         \item \textbf{Memory:}
         \begin{itemize}
@@ -1809,9 +1859,11 @@ cl <- makeCluster(ncores)
             \item Don't over-allocate
         \end{itemize}
     \end{enumerate}
+    }
 \end{frame}
 
-\begin{frame}{Best Practices Summary}
+\begin{frame}{Best Practices Summary (Part 1)}
+    {\small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Job Submission:}
@@ -1822,7 +1874,8 @@ cl <- makeCluster(ncores)
                 \item Test on small scale first
                 \item Check queue before submitting many jobs
             \end{itemize}
-            \vskip1em
+        \end{column}
+        \begin{column}{0.5\textwidth}
             \textbf{Resource Usage:}
             \begin{itemize}
                 \item Request what you need
@@ -1831,6 +1884,13 @@ cl <- makeCluster(ncores)
                 \item Clean up old files
             \end{itemize}
         \end{column}
+    \end{columns}
+    }
+\end{frame}
+
+\begin{frame}{Best Practices Summary (Part 2)}
+    {\small
+    \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Code Development:}
             \begin{itemize}
@@ -1840,7 +1900,8 @@ cl <- makeCluster(ncores)
                 \item Profile before optimizing
                 \item Document your workflow
             \end{itemize}
-            \vskip1em
+        \end{column}
+        \begin{column}{0.5\textwidth}
             \textbf{Data Management:}
             \begin{itemize}
                 \item Use scratch space for temporary files
@@ -1850,16 +1911,18 @@ cl <- makeCluster(ncores)
             \end{itemize}
         \end{column}
     \end{columns}
+    }
 \end{frame}
 
 \begin{frame}{Additional Resources}
+    {\small
     \textbf{Documentation:}
     \begin{itemize}
         \item SLURM Official Documentation: \texttt{https://slurm.schedmd.com/}
         \item Your cluster's wiki/documentation
         \item \texttt{man sbatch}, \texttt{man srun}, etc.
     \end{itemize}
-    \vskip1em
+    \vskip0.5em
     \textbf{Learning Resources:}
     \begin{itemize}
         \item HPC Carpentry: \texttt{https://www.hpc-carpentry.org/}
@@ -1867,13 +1930,14 @@ cl <- makeCluster(ncores)
         \item OpenMP Tutorial: \texttt{https://www.openmp.org/resources/tutorials-articles/}
         \item MPI Tutorial: \texttt{https://mpitutorial.com/}
     \end{itemize}
-    \vskip1em
+    \vskip0.5em
     \textbf{Tools:}
     \begin{itemize}
         \item Performance profilers: \texttt{gprof}, \texttt{perf}, \texttt{Intel VTune}
         \item Debuggers: \texttt{gdb}, \texttt{valgrind}, \texttt{DDT}
         \item Job monitoring: \texttt{squeue}, \texttt{sacct}, \texttt{scontrol}
     \end{itemize}
+    }
 \end{frame}
 
 \begin{frame}{Questions?}
