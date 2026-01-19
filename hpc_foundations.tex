@@ -1349,14 +1349,11 @@ with Pool(processes=4) as pool:
             \vskip0.8em
             \textbf{SLURM Configuration:}
             }
-            \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
-# For multiprocessing
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-
-# Set in Python
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+# In your Python script:
 from multiprocessing import cpu_count
 import os
+
 n_cores = int(os.getenv(
     'SLURM_CPUS_PER_TASK', 
     cpu_count()))
@@ -1424,7 +1421,7 @@ mpirun python my_mpi_script.py
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Multi-threading:}
-            \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 using Base.Threads
 
 # Set threads with environment variable
@@ -1441,7 +1438,7 @@ end
             \end{lstlisting}
             \vskip0.5em
             \textbf{Distributed Computing:}
-            \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 using Distributed
 
 addprocs(4)  # Add 4 workers
@@ -1473,7 +1470,7 @@ julia my_script.jl
             \end{lstlisting}
             \vskip0.5em
             \textbf{MPI in Julia:}
-            \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 using MPI
 
 MPI.Init()
@@ -1491,7 +1488,7 @@ size = MPI.Comm_size(comm)
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Using foreach:}
-            \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 library(foreach)
 library(doParallel)
 
@@ -1509,7 +1506,7 @@ stopCluster(cl)
             \end{lstlisting}
             \vskip0.5em
             \textbf{Using mclapply:}
-            \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 library(parallel)
 
 # Detect cores
@@ -1539,7 +1536,7 @@ Rscript my_script.R
             \end{lstlisting}
             \vskip0.5em
             \textbf{In R script:}
-            \begin{lstlisting}[basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 # Get cores from environment
 ncores <- as.integer(Sys.getenv("R_NCORES", "1"))
 
