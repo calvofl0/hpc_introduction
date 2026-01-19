@@ -89,22 +89,9 @@
         \item A broad concept encompassing various forms of simultaneous computation
         \item \textbf{Core Idea:}
         \begin{itemize}
-            \item Break down a problem into smaller, independent parts
-            \item Execute these parts simultaneously on different processing units
+            \item Break down a task into smaller tasks
+            \item Execute these smaller tasks simultaneously
             \item Combine results to get the final solution
-        \end{itemize}
-        \item \textbf{Why Parallel Computing?}
-        \begin{itemize}
-            \item Overcome physical limitations of single processors
-            \item Solve problems that would take too long sequentially
-            \item Handle larger datasets and more complex computations
-            \item Improve computational efficiency and throughput
-        \end{itemize}
-        \item \textbf{Range of Applications:}
-        \begin{itemize}
-            \item From multi-core laptops to massive supercomputers
-            \item From simple multi-threaded programs to distributed systems
-            \item The foundation of modern High-Performance Computing
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -114,26 +101,26 @@
         \begin{column}{0.5\textwidth}
             \textbf{Concurrency:} Tasks that \emph{appear} to happen simultaneously but don't actually overlap in execution
             \vskip1em
-            \textbf{Example: Cooking and talking on phone}
+            \textbf{Example: Learning to bike and talking on phone}
             \begin{tikzpicture}[scale=0.85]
                 % Time axis
                 \draw[->, thick] (0,0) -- (6,0) node[right] {Time};
                 
-                % Cooking task
-                \node[left] at (0, 1.5) {\tiny Cooking:};
-                \draw[thick, fill=orange!40] (0,1.2) rectangle (1.8,1.8);
-                \node at (0.9, 1.5) {\tiny Chop};
-                \draw[thick, fill=orange!40] (2.2,1.2) rectangle (3.6,1.8);
-                \node at (2.9, 1.5) {\tiny Stir};
-                \draw[thick, fill=orange!40] (4.0,1.2) rectangle (5.5,1.8);
-                \node at (4.75, 1.5) {\tiny Serve};
+                % Biking task (learning - needs full attention)
+                \node[left] at (0, 1.5) {\tiny Biking:};
+                \draw[thick, fill=green!40] (0,1.2) rectangle (1.8,1.8);
+                \node at (0.9, 1.5) {\tiny Pedal};
+                \draw[thick, fill=green!40] (2.2,1.2) rectangle (3.6,1.8);
+                \node at (2.9, 1.5) {\tiny Steer};
+                \draw[thick, fill=green!40] (4.0,1.2) rectangle (5.5,1.8);
+                \node at (4.75, 1.5) {\tiny Balance};
                 
-                % Phone task
+                % Phone task (brief responses)
                 \node[left] at (0, 0.7) {\tiny Phone:};
                 \draw[thick, fill=blue!40] (1.8,0.4) rectangle (2.2,1.0);
-                \node at (2.0, 0.7) {\tiny C};
+                \node at (2.0, 0.7) {\tiny Mmh};
                 \draw[thick, fill=blue!40] (3.6,0.4) rectangle (4.0,1.0);
-                \node at (3.8, 0.7) {\tiny C};
+                \node at (3.8, 0.7) {\tiny Yeah};
                 
                 % No overlap indicator
                 \node[red] at (3, 2.3) {\tiny No overlap in execution};
@@ -149,15 +136,15 @@
                 % Time axis
                 \draw[->, thick] (0,0) -- (6,0) node[right] {Time};
                 
-                % Biking task (continuous)
+                % Biking task (continuous - experienced rider)
                 \node[left] at (0, 1.5) {\tiny Biking:};
                 \draw[thick, fill=green!40] (0,1.2) rectangle (5.5,1.8);
                 \node at (2.75, 1.5) {\tiny Pedaling continuously};
                 
-                % Phone task (overlapping)
+                % Phone task (full conversation - overlapping)
                 \node[left] at (0, 0.7) {\tiny Phone:};
                 \draw[thick, fill=blue!40] (0.5,0.4) rectangle (5.0,1.0);
-                \node at (2.75, 0.7) {\tiny Talking};
+                \node at (2.75, 0.7) {\tiny Full conversation};
                 
                 % Overlap indicator
                 \draw[red, thick, <->] (0.5, 2.3) -- (5.0, 2.3);
