@@ -1421,7 +1421,7 @@ mpirun python my_mpi_script.py
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Multi-threading:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[basicstyle=\tiny\ttfamily, escapeinside={}]
 using Base.Threads
 
 # Set threads with environment variable
@@ -1438,7 +1438,7 @@ end
             \end{lstlisting}
             \vskip0.5em
             \textbf{Distributed Computing:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[basicstyle=\tiny\ttfamily, escapeinside={}]
 using Distributed
 
 addprocs(4)  # Add 4 workers
@@ -1470,7 +1470,7 @@ julia my_script.jl
             \end{lstlisting}
             \vskip0.5em
             \textbf{MPI in Julia:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[basicstyle=\tiny\ttfamily, escapeinside={}]
 using MPI
 
 MPI.Init()
@@ -1488,7 +1488,7 @@ size = MPI.Comm_size(comm)
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Using foreach:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[basicstyle=\tiny\ttfamily, escapeinside={}]
 library(foreach)
 library(doParallel)
 
@@ -1506,7 +1506,7 @@ stopCluster(cl)
             \end{lstlisting}
             \vskip0.5em
             \textbf{Using mclapply:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[basicstyle=\tiny\ttfamily, escapeinside={}]
 library(parallel)
 
 # Detect cores
@@ -1536,7 +1536,7 @@ Rscript my_script.R
             \end{lstlisting}
             \vskip0.5em
             \textbf{In R script:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+            \begin{lstlisting}[basicstyle=\tiny\ttfamily, escapeinside={}]
 # Get cores from environment
 ncores <- as.integer(Sys.getenv("R_NCORES", "1"))
 
