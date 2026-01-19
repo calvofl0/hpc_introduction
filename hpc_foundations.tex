@@ -42,8 +42,8 @@
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 % Title information
-\title{Foundations of High-Performance Computing (HPC)}
-\subtitle{An Introduction to Parallel Computing and Cluster Computing}
+\title{An Introduction to Parallel Computing}
+\subtitle{Foundations of High-Performance Computing (HPC)}
 \author{HPC Course}
 \date{\today}
 
@@ -118,9 +118,9 @@
                 % Phone task (brief responses)
                 \node[left] at (0, 0.7) {\tiny Phone:};
                 \draw[thick, fill=blue!40] (1.8,0.4) rectangle (2.2,1.0);
-                \node at (2.0, 0.7) {\tiny Mmh};
+                \node at (2.0, 0.7) {\tiny T};
                 \draw[thick, fill=blue!40] (3.6,0.4) rectangle (4.0,1.0);
-                \node at (3.8, 0.7) {\tiny Yeah};
+                \node at (3.8, 0.7) {\tiny T};
                 
                 % No overlap indicator
                 \node[red] at (3, 2.3) {\tiny No overlap in execution};
@@ -170,33 +170,48 @@
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
-                % Socket
-                \draw[thick, rounded corners] (0,0) rectangle (5,4);
-                \node at (2.5, 3.7) {\textbf{Socket}};
+            \begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
+                % Socket 1
+                \draw[thick, rounded corners] (0,0) rectangle (3,3.5);
+                \node at (1.5, 3.2) {\textbf{Socket 1}};
                 
-                % CPU
-                \draw[thick, rounded corners, fill=blue!10] (0.3,0.3) rectangle (4.7,3.4);
-                \node at (2.5, 3.1) {\textbf{CPU}};
+                % CPU 1
+                \draw[thick, rounded corners, fill=blue!10] (0.2,0.2) rectangle (2.8,2.9);
+                \node at (1.5, 2.6) {\textbf{CPU 1}};
                 
-                % Cores
-                \draw[thick, fill=green!20] (0.6,1.8) rectangle (1.8,2.8);
-                \node at (1.2, 2.3) {\tiny Core 0};
+                % Cores in Socket 1
+                \draw[thick, fill=green!20] (0.4,1.5) rectangle (1.3,2.3);
+                \node at (0.85, 1.9) {\tiny Core 0};
                 
-                \draw[thick, fill=green!20] (2.2,1.8) rectangle (3.4,2.8);
-                \node at (2.8, 2.3) {\tiny Core 1};
+                \draw[thick, fill=green!20] (1.7,1.5) rectangle (2.6,2.3);
+                \node at (2.15, 1.9) {\tiny Core 1};
                 
-                \draw[thick, fill=green!20] (3.8,1.8) rectangle (5.0,2.8);
-                \node at (4.4, 2.3) {\tiny Core 2};
+                \draw[thick, fill=green!20] (0.4,0.4) rectangle (1.3,1.2);
+                \node at (0.85, 0.8) {\tiny Core 2};
                 
-                \draw[thick, fill=green!20] (0.6,0.6) rectangle (1.8,1.6);
-                \node at (1.2, 1.1) {\tiny Core 3};
+                \draw[thick, fill=green!20] (1.7,0.4) rectangle (2.6,1.2);
+                \node at (2.15, 0.8) {\tiny Core 3};
                 
-                \draw[thick, fill=green!20] (2.2,0.6) rectangle (3.4,1.6);
-                \node at (2.8, 1.1) {\tiny Core 4};
+                % Socket 2
+                \draw[thick, rounded corners] (3.5,0) rectangle (6.5,3.5);
+                \node at (5, 3.2) {\textbf{Socket 2}};
                 
-                \draw[thick, fill=green!20] (3.8,0.6) rectangle (5.0,1.6);
-                \node at (4.4, 1.1) {\tiny Core 5};
+                % CPU 2
+                \draw[thick, rounded corners, fill=blue!10] (3.7,0.2) rectangle (6.3,2.9);
+                \node at (5, 2.6) {\textbf{CPU 2}};
+                
+                % Cores in Socket 2
+                \draw[thick, fill=green!20] (3.9,1.5) rectangle (4.8,2.3);
+                \node at (4.35, 1.9) {\tiny Core 0};
+                
+                \draw[thick, fill=green!20] (5.2,1.5) rectangle (6.1,2.3);
+                \node at (5.65, 1.9) {\tiny Core 1};
+                
+                \draw[thick, fill=green!20] (3.9,0.4) rectangle (4.8,1.2);
+                \node at (4.35, 0.8) {\tiny Core 2};
+                
+                \draw[thick, fill=green!20] (5.2,0.4) rectangle (6.1,1.2);
+                \node at (5.65, 0.8) {\tiny Core 3};
             \end{tikzpicture}
         \end{column}
     \end{columns}
@@ -220,21 +235,24 @@
             \textbf{Key Principle:} Faster memory is smaller and more expensive
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.8]
-                % Triangle representing hierarchy
-                \draw[thick, fill=red!20] (0,0) -- (4,0) -- (2,5) -- cycle;
+            \centering
+            \begin{tikzpicture}[scale=0.9]
+                % Triangle representing hierarchy - taller version
+                \draw[thick, fill=red!20] (0,0) -- (4,0) -- (2,6.5) -- cycle;
                 
-                % Labels
-                \node at (2, 4.5) {\tiny Registers};
-                \node at (2, 3.8) {\tiny L1 Cache};
-                \node at (2, 3.1) {\tiny L2 Cache};
-                \node at (2, 2.4) {\tiny L3 Cache};
-                \node at (2, 1.5) {\small RAM};
-                \node at (2, 0.5) {\small Disk};
+                % Labels - avoid top narrow part
+                \node at (2, 3.5) {\small RAM};
+                \node at (2, 2.5) {\small Disk};
+                \node at (2, 4.8) {\tiny L3 Cache};
+                \node at (2, 5.4) {\tiny L2 Cache};
+                \node at (2, 5.9) {\tiny L1};
+                \node at (2, 1.2) {\small Storage};
                 
-                % Arrows for speed and size
-                \draw[->, thick] (4.5, 4.5) -- (4.5, 0.5) node[midway, right] {Speed};
-                \draw[->, thick] (0.5, 0) -- (3.5, 0) node[midway, below] {Capacity};
+                % Speed arrow - bottom to top (slowest to fastest)
+                \draw[->, thick] (4.8, 0.5) -- (4.8, 6) node[midway, right] {Speed};
+                
+                % Capacity arrow - outside triangle
+                \draw[->, thick] (-0.5, -0.5) -- (4.5, -0.5) node[midway, below] {Capacity};
             \end{tikzpicture}
         \end{column}
     \end{columns}
@@ -250,15 +268,16 @@
                 \item Limited scalability
                 \item Example: Multi-core CPU
             \end{itemize}
+            \centering
             \begin{tikzpicture}[scale=0.7]
                 % Cores
                 \foreach \x in {0,1.5,3} {
                     \draw[thick, fill=green!20] (\x,2) rectangle (\x+0.8,2.8);
                     \node at (\x+0.4, 2.4) {\tiny Core};
                 }
-                % Shared memory
-                \draw[thick, fill=blue!20] (0,0.5) rectangle (3.8,1.3);
-                \node at (1.9, 0.9) {Shared Memory};
+                % Shared memory - wider box
+                \draw[thick, fill=blue!20] (0,0.5) rectangle (4.8,1.3);
+                \node at (2.4, 0.9) {Shared Memory};
                 % Arrows
                 \foreach \x in {0.4,1.9,3.4} {
                     \draw[->, thick] (\x, 2) -- (\x, 1.3);
@@ -273,6 +292,7 @@
                 \item Highly scalable
                 \item Example: HPC cluster
             \end{itemize}
+            \centering
             \begin{tikzpicture}[scale=0.7]
                 % Node 1
                 \draw[thick, fill=green!20] (0,2.5) rectangle (0.8,3.3);
@@ -302,43 +322,37 @@
 \end{frame}
 
 \begin{frame}{Compute Nodes in an HPC Cluster}
-    \begin{tikzpicture}[scale=0.9]
-        % Login node
-        \draw[thick, fill=yellow!20, rounded corners] (0,5) rectangle (2,6);
-        \node at (1, 5.5) {Login Node};
+    \centering
+    \begin{tikzpicture}[scale=0.85]
+        % Big box for SLURM managed nodes
+        \draw[thick, fill=gray!5, rounded corners] (-0.3,2) rectangle (9.8,4.8);
+        \node at (4.75, 4.5) {\textbf{SLURM Managed}};
         
-        % Scheduler
-        \draw[thick, fill=orange!20, rounded corners] (3,5) rectangle (5,6);
-        \node at (4, 5.5) {SLURM};
+        % Login node - at same level as compute nodes
+        \draw[thick, fill=yellow!20, rounded corners] (0,2.3) rectangle (1.8,4);
+        \node at (0.9, 3.5) {\small Login};
+        \node at (0.9, 3.1) {\small Node};
         
         % Compute nodes
-        \foreach \x in {0,2.5,5,7.5} {
-            \draw[thick, fill=green!20, rounded corners] (\x,2.5) rectangle (\x+2,4);
-            \node at (\x+1, 3.6) {\small Compute};
-            \node at (\x+1, 3.2) {\small Node};
-            \draw[thick, fill=blue!10] (\x+0.2,2.7) rectangle (\x+1.8,3);
-            \node at (\x+1, 2.85) {\tiny Memory};
+        \foreach \x in {2.3,4.3,6.3,8.3} {
+            \draw[thick, fill=green!20, rounded corners] (\x,2.3) rectangle (\x+1.8,4);
+            \node at (\x+0.9, 3.7) {\small Compute};
+            \node at (\x+0.9, 3.4) {\small Node};
+            \draw[thick, fill=blue!10] (\x+0.15,2.5) rectangle (\x+1.65,3.1);
+            \node at (\x+0.9, 2.8) {\tiny Memory};
         }
         
-        % Storage
-        \draw[thick, fill=purple!20, rounded corners] (2,0) rectangle (6,1.5);
-        \node at (4, 0.75) {Shared Storage};
+        % Shared Storage - wider to match node width
+        \draw[thick, fill=purple!20, rounded corners] (0,0) rectangle (10.1,1.2);
+        \node at (5.05, 0.6) {Shared Storage};
         
-        % Arrows
-        \draw[->, thick] (1, 5) -- (1, 4);
-        \draw[->, thick] (4, 5) -- (4, 4.5);
-        \draw[->, thick] (4, 4.5) -- (1, 4);
-        \draw[->, thick] (4, 4.5) -- (3.5, 4);
-        \draw[->, thick] (4, 4.5) -- (6, 4);
-        \draw[->, thick] (4, 4.5) -- (8.5, 4);
-        
-        % Storage connections
-        \foreach \x in {1,3.5,6,8.5} {
-            \draw[->, thick, dashed] (\x, 2.5) -- (\x, 1.5);
+        % Storage connections from all nodes
+        \foreach \x in {0.9,3.2,5.2,7.2,9.2} {
+            \draw[->, thick, dashed] (\x, 2.3) -- (\x, 1.2);
         }
         
-        \node at (10, 5.5) {\small Users SSH here};
-        \draw[->, thick] (9.5, 5.5) -- (2, 5.5);
+        \node at (11.5, 3.15) {\small Users SSH};
+        \draw[->, thick] (10.8, 3.15) -- (1.8, 3.15);
     \end{tikzpicture}
     
     \vskip0.5em
