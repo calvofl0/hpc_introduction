@@ -31,8 +31,8 @@
     frame=single,
     numbers=left,
     numberstyle=\tiny\color{gray},
-    xleftmargin=2em,
-    framexleftmargin=1.5em
+    xleftmargin=2.5em,
+    framexleftmargin=2em
 }
 
 % Define custom colors
@@ -786,6 +786,104 @@ for (int i = 0; i < N; i++) {
     \textbf{Example:} 2 nodes × 4 threads = 8 total cores, but only 2 MPI processes
 \end{frame}
 
+\begin{frame}{Understanding Speedup}
+    \textbf{Speedup}: How much faster a parallel program runs compared to its serial version
+    \vskip1em
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Definition:}
+            \[
+            \text{Speedup} = \frac{T_{\text{serial}}}{T_{\text{parallel}}}
+            \]
+            where:
+            \begin{itemize}
+                \item $T_{\text{serial}}$ = time with 1 processor
+                \item $T_{\text{parallel}}$ = time with $n$ processors
+            \end{itemize}
+            \vskip1em
+            \textbf{Ideal Speedup:}
+            \begin{itemize}
+                \item Linear: Speedup = $n$ processors
+                \item Doubling processors halves time
+                \item Rarely achieved in practice
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Example:}
+            \begin{itemize}
+                \item Serial time: 100 seconds
+                \item Parallel time (4 cores): 30 seconds
+                \item Speedup = $\frac{100}{30} \approx 3.3\times$
+            \end{itemize}
+            \vskip1em
+            \textbf{Efficiency:}
+            \[
+            \text{Efficiency} = \frac{\text{Speedup}}{n} \times 100\%
+            \]
+            \begin{itemize}
+                \item In example: $\frac{3.3}{4} = 82.5\%$
+                \item Goal: Keep efficiency $> 80\%$
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Strong vs Weak Scaling}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Strong Scaling:}
+            \begin{itemize}
+                \item Fixed total problem size
+                \item Increase number of processors
+                \item Measure time to solution
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Goal:} Solve same problem faster
+            \vskip0.5em
+            \textbf{Challenge:}
+            \begin{itemize}
+                \item Communication overhead increases
+                \item Less work per processor
+                \item Eventually becomes inefficient
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Example:}
+            \begin{itemize}
+                \item Process 1 GB data
+                \item 1 core: 100 sec
+                \item 4 cores: 30 sec (3.3× speedup)
+                \item 16 cores: 10 sec (10× speedup)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Weak Scaling:}
+            \begin{itemize}
+                \item Fixed problem size per processor
+                \item Increase both processors and total size
+                \item Measure time per processor
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Goal:} Solve bigger problems in same time
+            \vskip0.5em
+            \textbf{Challenge:}
+            \begin{itemize}
+                \item Global communication may increase
+                \item Synchronization overhead
+                \item Load balancing complexities
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Example:}
+            \begin{itemize}
+                \item 1 core: 1 GB in 100 sec
+                \item 4 cores: 4 GB in 100 sec
+                \item 16 cores: 16 GB in 100 sec
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \vskip0.5em
+    {\small \textbf{Key Difference:} Strong scaling fixes work, weak scaling fixes work per processor}
+\end{frame}
+
 \begin{frame}[fragile]{Amdahl's Law: The Speedup Limit}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -879,8 +977,9 @@ for (int i = 0; i < N; i++) {
     \end{columns}
 \end{frame}
 
-\begin{frame}{Common SLURM Commands}
-    \begin{tabular}{p{3.5cm}p{7cm}}
+\begin{frame}{Common SLURM Commands (Part 1)}
+    {\small
+    \begin{tabular}{p{4.5cm}p{6.5cm}}
         \toprule
         \textbf{Command} & \textbf{Description} \\
         \midrule
@@ -889,12 +988,9 @@ for (int i = 0; i < N; i++) {
         \texttt{squeue -u \$USER} & View your jobs \\
         \texttt{scancel <jobid>} & Cancel a job \\
         \texttt{sinfo} & View cluster node information \\
-        \texttt{srun command} & Run command interactively \\
-        \texttt{scontrol show job <jobid>} & View detailed job info \\
-        \texttt{sacct} & View job accounting information \\
-        \texttt{salloc} & Allocate resources for interactive use \\
         \bottomrule
     \end{tabular}
+    }
     \vskip1em
     \textbf{Useful squeue options:}
     \begin{itemize}
@@ -902,6 +998,21 @@ for (int i = 0; i < N; i++) {
         \item \texttt{--start}: Show estimated start time
         \item \texttt{-t RUNNING}: Filter by job state (PENDING, RUNNING, etc.)
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Common SLURM Commands (Part 2)}
+    {\small
+    \begin{tabular}{p{4.5cm}p{6.5cm}}
+        \toprule
+        \textbf{Command} & \textbf{Description} \\
+        \midrule
+        \texttt{srun command} & Run command interactively \\
+        \texttt{scontrol show job <jobid>} & View detailed job info \\
+        \texttt{sacct} & View job accounting information \\
+        \texttt{salloc} & Allocate resources for interactive use \\
+        \bottomrule
+    \end{tabular}
+    }
 \end{frame}
 
 \begin{frame}[fragile]{Anatomy of a SLURM Job Script}
@@ -930,6 +1041,7 @@ python my_script.py
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
+            {\small
             \textbf{Key Options:}
             \begin{itemize}
                 \item \texttt{--job-name}: Job identifier
@@ -941,21 +1053,22 @@ python my_script.py
                 \item \texttt{--mem}: Memory per node
                 \item \texttt{--mem-per-cpu}: Memory per core
             \end{itemize}
-            \vskip0.5em
+            \vskip0.3em
             \textbf{Special Variables:}
             \begin{itemize}
                 \item \texttt{\%j}: Job ID
                 \item \texttt{\%x}: Job name
                 \item \texttt{\%N}: Node name
             \end{itemize}
+            }
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]{Example: Serial Job}
-    \textbf{Simplest case: Single core job}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    {\small \textbf{Simplest case: Single core job}}
+    \vskip0.5em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=serial_job
 #SBATCH --output=serial_%j.log
@@ -970,14 +1083,14 @@ echo "Number of cores: $SLURM_CPUS_PER_TASK"
 
 python my_serial_script.py
     \end{lstlisting}
-    \vskip1em
-    \textbf{Resources:} 1 node, 1 core, 2 GB RAM, 30 minutes
+    \vskip0.5em
+    {\small \textbf{Resources:} 1 node, 1 core, 2 GB RAM, 30 minutes}
 \end{frame}
 
 \begin{frame}[fragile]{Example: Multi-threaded (OpenMP) Job}
-    \textbf{Using multiple cores on a single node}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    {\small \textbf{Using multiple cores on a single node}}
+    \vskip0.5em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=openmp_job
 #SBATCH --output=openmp_%j.log
@@ -993,14 +1106,14 @@ echo "Using $OMP_NUM_THREADS OpenMP threads"
 
 ./my_openmp_program
     \end{lstlisting}
-    \vskip1em
-    \textbf{Resources:} 1 task, 16 cores for threading, 32 GB RAM
+    \vskip0.5em
+    {\small \textbf{Resources:} 1 task, 16 cores for threading, 32 GB RAM}
 \end{frame}
 
 \begin{frame}[fragile]{Example: MPI Job (Distributed)}
-    \textbf{Multiple tasks across nodes}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    {\small \textbf{Multiple tasks across nodes}}
+    \vskip0.5em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=mpi_job
 #SBATCH --output=mpi_%j.log
@@ -1017,14 +1130,14 @@ echo "Total tasks: $SLURM_NTASKS"
 
 mpirun ./my_mpi_program
     \end{lstlisting}
-    \vskip1em
-    \textbf{Resources:} 4 nodes, 64 MPI tasks (16 per node), 128 GB total RAM
+    \vskip0.5em
+    {\small \textbf{Resources:} 4 nodes, 64 MPI tasks (16 per node), 128 GB total RAM}
 \end{frame}
 
 \begin{frame}[fragile]{Example: Hybrid MPI + OpenMP Job}
-    \textbf{Combining distributed and shared memory parallelism}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    {\small \textbf{Combining distributed and shared memory parallelism}}
+    \vskip0.5em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=hybrid_job
 #SBATCH --output=hybrid_%j.log
@@ -1042,8 +1155,8 @@ echo "OpenMP threads per task: $OMP_NUM_THREADS"
 
 mpirun ./my_hybrid_program
     \end{lstlisting}
-    \vskip1em
-    \textbf{Resources:} 4 nodes, 16 MPI tasks (4 per node), 8 threads per task = 128 cores total
+    \vskip0.5em
+    {\small \textbf{Resources:} 4 nodes, 16 MPI tasks (4 per node), 8 threads per task = 128 cores total}
 \end{frame}
 
 
