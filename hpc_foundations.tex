@@ -51,7 +51,8 @@
     morecomment=[l]{\#},
     morestring=[b]",
     morestring=[b]',
-    literate={%}{{{\%}}}1,
+    morestring=[s]{\%}{\%},
+    literate={%}{{{\%}}}1
 }
 
 % Define custom colors
@@ -1720,6 +1721,7 @@ cl <- makeCluster(ncores)
             \end{itemize}
         \end{column}
     \end{columns}
+    }
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
