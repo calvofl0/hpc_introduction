@@ -1161,66 +1161,31 @@ mpirun ./my_hybrid_program
 
 
 \begin{frame}{Resource Allocation Strategies}
-    \begin{tikzpicture}[scale=0.9]
-        % Header
-        \node at (6, 6) {\textbf{Choosing the Right Configuration}};
-        
-        % Serial
-        \node[align=left] at (3, 5) {
-            \textbf{Serial Job:}\\
-            \tiny Single-threaded code\\
-            \tiny --ntasks=1\\
-            \tiny --cpus-per-task=1
-        };
-        \draw[->, thick] (5, 5) -- (6.5, 5);
-        \node[align=left] at (9, 5) {
-            \tiny Use case:\\
-            \tiny Simple scripts\\
-            \tiny Many independent runs
-        };
-        
-        % Multi-threaded
-        \node[align=left] at (3, 3.5) {
-            \textbf{Multi-threaded:}\\
-            \tiny OpenMP, threads\\
-            \tiny --ntasks=1\\
-            \tiny --cpus-per-task=N
-        };
-        \draw[->, thick] (5, 3.5) -- (6.5, 3.5);
-        \node[align=left] at (9, 3.5) {
-            \tiny Use case:\\
-            \tiny Shared memory code\\
-            \tiny Single node sufficient
-        };
-        
-        % MPI
-        \node[align=left] at (3, 2) {
-            \textbf{MPI:}\\
-            \tiny Distributed memory\\
-            \tiny --ntasks=N\\
-            \tiny --cpus-per-task=1
-        };
-        \draw[->, thick] (5, 2) -- (6.5, 2);
-        \node[align=left] at (9, 2) {
-            \tiny Use case:\\
-            \tiny Large scale problems\\
-            \tiny Multiple nodes needed
-        };
-        
-        % Hybrid
-        \node[align=left] at (3, 0.5) {
-            \textbf{Hybrid MPI+OpenMP:}\\
-            \tiny Both paradigms\\
-            \tiny --ntasks=M\\
-            \tiny --cpus-per-task=N
-        };
-        \draw[->, thick] (5, 0.5) -- (6.5, 0.5);
-        \node[align=left] at (9, 0.5) {
-            \tiny Use case:\\
-            \tiny Very large problems\\
-            \tiny Reduced MPI overhead
-        };
-    \end{tikzpicture}
+    \textbf{Choosing the Right Configuration}
+    \vskip1em
+    {\small
+    \begin{tabular}{p{3.5cm}p{3cm}p{4cm}}
+        \toprule
+        \textbf{Job Type} & \textbf{SLURM Config} & \textbf{Use Case} \\
+        \midrule
+        \textbf{Serial} & 
+        \texttt{--ntasks=1} \newline \texttt{--cpus-per-task=1} & 
+        Simple scripts, many independent runs \\
+        \midrule
+        \textbf{Multi-threaded} & 
+        \texttt{--ntasks=1} \newline \texttt{--cpus-per-task=N} & 
+        Shared memory code (OpenMP), single node sufficient \\
+        \midrule
+        \textbf{MPI} & 
+        \texttt{--ntasks=N} \newline \texttt{--cpus-per-task=1} & 
+        Large scale problems, distributed memory, multiple nodes \\
+        \midrule
+        \textbf{Hybrid} & 
+        \texttt{--ntasks=M} \newline \texttt{--cpus-per-task=N} & 
+        Very large problems, both paradigms, reduced MPI overhead \\
+        \bottomrule
+    \end{tabular}
+    }
 \end{frame}
 
 \begin{frame}[fragile]{Job Arrays: Running Many Similar Jobs}
@@ -1322,6 +1287,7 @@ exit  # Release resources
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Programming Languages and Parallel Computing}
+    {\small
     \begin{tabular}{p{2.5cm}p{3cm}p{5cm}}
         \toprule
         \textbf{Language} & \textbf{Paradigm} & \textbf{Common Tools} \\
@@ -1343,6 +1309,7 @@ exit  # Release resources
               & Vectorization & Compiler auto-vectorization \\
         \bottomrule
     \end{tabular}
+    }
 \end{frame}
 
 \begin{frame}[fragile]{Python: Multi-threading vs Multiprocessing}
