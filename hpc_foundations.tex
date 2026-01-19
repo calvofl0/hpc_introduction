@@ -635,31 +635,32 @@ for (int i = 0; i < N; i++) {
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
+            \centering
             \begin{tikzpicture}[scale=0.75]
-                % Process
-                \draw[thick, rounded corners, fill=yellow!10] (0,0) rectangle (5,5);
-                \node at (2.5, 4.7) {\textbf{Process}};
+                % Process - with more spacing
+                \draw[thick, rounded corners, fill=yellow!10] (0,0) rectangle (5.5,5.2);
+                \node at (2.75, 4.85) {\textbf{Process}};
                 
-                % Threads
-                \draw[thick, fill=green!20] (0.5,3) rectangle (1.5,4.3);
-                \node at (1, 3.65) {\tiny Thread 1};
+                % Threads - wider boxes
+                \draw[thick, fill=green!20] (0.5,3) rectangle (1.7,4.5);
+                \node at (1.1, 3.75) {\tiny Thread 1};
                 
-                \draw[thick, fill=green!20] (2,3) rectangle (3,4.3);
-                \node at (2.5, 3.65) {\tiny Thread 2};
+                \draw[thick, fill=green!20] (2.2,3) rectangle (3.4,4.5);
+                \node at (2.8, 3.75) {\tiny Thread 2};
                 
-                \draw[thick, fill=green!20] (3.5,3) rectangle (4.5,4.3);
-                \node at (4, 3.65) {\tiny Thread 3};
+                \draw[thick, fill=green!20] (3.9,3) rectangle (5.1,4.5);
+                \node at (4.5, 3.75) {\tiny Thread 3};
                 
                 % Shared memory
-                \draw[thick, fill=blue!20] (0.5,0.5) rectangle (4.5,2.5);
-                \node at (2.5, 1.5) {Shared Memory};
+                \draw[thick, fill=blue!20] (0.5,0.5) rectangle (5.1,2.5);
+                \node at (2.8, 1.5) {Shared Memory};
                 
                 % Arrows
-                \draw[<->, thick] (1, 3) -- (1, 2.5);
-                \draw[<->, thick] (2.5, 3) -- (2.5, 2.5);
-                \draw[<->, thick] (4, 3) -- (4, 2.5);
+                \draw[<->, thick] (1.1, 3) -- (1.1, 2.5);
+                \draw[<->, thick] (2.8, 3) -- (2.8, 2.5);
+                \draw[<->, thick] (4.5, 3) -- (4.5, 2.5);
             \end{tikzpicture}
-            \vskip0.5em
+            \vskip0.3em
             \textbf{Benefits:} Fast communication, easy data sharing
         \end{column}
     \end{columns}
@@ -668,6 +669,7 @@ for (int i = 0; i < N; i++) {
 \begin{frame}{Message Passing (Distributed Memory)}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
+            {\small
             \textbf{Message Passing Interface (MPI):}
             \begin{itemize}
                 \item Multiple processes with separate memory
@@ -675,7 +677,7 @@ for (int i = 0; i < N; i++) {
                 \item Scales across many nodes
                 \item Standard library with many implementations
             \end{itemize}
-            \vskip1em
+            \vskip0.8em
             \textbf{Key Operations:}
             \begin{itemize}
                 \item \texttt{MPI\_Send}: Send data
@@ -683,6 +685,7 @@ for (int i = 0; i < N; i++) {
                 \item \texttt{MPI\_Bcast}: Broadcast to all
                 \item \texttt{MPI\_Reduce}: Collect and combine
             \end{itemize}
+            }
         \end{column}
         \begin{column}{0.5\textwidth}
             \begin{tikzpicture}[scale=0.7]
@@ -744,40 +747,40 @@ for (int i = 0; i < N; i++) {
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.7]
+            \begin{tikzpicture}[scale=0.72]
                 % Node 1
-                \draw[thick, rounded corners, fill=gray!10] (0,3) rectangle (3.5,5.5);
-                \node at (1.75, 5.3) {\textbf{Node 1}};
+                \draw[thick, rounded corners, fill=gray!10] (0,3) rectangle (3.8,5.7);
+                \node at (1.9, 5.45) {\textbf{Node 1}};
                 
-                % MPI process 1
-                \draw[thick, fill=yellow!20] (0.3,3.3) rectangle (3.2,5);
-                \node at (1.75, 4.8) {\tiny MPI Process 0};
+                % MPI process 1 - more spacing
+                \draw[thick, fill=yellow!20] (0.3,3.4) rectangle (3.5,5.15);
+                \node at (1.9, 4.9) {\tiny MPI Process 0};
                 
-                % OpenMP threads
-                \foreach \x in {0.5,1.3,2.1,2.9} {
-                    \draw[thick, fill=green!30] (\x,3.5) rectangle (\x+0.6,4.5);
-                    \node at (\x+0.3, 4) {\tiny T};
+                % OpenMP threads - with proper spacing
+                \foreach \x in {0.5,1.25,2.0,2.75} {
+                    \draw[thick, fill=green!30] (\x,3.65) rectangle (\x+0.65,4.6);
+                    \node at (\x+0.325, 4.125) {\tiny T};
                 }
                 
                 % Node 2
-                \draw[thick, rounded corners, fill=gray!10] (0,0) rectangle (3.5,2.5);
-                \node at (1.75, 2.3) {\textbf{Node 2}};
+                \draw[thick, rounded corners, fill=gray!10] (0,0) rectangle (3.8,2.7);
+                \node at (1.9, 2.45) {\textbf{Node 2}};
                 
-                % MPI process 2
-                \draw[thick, fill=yellow!20] (0.3,0.3) rectangle (3.2,2);
-                \node at (1.75, 1.8) {\tiny MPI Process 1};
+                % MPI process 2 - more spacing
+                \draw[thick, fill=yellow!20] (0.3,0.4) rectangle (3.5,2.15);
+                \node at (1.9, 1.9) {\tiny MPI Process 1};
                 
-                % OpenMP threads
-                \foreach \x in {0.5,1.3,2.1,2.9} {
-                    \draw[thick, fill=green!30] (\x,0.5) rectangle (\x+0.6,1.5);
-                    \node at (\x+0.3, 1) {\tiny T};
+                % OpenMP threads - with proper spacing
+                \foreach \x in {0.5,1.25,2.0,2.75} {
+                    \draw[thick, fill=green!30] (\x,0.65) rectangle (\x+0.65,1.6);
+                    \node at (\x+0.325, 1.125) {\tiny T};
                 }
                 
                 % MPI communication
-                \draw[<->, thick, red, dashed] (1.75, 3) -- (1.75, 2.5);
-                \node at (4, 2.75) {\tiny MPI};
+                \draw[<->, thick, red, dashed] (1.9, 3) -- (1.9, 2.7);
+                \node at (4.3, 2.85) {\tiny MPI};
             \end{tikzpicture}
-        \end{column}
+        \end{column>
     \end{columns}
     \vskip0.5em
     \textbf{Example:} 2 nodes × 4 threads = 8 total cores, but only 2 MPI processes
