@@ -42,8 +42,8 @@
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
 % Title information
-\title{Foundations of High-Performance Computing (HPC)}
-\subtitle{An Introduction to Parallel Computing and Cluster Computing}
+\title{An Introduction to Parallel Computing}
+\subtitle{Foundations of High-Performance Computing (HPC)}
 \author{HPC Course}
 \date{\today}
 
@@ -83,6 +83,19 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{What is Parallel Computing?}
+    \begin{itemize}
+        \item \textbf{Parallel Computing}: Performing multiple operations at the same time
+        \item A broad concept encompassing various forms of simultaneous computation
+        \item \textbf{Core Idea:}
+        \begin{itemize}
+            \item Break down a task into smaller tasks
+            \item Execute these smaller tasks simultaneously
+            \item Combine results to get the final solution
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{CPU Architecture Basics}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -95,38 +108,53 @@
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.8, every node/.style={scale=0.8}]
-                % Socket
-                \draw[thick, rounded corners] (0,0) rectangle (5,4);
-                \node at (2.5, 3.7) {\textbf{Socket}};
+            \begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
+                % Socket 1
+                \draw[thick, rounded corners] (0,0) rectangle (2.5,3.5);
+                \node at (1.25, 3.2) {\textbf{\tiny Socket 1}};
                 
-                % CPU
-                \draw[thick, rounded corners, fill=blue!10] (0.3,0.3) rectangle (4.7,3.4);
-                \node at (2.5, 3.1) {\textbf{CPU}};
+                % CPU 1
+                \draw[thick, rounded corners, fill=blue!10] (0.2,0.2) rectangle (2.3,3);
+                \node at (1.25, 2.75) {\textbf{\tiny CPU}};
                 
-                % Cores
-                \draw[thick, fill=green!20] (0.6,1.8) rectangle (1.8,2.8);
-                \node at (1.2, 2.3) {\tiny Core 0};
+                % Cores in Socket 1
+                \draw[thick, fill=green!20] (0.4,1.6) rectangle (1.1,2.5);
+                \node at (0.75, 2.05) {\tiny Core 0};
                 
-                \draw[thick, fill=green!20] (2.2,1.8) rectangle (3.4,2.8);
-                \node at (2.8, 2.3) {\tiny Core 1};
+                \draw[thick, fill=green!20] (1.4,1.6) rectangle (2.1,2.5);
+                \node at (1.75, 2.05) {\tiny Core 1};
                 
-                \draw[thick, fill=green!20] (3.8,1.8) rectangle (5.0,2.8);
-                \node at (4.4, 2.3) {\tiny Core 2};
+                \draw[thick, fill=green!20] (0.4,0.4) rectangle (1.1,1.3);
+                \node at (0.75, 0.85) {\tiny Core 2};
                 
-                \draw[thick, fill=green!20] (0.6,0.6) rectangle (1.8,1.6);
-                \node at (1.2, 1.1) {\tiny Core 3};
+                \draw[thick, fill=green!20] (1.4,0.4) rectangle (2.1,1.3);
+                \node at (1.75, 0.85) {\tiny Core 3};
                 
-                \draw[thick, fill=green!20] (2.2,0.6) rectangle (3.4,1.6);
-                \node at (2.8, 1.1) {\tiny Core 4};
+                % Socket 2
+                \draw[thick, rounded corners] (3,0) rectangle (5.5,3.5);
+                \node at (4.25, 3.2) {\textbf{\tiny Socket 2}};
                 
-                \draw[thick, fill=green!20] (3.8,0.6) rectangle (5.0,1.6);
-                \node at (4.4, 1.1) {\tiny Core 5};
+                % CPU 2
+                \draw[thick, rounded corners, fill=blue!10] (3.2,0.2) rectangle (5.3,3);
+                \node at (4.25, 2.75) {\textbf{\tiny CPU}};
+                
+                % Cores in Socket 2
+                \draw[thick, fill=green!20] (3.4,1.6) rectangle (4.1,2.5);
+                \node at (3.75, 2.05) {\tiny Core 0};
+                
+                \draw[thick, fill=green!20] (4.4,1.6) rectangle (5.1,2.5);
+                \node at (4.75, 2.05) {\tiny Core 1};
+                
+                \draw[thick, fill=green!20] (3.4,0.4) rectangle (4.1,1.3);
+                \node at (3.75, 0.85) {\tiny Core 2};
+                
+                \draw[thick, fill=green!20] (4.4,0.4) rectangle (5.1,1.3);
+                \node at (4.75, 0.85) {\tiny Core 3};
             \end{tikzpicture}
         \end{column}
     \end{columns}
     \vskip1em
-    \textbf{Example:} A dual-socket server with 2 CPUs × 64 cores/CPU = 128 cores total
+    \textbf{Example:} A dual-socket server with 2 CPUs × 4 cores/CPU = 8 cores total
 \end{frame}
 
 \begin{frame}{Memory Hierarchy}
@@ -145,21 +173,24 @@
             \textbf{Key Principle:} Faster memory is smaller and more expensive
         \end{column}
         \begin{column}{0.5\textwidth}
+            \centering
+            \vspace{1em}
             \begin{tikzpicture}[scale=0.8]
-                % Triangle representing hierarchy
-                \draw[thick, fill=red!20] (0,0) -- (4,0) -- (2,5) -- cycle;
+                % Triangle representing hierarchy - extended higher
+                \draw[thick, fill=red!20] (0,0) -- (4,0) -- (2,6.5) -- cycle;
                 
-                % Labels
-                \node at (2, 4.5) {\tiny Registers};
-                \node at (2, 3.8) {\tiny L1 Cache};
-                \node at (2, 3.1) {\tiny L2 Cache};
-                \node at (2, 2.4) {\tiny L3 Cache};
-                \node at (2, 1.5) {\small RAM};
-                \node at (2, 0.5) {\small Disk};
+                % Labels - not in the very top part
+                \node at (2, 5.2) {\small RAM};
+                \node at (2, 4.2) {\small L3 Cache};
+                \node at (2, 3.2) {\small L2 Cache};
+                \node at (2, 2.2) {\small L1 Cache};
+                \node at (2, 1.2) {\small Registers};
+                \node at (2, 0.4) {\small Disk};
                 
-                % Arrows for speed and size
-                \draw[->, thick] (4.5, 4.5) -- (4.5, 0.5) node[midway, right] {Speed};
-                \draw[->, thick] (0.5, 0) -- (3.5, 0) node[midway, below] {Capacity};
+                % Arrows for speed (bottom to top = slowest to fastest)
+                \draw[->, thick] (4.8, 0.5) -- (4.8, 6) node[midway, right] {Speed};
+                % Capacity arrow outside the triangle
+                \draw[->, thick] (-0.8, -0.5) -- (4.8, -0.5) node[midway, below] {Capacity};
             \end{tikzpicture}
         \end{column}
     \end{columns}
@@ -175,14 +206,15 @@
                 \item Limited scalability
                 \item Example: Multi-core CPU
             \end{itemize}
+            \centering
             \begin{tikzpicture}[scale=0.7]
                 % Cores
                 \foreach \x in {0,1.5,3} {
                     \draw[thick, fill=green!20] (\x,2) rectangle (\x+0.8,2.8);
                     \node at (\x+0.4, 2.4) {\tiny Core};
                 }
-                % Shared memory
-                \draw[thick, fill=blue!20] (0,0.5) rectangle (3.8,1.3);
+                % Shared memory - wider box
+                \draw[thick, fill=blue!20] (-0.2,0.5) rectangle (4.0,1.3);
                 \node at (1.9, 0.9) {Shared Memory};
                 % Arrows
                 \foreach \x in {0.4,1.9,3.4} {
@@ -198,6 +230,7 @@
                 \item Highly scalable
                 \item Example: HPC cluster
             \end{itemize}
+            \centering
             \begin{tikzpicture}[scale=0.7]
                 % Node 1
                 \draw[thick, fill=green!20] (0,2.5) rectangle (0.8,3.3);
