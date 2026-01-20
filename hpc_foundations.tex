@@ -31,8 +31,8 @@
     frame=single,
     numbers=left,
     numberstyle=\tiny\color{gray},
-    xleftmargin=2em,
-    framexleftmargin=1.5em
+    xleftmargin=2.5em,
+    framexleftmargin=2.2em
 }
 
 % Define custom colors
@@ -577,29 +577,30 @@ for (int i = 0; i < N; i++) {
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.75]
-                % Process
-                \draw[thick, rounded corners, fill=yellow!10] (0,0) rectangle (5,5);
-                \node at (2.5, 4.7) {\textbf{Process}};
+            \centering
+            \begin{tikzpicture}[scale=0.72]
+                % Process - with more spacing
+                \draw[thick, rounded corners, fill=yellow!10] (0,0) rectangle (5.5,5.5);
+                \node at (2.75, 5.1) {\textbf{Process}};
                 
-                % Threads
-                \draw[thick, fill=green!20] (0.5,3) rectangle (1.5,4.3);
-                \node at (1, 3.65) {\tiny Thread 1};
+                % Threads - wider boxes
+                \draw[thick, fill=green!20] (0.5,3.3) rectangle (1.8,4.8);
+                \node at (1.15, 4.05) {\tiny Thread 1};
                 
-                \draw[thick, fill=green!20] (2,3) rectangle (3,4.3);
-                \node at (2.5, 3.65) {\tiny Thread 2};
+                \draw[thick, fill=green!20] (2.2,3.3) rectangle (3.5,4.8);
+                \node at (2.85, 4.05) {\tiny Thread 2};
                 
-                \draw[thick, fill=green!20] (3.5,3) rectangle (4.5,4.3);
-                \node at (4, 3.65) {\tiny Thread 3};
+                \draw[thick, fill=green!20] (3.9,3.3) rectangle (5.2,4.8);
+                \node at (4.55, 4.05) {\tiny Thread 3};
                 
                 % Shared memory
-                \draw[thick, fill=blue!20] (0.5,0.5) rectangle (4.5,2.5);
-                \node at (2.5, 1.5) {Shared Memory};
+                \draw[thick, fill=blue!20] (0.5,0.5) rectangle (5,2.8);
+                \node at (2.75, 1.65) {Shared Memory};
                 
                 % Arrows
-                \draw[<->, thick] (1, 3) -- (1, 2.5);
-                \draw[<->, thick] (2.5, 3) -- (2.5, 2.5);
-                \draw[<->, thick] (4, 3) -- (4, 2.5);
+                \draw[<->, thick] (1.15, 3.3) -- (1.15, 2.8);
+                \draw[<->, thick] (2.85, 3.3) -- (2.85, 2.8);
+                \draw[<->, thick] (4.55, 3.3) -- (4.55, 2.8);
             \end{tikzpicture}
             \vskip0.5em
             \textbf{Benefits:} Fast communication, easy data sharing
@@ -608,6 +609,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Message Passing (Distributed Memory)}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Message Passing Interface (MPI):}
@@ -617,7 +619,7 @@ for (int i = 0; i < N; i++) {
                 \item Scales across many nodes
                 \item Standard library with many implementations
             \end{itemize}
-            \vskip1em
+            \vskip0.5em
             \textbf{Key Operations:}
             \begin{itemize}
                 \item \texttt{MPI\_Send}: Send data
@@ -627,6 +629,7 @@ for (int i = 0; i < N; i++) {
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
+            \centering
             \begin{tikzpicture}[scale=0.7]
                 % Process 0
                 \draw[thick, rounded corners, fill=yellow!10] (0,4) rectangle (1.5,5.5);
@@ -660,7 +663,7 @@ for (int i = 0; i < N; i++) {
                 % Network
                 \node at (2, 0.5) {\textbf{Network}};
             \end{tikzpicture}
-            \vskip0.5em
+            \vskip0.3em
             \textbf{Trade-off:} More complex but highly scalable
         \end{column}
     \end{columns}
@@ -688,36 +691,36 @@ for (int i = 0; i < N; i++) {
         \begin{column}{0.5\textwidth}
             \begin{tikzpicture}[scale=0.7]
                 % Node 1
-                \draw[thick, rounded corners, fill=gray!10] (0,3) rectangle (3.5,5.5);
-                \node at (1.75, 5.3) {\textbf{Node 1}};
+                \draw[thick, rounded corners, fill=gray!10] (0,3) rectangle (3.8,5.5);
+                \node at (1.9, 5.2) {\textbf{\small Node 1}};
                 
                 % MPI process 1
-                \draw[thick, fill=yellow!20] (0.3,3.3) rectangle (3.2,5);
-                \node at (1.75, 4.8) {\tiny MPI Process 0};
+                \draw[thick, fill=yellow!20] (0.3,3.3) rectangle (3.5,4.9);
+                \node at (1.9, 4.7) {\tiny MPI Process 0};
                 
-                % OpenMP threads
-                \foreach \x in {0.5,1.3,2.1,2.9} {
-                    \draw[thick, fill=green!30] (\x,3.5) rectangle (\x+0.6,4.5);
-                    \node at (\x+0.3, 4) {\tiny T};
+                % OpenMP threads - wider boxes
+                \foreach \x in {0.5,1.2,1.9,2.6} {
+                    \draw[thick, fill=green!30] (\x,3.5) rectangle (\x+0.65,4.4);
+                    \node at (\x+0.325, 3.95) {\scriptsize T};
                 }
                 
                 % Node 2
-                \draw[thick, rounded corners, fill=gray!10] (0,0) rectangle (3.5,2.5);
-                \node at (1.75, 2.3) {\textbf{Node 2}};
+                \draw[thick, rounded corners, fill=gray!10] (0,0) rectangle (3.8,2.5);
+                \node at (1.9, 2.3) {\textbf{\small Node 2}};
                 
                 % MPI process 2
-                \draw[thick, fill=yellow!20] (0.3,0.3) rectangle (3.2,2);
-                \node at (1.75, 1.8) {\tiny MPI Process 1};
+                \draw[thick, fill=yellow!20] (0.3,0.3) rectangle (3.5,1.9);
+                \node at (1.9, 1.7) {\tiny MPI Process 1};
                 
-                % OpenMP threads
-                \foreach \x in {0.5,1.3,2.1,2.9} {
-                    \draw[thick, fill=green!30] (\x,0.5) rectangle (\x+0.6,1.5);
-                    \node at (\x+0.3, 1) {\tiny T};
+                % OpenMP threads - wider boxes
+                \foreach \x in {0.5,1.2,1.9,2.6} {
+                    \draw[thick, fill=green!30] (\x,0.5) rectangle (\x+0.65,1.4);
+                    \node at (\x+0.325, 0.95) {\scriptsize T};
                 }
                 
                 % MPI communication
-                \draw[<->, thick, red, dashed] (1.75, 3) -- (1.75, 2.5);
-                \node at (4, 2.75) {\tiny MPI};
+                \draw[<->, thick, red, dashed] (1.9, 3) -- (1.9, 2.5);
+                \node at (4.2, 2.75) {\tiny MPI};
             \end{tikzpicture}
         \end{column}
     \end{columns}
@@ -725,17 +728,159 @@ for (int i = 0; i < N; i++) {
     \textbf{Example:} 2 nodes × 4 threads = 8 total cores, but only 2 MPI processes
 \end{frame}
 
-\begin{frame}[fragile]{Amdahl's Law: The Speedup Limit}
+\begin{frame}{Understanding Speed-Up}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Definition:}
+            \begin{itemize}
+                \item Speed-up measures how much faster a parallel program runs compared to serial
+                \item Formula: 
+                \[
+                S = \frac{T_{\text{serial}}}{T_{\text{parallel}}}
+                \]
+            \end{itemize}
+            \vskip1em
+            \textbf{Efficiency:}
+            \begin{itemize}
+                \item Measures how well we use processors
+                \item Formula: 
+                \[
+                E = \frac{S}{N} = \frac{T_{\text{serial}}}{N \times T_{\text{parallel}}}
+                \]
+                \item Perfect efficiency: $E = 1$ (100\%)
+                \item Typical: $E = 0.7-0.9$ (70-90\%)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Example:}
+            \begin{itemize}
+                \item Serial time: 100 seconds
+                \item Parallel time (4 cores): 30 seconds
+                \item Speed-up: $S = 100/30 = 3.33$
+                \item Efficiency: $E = 3.33/4 = 0.83$ (83\%)
+            \end{itemize}
+            \vskip1em
+            \begin{tikzpicture}[scale=0.8]
+                \begin{axis}[
+                    width=6cm,
+                    height=4.5cm,
+                    xlabel={Number of Processors},
+                    ylabel={Speed-up},
+                    legend pos=north west,
+                    grid=major,
+                    xmin=1, xmax=16,
+                    ymin=0, ymax=16,
+                    legend style={font=\tiny}
+                ]
+                \addplot[black, dashed, thick, domain=1:16] {x};
+                \addlegendentry{Ideal (linear)}
+                
+                \addplot[blue, thick, mark=*, samples at={1,2,4,8,16}] coordinates {
+                    (1,1) (2,1.9) (4,3.6) (8,6.4) (16,11)
+                };
+                \addlegendentry{Typical}
+                \end{axis}
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Strong Scaling vs Weak Scaling}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Strong Scaling:}
+            \begin{itemize}
+                \item \textbf{Fixed total problem size}
+                \item Increase number of processors
+                \item Measure time to solution
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Goal:} Solve the same problem faster
+            \vskip0.5em
+            \textbf{Example:}
+            \begin{itemize}
+                \item Problem: Process 1M data points
+                \item 1 core: 100 seconds
+                \item 2 cores: 55 seconds (each processes 500K)
+                \item 4 cores: 30 seconds (each processes 250K)
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Challenge:} Communication overhead increases
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Weak Scaling:}
+            \begin{itemize}
+                \item \textbf{Fixed problem size per processor}
+                \item Increase processors and total problem size together
+                \item Measure time per processor
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Goal:} Solve bigger problems in same time
+            \vskip0.5em
+            \textbf{Example:}
+            \begin{itemize}
+                \item 1 core: 1M points in 100 seconds
+                \item 2 cores: 2M points in 100 seconds
+                \item 4 cores: 4M points in 100 seconds
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Challenge:} Memory and communication patterns
+        \end{column}
+    \end{columns}
+    \vskip1em
+    \textbf{When to use which:}
+    \begin{itemize}
+        \item Strong scaling: Fixed problem, want faster results
+        \item Weak scaling: Problem scales with resources, want to solve bigger problems
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Deriving Amdahl's Law}
+    \textbf{The Fundamental Question:} What limits parallel speedup?
+    \vskip1em
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Key Insight:}
             \begin{itemize}
-                \item Speedup is limited by serial portion of code
-                \item Not all code can be parallelized
-                \item Adding more processors has diminishing returns
+                \item Every program has serial and parallel parts
+                \item Serial part cannot be sped up
+                \item Only parallel part benefits from more processors
             \end{itemize}
             \vskip1em
-            \textbf{Formula:}
+            \textbf{Let's derive:}
+            \begin{enumerate}
+                \item Let $T$ = total time on 1 processor
+                \item Let $p$ = fraction that's parallelizable
+                \item Let $(1-p)$ = serial fraction
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{With $N$ processors:}
+            \begin{itemize}
+                \item Serial time: $(1-p) \times T$
+                \item Parallel time: $\frac{p \times T}{N}$
+                \item Total time: $(1-p) \times T + \frac{p \times T}{N}$
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Speed-up:}
+            \[
+            S(N) = \frac{T}{(1-p) \times T + \frac{p \times T}{N}}
+            \]
+            \vskip0.5em
+            Simplify by dividing by $T$:
+            \[
+            S(N) = \frac{1}{(1-p) + \frac{p}{N}}
+            \]
+        \end{column}
+    \end{columns}
+    \vskip1em
+    \textbf{Implication:} Maximum speedup is limited by serial fraction!
+\end{frame}
+
+\begin{frame}[fragile]{Amdahl's Law: The Speedup Limit}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{The Formula:}
             \[
             S(n) = \frac{1}{(1-p) + \frac{p}{n}}
             \]
@@ -744,6 +889,13 @@ for (int i = 0; i < N; i++) {
                 \item $S(n)$ = speedup with $n$ processors
                 \item $p$ = parallel fraction of code
                 \item $(1-p)$ = serial fraction
+            \end{itemize}
+            \vskip1em
+            \textbf{Key Insights:}
+            \begin{itemize}
+                \item Even 5\% serial code limits speedup to 20×
+                \item As $n \to \infty$: $S \to \frac{1}{1-p}$
+                \item Adding more processors has diminishing returns
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
@@ -760,15 +912,15 @@ for (int i = 0; i < N; i++) {
                     legend style={font=\tiny}
                 ]
                 \addplot[blue, thick, domain=1:64, samples=50] {1/((1-0.95) + 0.95/x)};
-                \addlegendentry{95\% parallel}
+                \addlegendentry{95\% parallel (max=20×)}
                 
                 \addplot[red, thick, domain=1:64, samples=50] {1/((1-0.75) + 0.75/x)};
-                \addlegendentry{75\% parallel}
+                \addlegendentry{75\% parallel (max=4×)}
                 
                 \addplot[green, thick, domain=1:64, samples=50] {1/((1-0.50) + 0.50/x)};
-                \addlegendentry{50\% parallel}
+                \addlegendentry{50\% parallel (max=2×)}
                 
-                \addplot[black, dashed, domain=1:64] {x};
+                \addplot[black, dashed, domain=1:20] {x};
                 \addlegendentry{Ideal (100\%)}
                 \end{axis}
             \end{tikzpicture}
@@ -819,7 +971,8 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Common SLURM Commands}
-    \begin{tabular}{p{3.5cm}p{7cm}}
+    \small
+    \begin{tabular}{p{4.5cm}p{6.5cm}}
         \toprule
         \textbf{Command} & \textbf{Description} \\
         \midrule
@@ -834,7 +987,7 @@ for (int i = 0; i < N; i++) {
         \texttt{salloc} & Allocate resources for interactive use \\
         \bottomrule
     \end{tabular}
-    \vskip1em
+    \vskip0.8em
     \textbf{Useful squeue options:}
     \begin{itemize}
         \item \texttt{-l}: Long format with more details
@@ -869,13 +1022,14 @@ python my_script.py
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
+            \small
             \textbf{Key Options:}
             \begin{itemize}
                 \item \texttt{--job-name}: Job identifier
                 \item \texttt{--output/--error}: Log files
                 \item \texttt{--time}: Max runtime (HH:MM:SS)
                 \item \texttt{--nodes}: Number of nodes
-                \item \texttt{--ntasks}: Number of tasks (processes)
+                \item \texttt{--ntasks}: Number of tasks
                 \item \texttt{--cpus-per-task}: Cores per task
                 \item \texttt{--mem}: Memory per node
                 \item \texttt{--mem-per-cpu}: Memory per core
@@ -892,9 +1046,10 @@ python my_script.py
 \end{frame}
 
 \begin{frame}[fragile]{Example: Serial Job}
+    \small
     \textbf{Simplest case: Single core job}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    \vskip0.8em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=serial_job
 #SBATCH --output=serial_%j.log
@@ -909,14 +1064,15 @@ echo "Number of cores: $SLURM_CPUS_PER_TASK"
 
 python my_serial_script.py
     \end{lstlisting}
-    \vskip1em
+    \vskip0.8em
     \textbf{Resources:} 1 node, 1 core, 2 GB RAM, 30 minutes
 \end{frame}
 
 \begin{frame}[fragile]{Example: Multi-threaded (OpenMP) Job}
+    \small
     \textbf{Using multiple cores on a single node}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    \vskip0.8em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=openmp_job
 #SBATCH --output=openmp_%j.log
@@ -932,14 +1088,15 @@ echo "Using $OMP_NUM_THREADS OpenMP threads"
 
 ./my_openmp_program
     \end{lstlisting}
-    \vskip1em
+    \vskip0.8em
     \textbf{Resources:} 1 task, 16 cores for threading, 32 GB RAM
 \end{frame}
 
 \begin{frame}[fragile]{Example: MPI Job (Distributed)}
+    \small
     \textbf{Multiple tasks across nodes}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    \vskip0.8em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=mpi_job
 #SBATCH --output=mpi_%j.log
@@ -956,14 +1113,15 @@ echo "Total tasks: $SLURM_NTASKS"
 
 mpirun ./my_mpi_program
     \end{lstlisting}
-    \vskip1em
+    \vskip0.8em
     \textbf{Resources:} 4 nodes, 64 MPI tasks (16 per node), 128 GB total RAM
 \end{frame}
 
 \begin{frame}[fragile]{Example: Hybrid MPI + OpenMP Job}
+    \small
     \textbf{Combining distributed and shared memory parallelism}
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\small\ttfamily]
+    \vskip0.8em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=hybrid_job
 #SBATCH --output=hybrid_%j.log
@@ -981,96 +1139,54 @@ echo "OpenMP threads per task: $OMP_NUM_THREADS"
 
 mpirun ./my_hybrid_program
     \end{lstlisting}
-    \vskip1em
-    \textbf{Resources:} 4 nodes, 16 MPI tasks (4 per node), 8 threads per task = 128 cores total
+    \vskip0.8em
+    \textbf{Resources:} 4 nodes, 16 MPI tasks (4 per node), 8 threads per task = 128 cores
 \end{frame}
 
 
 \begin{frame}{Resource Allocation Strategies}
-    \begin{tikzpicture}[scale=0.9]
-        % Header
-        \node at (6, 6) {\textbf{Choosing the Right Configuration}};
-        
-        % Serial
-        \node[align=left] at (3, 5) {
-            \textbf{Serial Job:}\\
-            \tiny Single-threaded code\\
-            \tiny --ntasks=1\\
-            \tiny --cpus-per-task=1
-        };
-        \draw[->, thick] (5, 5) -- (6.5, 5);
-        \node[align=left] at (9, 5) {
-            \tiny Use case:\\
-            \tiny Simple scripts\\
-            \tiny Many independent runs
-        };
-        
-        % Multi-threaded
-        \node[align=left] at (3, 3.5) {
-            \textbf{Multi-threaded:}\\
-            \tiny OpenMP, threads\\
-            \tiny --ntasks=1\\
-            \tiny --cpus-per-task=N
-        };
-        \draw[->, thick] (5, 3.5) -- (6.5, 3.5);
-        \node[align=left] at (9, 3.5) {
-            \tiny Use case:\\
-            \tiny Shared memory code\\
-            \tiny Single node sufficient
-        };
-        
-        % MPI
-        \node[align=left] at (3, 2) {
-            \textbf{MPI:}\\
-            \tiny Distributed memory\\
-            \tiny --ntasks=N\\
-            \tiny --cpus-per-task=1
-        };
-        \draw[->, thick] (5, 2) -- (6.5, 2);
-        \node[align=left] at (9, 2) {
-            \tiny Use case:\\
-            \tiny Large scale problems\\
-            \tiny Multiple nodes needed
-        };
-        
-        % Hybrid
-        \node[align=left] at (3, 0.5) {
-            \textbf{Hybrid MPI+OpenMP:}\\
-            \tiny Both paradigms\\
-            \tiny --ntasks=M\\
-            \tiny --cpus-per-task=N
-        };
-        \draw[->, thick] (5, 0.5) -- (6.5, 0.5);
-        \node[align=left] at (9, 0.5) {
-            \tiny Use case:\\
-            \tiny Very large problems\\
-            \tiny Reduced MPI overhead
-        };
-    \end{tikzpicture}
+    \textbf{Choosing the Right Configuration}
+    \vskip1em
+    \small
+    \begin{tabular}{p{3.5cm}p{3cm}p{4.5cm}}
+        \toprule
+        \textbf{Job Type} & \textbf{SLURM Config} & \textbf{Use Case} \\
+        \midrule
+        \textbf{Serial Job} & 
+        \texttt{--ntasks=1} \newline \texttt{--cpus-per-task=1} & 
+        Single-threaded code, simple scripts, many independent runs \\
+        \midrule
+        \textbf{Multi-threaded} & 
+        \texttt{--ntasks=1} \newline \texttt{--cpus-per-task=N} & 
+        OpenMP/threads, shared memory code, single node sufficient \\
+        \midrule
+        \textbf{MPI} & 
+        \texttt{--ntasks=N} \newline \texttt{--cpus-per-task=1} & 
+        Distributed memory, large scale problems, multiple nodes needed \\
+        \midrule
+        \textbf{Hybrid} \newline \textbf{(MPI+OpenMP)} & 
+        \texttt{--ntasks=M} \newline \texttt{--cpus-per-task=N} & 
+        Very large problems, reduced MPI overhead, maximum scalability \\
+        \bottomrule
+    \end{tabular}
+    \vskip1em
+    \textbf{Decision Guide:}
+    \begin{itemize}
+        \item Serial: Code not parallelizable or testing phase
+        \item Multi-threaded: Code supports threading, problem fits on one node
+        \item MPI: Need multiple nodes, problem naturally decomposes
+        \item Hybrid: Maximize efficiency on large-scale runs
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Job Arrays: Running Many Similar Jobs}
     \textbf{Scenario:} Need to run same program with different parameters
     \vskip1em
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \textbf{Without Job Arrays:}
-            \begin{itemize}
-                \item Submit 100 separate jobs
-                \item Manage 100 job IDs
-                \item Tedious and error-prone
-            \end{itemize}
-            \vskip1em
-            \textbf{With Job Arrays:}
-            \begin{itemize}
-                \item Single submission
-                \item One job ID with array indices
-                \item Easier management
-                \item Automatic resource scheduling
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
+    \textbf{Without Job Arrays:} Submit 100 separate jobs, manage 100 job IDs (tedious!)
+    \vskip0.5em
+    \textbf{With Job Arrays:} Single submission, one job ID with array indices (easy!)
+    \vskip1em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=array_job
 #SBATCH --output=job_%A_%a.log
@@ -1080,67 +1196,86 @@ mpirun ./my_hybrid_program
 #SBATCH --mem=2G
 #SBATCH --time=01:00:00
 
-# SLURM_ARRAY_TASK_ID contains 
-# the current array index (1-100)
+# SLURM_ARRAY_TASK_ID contains the current array index (1-100)
 PARAM=$SLURM_ARRAY_TASK_ID
-
 echo "Processing parameter: $PARAM"
 python process.py --id $PARAM
-            \end{lstlisting}
-            \vskip0.5em
-            \textbf{Special variables:}
-            \begin{itemize}
-                \item \texttt{\%A}: Job array master ID
-                \item \texttt{\%a}: Array task ID
-                \item \texttt{\$SLURM\_ARRAY\_TASK\_ID}
-            \end{itemize}
-        \end{column}
-    \end{columns}
+    \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Interactive Jobs with srun and salloc}
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \textbf{srun - Run single command:}
-            \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
+\begin{frame}{Job Arrays: Advanced Features}
+    \textbf{Special Variables:}
+    \begin{itemize}
+        \item \texttt{\%A}: Job array master ID
+        \item \texttt{\%a}: Individual array task ID
+        \item \texttt{\$SLURM\_ARRAY\_TASK\_ID}: Current array index
+    \end{itemize}
+    \vskip1em
+    \textbf{Array Syntax Options:}
+    \begin{itemize}
+        \item \texttt{--array=1-100}: Indices 1 through 100
+        \item \texttt{--array=1-100:10}: Every 10th index (1, 11, 21, ...)
+        \item \texttt{--array=1,5,10,15}: Specific indices
+        \item \texttt{--array=1-100\%10}: Limit to 10 concurrent tasks
+    \end{itemize}
+    \vskip1em
+    \textbf{Benefits:}
+    \begin{itemize}
+        \item Easier management (one job ID)
+        \item Automatic resource scheduling
+        \item Better for cluster scheduler
+        \item Can limit concurrent tasks
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Interactive Jobs with srun}
+    \small
+    \textbf{Run a single command interactively:}
+    \vskip0.8em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 # Interactive single command
 srun --ntasks=1 \
      --cpus-per-task=4 \
      --mem=8G \
      --time=01:00:00 \
      python my_script.py
-            \end{lstlisting}
-            \begin{itemize}
-                \item Blocks until complete
-                \item Output to terminal
-                \item Good for testing
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            \textbf{salloc - Interactive shell:}
-            \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
+    \end{lstlisting}
+    \vskip1em
+    \textbf{Characteristics:}
+    \begin{itemize}
+        \item Blocks until complete
+        \item Output to terminal
+        \item Good for testing and debugging
+        \item Waits for resources if not immediately available
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Interactive Jobs with salloc}
+    \small
+    \textbf{Allocate resources for interactive shell:}
+    \vskip0.8em
+    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 # Allocate resources
 salloc --nodes=1 \
        --ntasks=4 \
        --mem=16G \
        --time=02:00:00
 
-# Now on compute node
+# Now on compute node, run multiple commands
 hostname
 module load python
-python
+python  # Interactive Python session
 # ... work interactively ...
-exit  # Release resources
-            \end{lstlisting}
-            \begin{itemize}
-                \item Interactive shell session
-                \item Multiple commands
-                \item Development and debugging
-            \end{itemize}
-        \end{column}
-    \end{columns}
+exit  # Release resources when done
+    \end{lstlisting}
     \vskip1em
-    \textbf{Note:} Interactive jobs consume resources even when idle. Use for active work only!
+    \textbf{Characteristics:}
+    \begin{itemize}
+        \item Interactive shell session on compute node
+        \item Run multiple commands
+        \item Good for development and debugging
+        \item \textbf{Warning:} Consumes resources even when idle. Use for active work only!
+    \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1148,7 +1283,8 @@ exit  # Release resources
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Programming Languages and Parallel Computing}
-    \begin{tabular}{p{2.5cm}p{3cm}p{5cm}}
+    \small
+    \begin{tabular}{p{2cm}p{2.5cm}p{6cm}}
         \toprule
         \textbf{Language} & \textbf{Paradigm} & \textbf{Common Tools} \\
         \midrule
@@ -1172,6 +1308,7 @@ exit  # Release resources
 \end{frame}
 
 \begin{frame}[fragile]{Python: Multi-threading vs Multiprocessing}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Threading (GIL limitation):}
@@ -1183,11 +1320,11 @@ def compute(x):
     # Good for I/O-bound tasks
     return np.sqrt(x)
 
-with ThreadPoolExecutor(max_workers=4) as executor:
-    results = executor.map(compute, range(100))
+with ThreadPoolExecutor(max_workers=4) as ex:
+    results = ex.map(compute, range(100))
             \end{lstlisting}
             \vskip0.5em
-            \textbf{Multiprocessing (True parallelism):}
+            \textbf{Multiprocessing:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 from multiprocessing import Pool
 
@@ -1202,7 +1339,7 @@ with Pool(processes=4) as pool:
         \begin{column}{0.5\textwidth}
             \textbf{Key Differences:}
             \begin{itemize}
-                \item \textbf{Threading:} Shared memory, limited by GIL
+                \item \textbf{Threading:} Shared memory, GIL-limited
                 \item \textbf{Multiprocessing:} Separate processes, true parallelism
             \end{itemize}
             \vskip1em
@@ -1212,9 +1349,9 @@ with Pool(processes=4) as pool:
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 
-# Set in Python
-from multiprocessing import cpu_count
+# In Python script
 import os
+from multiprocessing import cpu_count
 n_cores = int(os.getenv(
     'SLURM_CPUS_PER_TASK', 
     cpu_count()))
@@ -1224,11 +1361,12 @@ n_cores = int(os.getenv(
 \end{frame}
 
 \begin{frame}[fragile]{Python: MPI with mpi4py}
+    \small
     \textbf{Distributed memory parallelism in Python}
-    \vskip1em
+    \vskip0.8em
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Example: Parallel computation}
+            \textbf{Example Code:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 from mpi4py import MPI
 import numpy as np
@@ -1243,9 +1381,10 @@ data = np.random.rand(n_local)
 local_sum = np.sum(data)
 
 # Reduce to get total sum
-total_sum = comm.reduce(local_sum, 
-                        op=MPI.SUM, 
-                        root=0)
+total_sum = comm.reduce(
+    local_sum, 
+    op=MPI.SUM, 
+    root=0)
 
 if rank == 0:
     print(f"Total: {total_sum}")
@@ -1264,7 +1403,7 @@ module load openmpi python/3.9
 
 mpirun python my_mpi_script.py
             \end{lstlisting}
-            \vskip0.5em
+            \vskip0.8em
             \textbf{Key Points:}
             \begin{itemize}
                 \item Use \texttt{mpirun} to launch
@@ -1276,10 +1415,11 @@ mpirun python my_mpi_script.py
     \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Julia: Native Parallel Computing}
+\begin{frame}[fragile]{Julia: Multi-threading}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Multi-threading:}
+            \textbf{Multi-threading Example:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 using Base.Threads
 
@@ -1294,21 +1434,10 @@ function parallel_sum(arr)
     end
     return sum(result)
 end
-            \end{lstlisting}
-            \vskip0.5em
-            \textbf{Distributed Computing:}
-            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
-using Distributed
 
-addprocs(4)  # Add 4 workers
-
-@everywhere function compute(x)
-    return x^2
-end
-
-results = @distributed (+) for i = 1:100
-    compute(i)
-end
+# Test
+arr = rand(1000000)
+total = parallel_sum(arr)
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
@@ -1327,8 +1456,44 @@ export JULIA_NUM_THREADS=$SLURM_CPUS_PER_TASK
 
 julia my_script.jl
             \end{lstlisting}
-            \vskip0.5em
-            \textbf{MPI in Julia:}
+            \vskip0.8em
+            \textbf{Features:}
+            \begin{itemize}
+                \item Native threading support
+                \item Easy to use with \texttt{@threads}
+                \item Good performance
+                \item Set thread count via environment
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Julia: Distributed Computing}
+    \small
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Distributed.jl:}
+            \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
+using Distributed
+
+# Add 4 worker processes
+addprocs(4)
+
+# Function available on all workers
+@everywhere function compute(x)
+    return x^2
+end
+
+# Parallel reduction
+results = @distributed (+) for i = 1:100
+    compute(i)
+end
+
+println("Sum of squares: $results")
+            \end{lstlisting}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{MPI.jl:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 using MPI
 
@@ -1337,13 +1502,25 @@ comm = MPI.COMM_WORLD
 rank = MPI.Comm_rank(comm)
 size = MPI.Comm_size(comm)
 
-# Parallel computation
+# Each rank does work
+local_result = rank * 10
+
+# Gather results
+all_results = MPI.Gather(
+    local_result, 0, comm)
+
+if rank == 0
+    println("Results: $all_results")
+end
             \end{lstlisting}
         \end{column}
     \end{columns}
+    \vskip0.8em
+    \textbf{Choice:} Use Distributed.jl for within-cluster, MPI.jl for large-scale HPC
 \end{frame}
 
-\begin{frame}[fragile]{R: Parallel Package}
+\begin{frame}[fragile]{R: Parallel Package - Part 1}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Using foreach:}
@@ -1356,14 +1533,17 @@ cl <- makeCluster(4)
 registerDoParallel(cl)
 
 # Parallel loop
-results <- foreach(i=1:100, .combine=c) %dopar% {
+results <- foreach(
+    i=1:100, 
+    .combine=c) %dopar% {
     # Computation
     i^2
 }
 
 stopCluster(cl)
             \end{lstlisting}
-            \vskip0.5em
+        \end{column}
+        \begin{column}{0.5\textwidth}
             \textbf{Using mclapply:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 library(parallel)
@@ -1372,11 +1552,23 @@ library(parallel)
 ncores <- detectCores()
 
 # Parallel apply
-results <- mclapply(1:100, 
-                    function(x) x^2,
-                    mc.cores = ncores)
+results <- mclapply(
+    1:100, 
+    function(x) x^2,
+    mc.cores = ncores)
+
+# Convert to vector
+results <- unlist(results)
             \end{lstlisting}
         \end{column}
+    \end{columns}
+    \vskip1em
+    \textbf{Note:} \texttt{mclapply} uses forking (Unix only), \texttt{foreach} works cross-platform
+\end{frame}
+
+\begin{frame}[fragile]{R: Parallel Package - Part 2}
+    \small
+    \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{SLURM Job Script:}
             \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
@@ -1393,20 +1585,35 @@ export R_NCORES=$SLURM_CPUS_PER_TASK
 
 Rscript my_script.R
             \end{lstlisting}
-            \vskip0.5em
+        \end{column}
+        \begin{column}{0.5\textwidth}
             \textbf{In R script:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 # Get cores from environment
-ncores <- as.integer(Sys.getenv("R_NCORES", "1"))
+ncores <- as.integer(
+    Sys.getenv("R_NCORES", "1"))
 
+# Use with foreach
 cl <- makeCluster(ncores)
-# ... rest of code
+registerDoParallel(cl)
+
+# ... rest of code ...
+
+stopCluster(cl)
             \end{lstlisting}
         \end{column}
     \end{columns}
+    \vskip1em
+    \textbf{Best Practices:}
+    \begin{itemize}
+        \item Always read core count from SLURM environment
+        \item Remember to stop clusters when done
+        \item Use \texttt{.combine} to control result aggregation
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Debugging Parallel Programs}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Common Issues:}
@@ -1417,7 +1624,7 @@ cl <- makeCluster(ncores)
                 \item Load imbalance
                 \item Communication bottlenecks
             \end{itemize}
-            \vskip1em
+            \vskip0.8em
             \textbf{Debugging Strategies:}
             \begin{itemize}
                 \item Start with serial version
@@ -1445,7 +1652,7 @@ cl <- makeCluster(ncores)
                 \begin{itemize}
                     \item Valgrind for memory
                     \item GDB for segfaults
-                    \item profilers for performance
+                    \item Profilers for performance
                 \end{itemize}
                 \item \textbf{Monitor resource usage}
                 \begin{itemize}
@@ -1459,61 +1666,84 @@ cl <- makeCluster(ncores)
 \end{frame}
 
 \begin{frame}{Performance Optimization Tips}
-    \begin{enumerate}
-        \item \textbf{Profile Before Optimizing}
-        \begin{itemize}
-            \item Identify bottlenecks
-            \item Focus on hot spots
-            \item Measure, don't guess
-        \end{itemize}
-        
-        \item \textbf{Optimize Serial Code First}
-        \begin{itemize}
-            \item Algorithm improvements
-            \item Data structures
-            \item Memory access patterns
-        \end{itemize}
-        
-        \item \textbf{Minimize Communication}
-        \begin{itemize}
-            \item Reduce MPI calls
-            \item Batch communications
-            \item Overlap compute and communication
-        \end{itemize}
-        
-        \item \textbf{Balance Load}
-        \begin{itemize}
-            \item Equal work distribution
-            \item Dynamic load balancing
-            \item Avoid idle processes
-        \end{itemize}
-        
-        \item \textbf{Use Appropriate Tools}
-        \begin{itemize}
-            \item Vectorized operations
-            \item Efficient libraries (BLAS, LAPACK)
-            \item Compiler optimizations
-        \end{itemize}
-    \end{enumerate}
+    \small
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \begin{enumerate}
+                \item \textbf{Profile Before Optimizing}
+                \begin{itemize}
+                    \item Identify bottlenecks
+                    \item Focus on hot spots
+                    \item Measure, don't guess
+                \end{itemize}
+                
+                \item \textbf{Optimize Serial Code First}
+                \begin{itemize}
+                    \item Algorithm improvements
+                    \item Data structures
+                    \item Memory access patterns
+                \end{itemize}
+                
+                \item \textbf{Minimize Communication}
+                \begin{itemize}
+                    \item Reduce MPI calls
+                    \item Batch communications
+                    \item Overlap compute and comm.
+                \end{itemize}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{enumerate}
+                \setcounter{enumi}{3}
+                \item \textbf{Balance Load}
+                \begin{itemize}
+                    \item Equal work distribution
+                    \item Dynamic load balancing
+                    \item Avoid idle processes
+                \end{itemize}
+                
+                \item \textbf{Use Appropriate Tools}
+                \begin{itemize}
+                    \item Vectorized operations
+                    \item Efficient libraries (BLAS, LAPACK)
+                    \item Compiler optimizations
+                \end{itemize}
+                
+                \item \textbf{Memory Efficiency}
+                \begin{itemize}
+                    \item Cache-friendly access
+                    \item Minimize allocations
+                    \item Avoid memory leaks
+                \end{itemize}
+            \end{enumerate}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]{Scaling Studies}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Strong Scaling:}
             \begin{itemize}
                 \item Fixed problem size
-                \item Increase number of processors
+                \item Increase processors
                 \item Measure time to solution
                 \item Goal: Linear speedup
             \end{itemize}
             \vskip0.5em
             \textbf{Weak Scaling:}
             \begin{itemize}
-                \item Fixed problem size per processor
-                \item Increase processors and problem size together
+                \item Fixed problem per processor
+                \item Increase processors and problem
                 \item Measure time per processor
                 \item Goal: Constant time
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Key Metrics:}
+            \begin{itemize}
+                \item Efficiency = Speedup / N\_cores
+                \item Aim for $>$80\% efficiency
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
@@ -1540,10 +1770,11 @@ cl <- makeCluster(ncores)
                 \end{axis}
             \end{tikzpicture}
             \vskip0.5em
-            \textbf{Key Metrics:}
+            \textbf{What to report:}
             \begin{itemize}
-                \item Parallel efficiency = Speedup / N\_cores
-                \item Aim for $>$80\% efficiency
+                \item Speedup vs core count
+                \item Parallel efficiency
+                \item Time breakdown (compute vs comm.)
             \end{itemize}
         \end{column}
     \end{columns}
@@ -1554,8 +1785,9 @@ cl <- makeCluster(ncores)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{Exercise 1: Writing Your First SLURM Script}
+    \small
     \textbf{Task:} Create a simple SLURM job script
-    \vskip1em
+    \vskip0.8em
     \begin{enumerate}
         \item Create a script that:
         \begin{itemize}
@@ -1568,13 +1800,14 @@ cl <- makeCluster(ncores)
         \item Check status with \texttt{squeue}
         \item View output logs
     \end{enumerate}
-    \vskip1em
+    \vskip0.8em
     \textbf{Bonus:} Modify to use different core counts and compare timing
 \end{frame}
 
 \begin{frame}{Exercise 2: Parallel Python Script}
+    \small
     \textbf{Task:} Write a parallel Python program
-    \vskip1em
+    \vskip0.8em
     \begin{enumerate}
         \item Create a script that:
         \begin{itemize}
@@ -1586,7 +1819,7 @@ cl <- makeCluster(ncores)
         \item Create SLURM script to run it
         \item Experiment with different worker counts
     \end{enumerate}
-    \vskip1em
+    \vskip0.8em
     \textbf{Questions to explore:}
     \begin{itemize}
         \item How does speedup change with core count?
@@ -1595,22 +1828,23 @@ cl <- makeCluster(ncores)
 \end{frame}
 
 \begin{frame}{Exercise 3: Job Arrays}
+    \small
     \textbf{Task:} Use job arrays for parameter sweep
-    \vskip1em
+    \vskip0.8em
     \begin{enumerate}
         \item Create a script that takes a parameter as input
         \item Run the same script with parameters 1-20
         \item Use SLURM job arrays
         \item Collect and analyze results
     \end{enumerate}
-    \vskip1em
+    \vskip0.8em
     \textbf{Example scenario:}
     \begin{itemize}
         \item Simulate with different random seeds
         \item Process different input files
         \item Test different hyperparameters
     \end{itemize}
-    \vskip1em
+    \vskip0.8em
     \textbf{Questions:}
     \begin{itemize}
         \item How to aggregate results from array jobs?
@@ -1618,31 +1852,99 @@ cl <- makeCluster(ncores)
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Common Pitfalls and Solutions}
-    \begin{tabular}{p{5cm}p{6cm}}
+\begin{frame}{Common Pitfalls - Resource Issues}
+    \small
+    \textbf{Resource-Related Problems:}
+    \vskip0.8em
+    \begin{tabular}{p{4.5cm}p{6cm}}
         \toprule
         \textbf{Pitfall} & \textbf{Solution} \\
         \midrule
-        Job stuck in queue & Check node availability with \texttt{sinfo}; reduce resource requests \\
-        Out of memory & Monitor with \texttt{sacct}; increase \texttt{--mem} \\
-        Timeout & Increase \texttt{--time} or optimize code \\
-        Wrong module & Use \texttt{module avail} and \texttt{module load} \\
-        Poor parallel performance & Profile code; check CPU utilization \\
-        Can't find output files & Check working directory; use absolute paths \\
+        Job stuck in queue & Check node availability with \texttt{sinfo}; reduce resource requests; check time limits \\
+        \midrule
+        Out of memory (OOM) & Monitor with \texttt{sacct}; increase \texttt{--mem} or \texttt{--mem-per-cpu}; check for memory leaks \\
+        \midrule
+        Job timeout & Increase \texttt{--time} limit; optimize code; use checkpointing for long jobs \\
+        \midrule
+        Node allocation issues & Check partition limits; verify account permissions; use \texttt{scontrol show partition} \\
         \bottomrule
     \end{tabular}
     \vskip1em
-    \textbf{Debugging Tips:}
+    \textbf{Prevention:}
     \begin{itemize}
-        \item Always check error logs first
-        \item Test interactively with \texttt{salloc} or \texttt{srun}
-        \item Start small, then scale up
+        \item Start with test runs on small data
+        \item Monitor resource usage with \texttt{sstat} during runs
+        \item Use \texttt{sacct} to check completed jobs
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Resource Estimation Guidelines}
-    \textbf{How to estimate resources needed:}
+\begin{frame}{Common Pitfalls - Code and Environment}
+    \small
+    \textbf{Code and Environment Issues:}
+    \vskip0.8em
+    \begin{tabular}{p{4.5cm}p{6cm}}
+        \toprule
+        \textbf{Pitfall} & \textbf{Solution} \\
+        \midrule
+        Wrong module loaded & Use \texttt{module avail} to find modules; \texttt{module load} correct version; check dependencies \\
+        \midrule
+        Poor parallel performance & Profile code; check CPU utilization; verify thread/process count; look for load imbalance \\
+        \midrule
+        Can't find output files & Check working directory; use absolute paths; verify \texttt{\$SLURM\_SUBMIT\_DIR} \\
+        \midrule
+        Permission denied & Check file permissions; verify group membership; use correct scratch directory \\
+        \bottomrule
+    \end{tabular}
     \vskip1em
+    \textbf{Best Practice:}
+    \begin{itemize}
+        \item Test scripts locally before submitting
+        \item Use \texttt{echo} statements to debug paths
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Common Pitfalls - Debugging Strategies}
+    \small
+    \textbf{General Debugging Approach:}
+    \vskip1em
+    \begin{enumerate}
+        \item \textbf{Check Error Logs}
+        \begin{itemize}
+            \item Always read \texttt{stderr} file first
+            \item Look for error messages and stack traces
+            \item Check SLURM output for resource issues
+        \end{itemize}
+        \vskip0.5em
+        
+        \item \textbf{Test Interactively}
+        \begin{itemize}
+            \item Use \texttt{salloc} or \texttt{srun} for interactive sessions
+            \item Run commands manually to isolate issues
+            \item Verify modules and environment variables
+        \end{itemize}
+        \vskip0.5em
+        
+        \item \textbf{Start Small, Scale Up}
+        \begin{itemize}
+            \item Test with minimal resources (1 core, small data)
+            \item Verify correctness before scaling
+            \item Gradually increase resources and problem size
+        \end{itemize}
+        \vskip0.5em
+        
+        \item \textbf{Use Cluster Documentation}
+        \begin{itemize}
+            \item Check cluster-specific quirks
+            \item Review example job scripts
+            \item Contact support if stuck
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Resource Estimation Guidelines}
+    \small
+    \textbf{How to estimate resources needed:}
+    \vskip0.8em
     \begin{enumerate}
         \item \textbf{Memory:}
         \begin{itemize}
@@ -1651,6 +1953,7 @@ cl <- makeCluster(ncores)
             \item Add 20-30\% buffer
             \item Formula: $\text{mem} = \text{data\_size} \times \text{copies} \times 1.3$
         \end{itemize}
+        \vskip0.5em
         
         \item \textbf{Time:}
         \begin{itemize}
@@ -1659,18 +1962,20 @@ cl <- makeCluster(ncores)
             \item Add buffer for overhead
             \item Consider: $T_{\text{parallel}} \approx \frac{T_{\text{serial}}}{N_{\text{cores}} \times \text{efficiency}}$
         \end{itemize}
+        \vskip0.5em
         
         \item \textbf{Cores:}
         \begin{itemize}
             \item Start with small counts (4-8)
             \item Measure speedup
             \item Check parallel efficiency
-            \item Don't over-allocate
+            \item Don't over-allocate (diminishing returns)
         \end{itemize}
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Best Practices Summary}
+\begin{frame}{Best Practices - Job Management}
+    \small
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Job Submission:}
@@ -1679,19 +1984,43 @@ cl <- makeCluster(ncores)
                 \item Always specify time limits
                 \item Use \texttt{\%j} in output files
                 \item Test on small scale first
-                \item Check queue before submitting many jobs
+                \item Check queue before many jobs
             \end{itemize}
             \vskip1em
             \textbf{Resource Usage:}
             \begin{itemize}
                 \item Request what you need
                 \item Don't monopolize resources
-                \item Use job arrays for many similar jobs
-                \item Clean up old files
+                \item Use job arrays for similar jobs
+                \item Clean up old files regularly
+                \item Monitor your usage
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \textbf{Code Development:}
+            \textbf{Job Monitoring:}
+            \begin{itemize}
+                \item Check job status: \texttt{squeue -u \$USER}
+                \item Review completed jobs: \texttt{sacct}
+                \item Monitor running jobs: \texttt{sstat}
+                \item Check efficiency after completion
+            \end{itemize}
+            \vskip1em
+            \textbf{Error Handling:}
+            \begin{itemize}
+                \item Always capture stderr
+                \item Use unique log file names
+                \item Implement checkpointing for long jobs
+                \item Handle job failures gracefully
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Best Practices - Code Development}
+    \small
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Development Workflow:}
             \begin{itemize}
                 \item Version control (git)
                 \item Validate serial code first
@@ -1700,25 +2029,89 @@ cl <- makeCluster(ncores)
                 \item Document your workflow
             \end{itemize}
             \vskip1em
-            \textbf{Data Management:}
+            \textbf{Testing Strategy:}
             \begin{itemize}
-                \item Use scratch space for temporary files
+                \item Unit tests for components
+                \item Integration tests for workflow
+                \item Scaling tests before production
+                \item Compare results across scales
+                \item Save test datasets
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Code Organization:}
+            \begin{itemize}
+                \item Separate input/output/code
+                \item Use configuration files
+                \item Modular design
+                \item Clear commenting
+                \item README with instructions
+            \end{itemize}
+            \vskip1em
+            \textbf{Performance:}
+            \begin{itemize}
+                \item Optimize algorithms first
+                \item Use efficient libraries
+                \item Minimize I/O operations
+                \item Cache frequently-used data
+                \item Profile to find bottlenecks
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Best Practices - Data Management}
+    \small
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Storage Strategy:}
+            \begin{itemize}
+                \item Use scratch for temporary files
                 \item Back up important results
                 \item Compress large files
-                \item Clean up after jobs
+                \item Clean up after jobs complete
+                \item Document data provenance
+            \end{itemize}
+            \vskip1em
+            \textbf{File Organization:}
+            \begin{itemize}
+                \item Meaningful directory structure
+                \item Consistent naming conventions
+                \item Separate raw and processed data
+                \item Use metadata files
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{I/O Optimization:}
+            \begin{itemize}
+                \item Batch small files
+                \item Use appropriate formats (HDF5, NetCDF)
+                \item Minimize random access
+                \item Consider parallel I/O for large data
+                \item Profile I/O performance
+            \end{itemize}
+            \vskip1em
+            \textbf{Collaboration:}
+            \begin{itemize}
+                \item Share code via repositories
+                \item Document dependencies
+                \item Use containers if available
+                \item Follow cluster policies
+                \item Communicate with team
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}{Additional Resources}
+    \small
     \textbf{Documentation:}
     \begin{itemize}
         \item SLURM Official Documentation: \texttt{https://slurm.schedmd.com/}
         \item Your cluster's wiki/documentation
         \item \texttt{man sbatch}, \texttt{man srun}, etc.
     \end{itemize}
-    \vskip1em
+    \vskip0.8em
     \textbf{Learning Resources:}
     \begin{itemize}
         \item HPC Carpentry: \texttt{https://www.hpc-carpentry.org/}
@@ -1726,7 +2119,7 @@ cl <- makeCluster(ncores)
         \item OpenMP Tutorial: \texttt{https://www.openmp.org/resources/tutorials-articles/}
         \item MPI Tutorial: \texttt{https://mpitutorial.com/}
     \end{itemize}
-    \vskip1em
+    \vskip0.8em
     \textbf{Tools:}
     \begin{itemize}
         \item Performance profilers: \texttt{gprof}, \texttt{perf}, \texttt{Intel VTune}
