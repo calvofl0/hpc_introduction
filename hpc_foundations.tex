@@ -13,6 +13,15 @@
 \usepackage{amssymb}
 \usepackage{subcaption}
 \usepackage{pgfplots}
+\usepackage{hyperref}
+
+% Hyperref configuration for clickable links
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=blue
+}
 
 % TikZ libraries for diagrams
 \usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds,decorations.pathreplacing}
@@ -2413,7 +2422,7 @@ stopCluster(cl)
     \textbf{Documentation:}
     \begin{itemize}
         \footnotesize
-        \item SLURM Official Documentation: \texttt{https://slurm.schedmd.com/}
+        \item SLURM Official Documentation: \url{https://slurm.schedmd.com/}
         \item Your cluster's wiki/documentation
         \item \texttt{man sbatch}, \texttt{man srun}, etc.
     \end{itemize}
@@ -2421,10 +2430,10 @@ stopCluster(cl)
     \textbf{Learning Resources:}
     \begin{itemize}
         \footnotesize
-        \item HPC Carpentry: \texttt{https://www.hpc-carpentry.org/}
-        \item XSEDE Training: \texttt{https://www.xsede.org/for-users/training}
-        \item OpenMP Tutorial: \texttt{https://www.openmp.org/resources/tutorials-articles/}
-        \item MPI Tutorial: \texttt{https://mpitutorial.com/}
+        \item HPC Carpentry: \url{https://www.hpc-carpentry.org/}
+        \item XSEDE Training: \url{https://www.xsede.org/for-users/training}
+        \item OpenMP Tutorial: \url{https://www.openmp.org/resources/tutorials-articles/}
+        \item MPI Tutorial: \url{https://mpitutorial.com/}
     \end{itemize}
     \vskip0.8em
     \textbf{Tools:}
