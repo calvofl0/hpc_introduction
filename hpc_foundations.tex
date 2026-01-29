@@ -962,6 +962,102 @@ for (int i = 0; i < N; i++) {
     \end{columns}
 \end{frame}
 
+\begin{frame}[fragile]{Gustafson's Law: Scaling the Problem}
+	\footnotesize
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{A Different Perspective:}
+            \begin{itemize}
+                \item Amdahl assumes \textbf{fixed problem size}
+                \item Gustafson assumes \textbf{fixed execution time}
+                \item Scale the problem with processors
+            \end{itemize}
+            \vskip0.5em
+            \textbf{The Formula:}
+            \[
+            S(N) = N - s(N-1) = s + p \cdot N
+            \]
+            where:
+            \begin{itemize}
+                \item $s$ = serial fraction
+                \item $p$ = parallel fraction ($p = 1-s$)
+                \item $N$ = number of processors
+            \end{itemize}
+            \vskip0.5em
+            \textbf{Key Insight:} Speedup grows \textbf{linearly} with $N$!
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{tikzpicture}[scale=0.8]
+                \begin{axis}[
+                    width=6cm,
+                    height=5cm,
+                    xlabel={Number of Processors},
+                    ylabel={Speedup},
+                    legend pos=north west,
+                    grid=major,
+                    xmin=1, xmax=64,
+                    ymin=1, ymax=65,
+                    legend style={font=\tiny}
+                ]
+                \addplot[blue, thick, domain=1:64, samples=50] {0.05 + 0.95*x};
+                \addlegendentry{95\% parallel}
+
+                \addplot[red, thick, domain=1:64, samples=50] {0.25 + 0.75*x};
+                \addlegendentry{75\% parallel}
+
+                \addplot[green, thick, domain=1:64, samples=50] {0.50 + 0.50*x};
+                \addlegendentry{50\% parallel}
+
+                \addplot[black, dashed, domain=1:64] {x};
+                \addlegendentry{Ideal (100\%)}
+                \end{axis}
+            \end{tikzpicture}
+            \vskip0.5em
+            \textbf{Lesson:} With larger problems, parallelism pays off!
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Amdahl vs Gustafson: When to Use Which}
+	\footnotesize
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Amdahl's Law:}
+            \begin{itemize}
+                \item Fixed problem size
+                \item Strong scaling scenario
+                \item Pessimistic view
+                \item Good for: "How fast can I solve \textit{this} problem?"
+            \end{itemize}
+            \vskip1em
+            \textbf{Example:}
+            \begin{itemize}
+                \item Analyze today's dataset faster
+                \item Real-time processing constraints
+                \item Fixed input size applications
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Gustafson's Law:}
+            \begin{itemize}
+                \item Scaled problem size
+                \item Weak scaling scenario
+                \item Optimistic view
+                \item Good for: "How big a problem can I solve?"
+            \end{itemize}
+            \vskip1em
+            \textbf{Example:}
+            \begin{itemize}
+                \item Higher resolution simulations
+                \item Larger training datasets
+                \item More parameter combinations
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \vskip1em
+    \textbf{Reality:} Most HPC users benefit from Gustafson's perspective---more resources let you tackle bigger, more interesting problems!
+\end{frame}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Cluster Workflow and SLURM Basics}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
