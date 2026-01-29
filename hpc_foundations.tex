@@ -43,9 +43,9 @@
 
 % Title information
 \title{An Introduction to Parallel Computing}
-\subtitle{Foundations of High-Performance Computing (HPC)}
-\author{HPC Course}
-\date{\today}
+\subtitle{\Large Foundations of High-Performance Computing (HPC)}
+\author{Flavio Calvo \\ \emph{Université de Lausanne}}
+\date{February 3-4, 2026}
 
 \begin{document}
 
@@ -97,6 +97,7 @@
 \end{frame}
 
 \begin{frame}{CPU Architecture Basics}
+	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Key Components:}
@@ -108,58 +109,103 @@
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
-                % Socket 1
-                \draw[thick, rounded corners] (0,0) rectangle (2.5,3.5);
-                \node at (1.25, 3.2) {\textbf{\tiny Socket 1}};
-                
-                % CPU 1
-                \draw[thick, rounded corners, fill=blue!10] (0.2,0.2) rectangle (2.3,3);
-                \node at (1.25, 2.75) {\textbf{\tiny CPU}};
-                
-                % Cores in Socket 1
-                \draw[thick, fill=green!20] (0.4,1.6) rectangle (1.1,2.5);
-                \node at (0.75, 2.05) {\tiny Core 0};
-                
-                \draw[thick, fill=green!20] (1.4,1.6) rectangle (2.1,2.5);
-                \node at (1.75, 2.05) {\tiny Core 1};
-                
-                \draw[thick, fill=green!20] (0.4,0.4) rectangle (1.1,1.3);
-                \node at (0.75, 0.85) {\tiny Core 2};
-                
-                \draw[thick, fill=green!20] (1.4,0.4) rectangle (2.1,1.3);
-                \node at (1.75, 0.85) {\tiny Core 3};
-                
-                % Socket 2
-                \draw[thick, rounded corners] (3,0) rectangle (5.5,3.5);
-                \node at (4.25, 3.2) {\textbf{\tiny Socket 2}};
-                
-                % CPU 2
-                \draw[thick, rounded corners, fill=blue!10] (3.2,0.2) rectangle (5.3,3);
-                \node at (4.25, 2.75) {\textbf{\tiny CPU}};
-                
-                % Cores in Socket 2
-                \draw[thick, fill=green!20] (3.4,1.6) rectangle (4.1,2.5);
-                \node at (3.75, 2.05) {\tiny Core 0};
-                
-                \draw[thick, fill=green!20] (4.4,1.6) rectangle (5.1,2.5);
-                \node at (4.75, 2.05) {\tiny Core 1};
-                
-                \draw[thick, fill=green!20] (3.4,0.4) rectangle (4.1,1.3);
-                \node at (3.75, 0.85) {\tiny Core 2};
-                
-                \draw[thick, fill=green!20] (4.4,0.4) rectangle (5.1,1.3);
-                \node at (4.75, 0.85) {\tiny Core 3};
-            \end{tikzpicture}
+			\centering\vspace{2.5em}
+			\begin{tikzpicture}[scale=0.75, every node/.style={scale=0.75}]
+				% Socket 1
+				\draw[thick, rounded corners] (0,0) rectangle (3,3.5);
+				\node at (1.5, 3.2) {\textbf{\tiny Socket 1}};
+
+				% CPU 1
+				\draw[thick, rounded corners, fill=blue!10] (0.2,0.2) rectangle (2.8,3);
+				\node at (1.5, 2.75) {\textbf{\tiny CPU}};
+
+				% Cores in Socket 1 (wider boxes, centered)
+				\draw[thick, fill=green!20] (0.4,1.6) rectangle (1.3,2.5);
+				\node at (0.85, 2.05) {\tiny Core 0};
+
+				\draw[thick, fill=green!20] (1.7,1.6) rectangle (2.6,2.5);
+				\node at (2.15, 2.05) {\tiny Core 1};
+
+				\draw[thick, fill=green!20] (0.4,0.4) rectangle (1.3,1.3);
+				\node at (0.85, 0.85) {\tiny Core 2};
+
+				\draw[thick, fill=green!20] (1.7,0.4) rectangle (2.6,1.3);
+				\node at (2.15, 0.85) {\tiny Core 3};
+
+				% Socket 2
+				\draw[thick, rounded corners] (3.5,0) rectangle (6.5,3.5);
+				\node at (5, 3.2) {\textbf{\tiny Socket 2}};
+
+				% CPU 2
+				\draw[thick, rounded corners, fill=blue!10] (3.7,0.2) rectangle (6.3,3);
+				\node at (5, 2.75) {\textbf{\tiny CPU}};
+
+				% Cores in Socket 2 (wider boxes, centered)
+				\draw[thick, fill=green!20] (3.9,1.6) rectangle (4.8,2.5);
+				\node at (4.35, 2.05) {\tiny Core 0};
+
+				\draw[thick, fill=green!20] (5.2,1.6) rectangle (6.1,2.5);
+				\node at (5.65, 2.05) {\tiny Core 1};
+
+				\draw[thick, fill=green!20] (3.9,0.4) rectangle (4.8,1.3);
+				\node at (4.35, 0.85) {\tiny Core 2};
+
+				\draw[thick, fill=green!20] (5.2,0.4) rectangle (6.1,1.3);
+				\node at (5.65, 0.85) {\tiny Core 3};
+			\end{tikzpicture}
         \end{column}
     \end{columns}
     \vskip1em
     \textbf{Example:} A dual-socket server with 2 CPUs × 4 cores/CPU = 8 cores total
 \end{frame}
 
+\begin{frame}{Why Multiprocessing?}
+	\footnotesize
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\textbf{Serial Computing Limitations:}
+			\begin{itemize}
+				\item CPU clock speeds plateaued (\textasciitilde2005)
+				\item Physical limits (power, heat)
+				\item Need for faster solutions
+			\end{itemize}
+			\vskip1em
+			\textbf{Solution: Parallelism}
+			\begin{itemize}
+				\item Use multiple cores simultaneously
+				\item Divide work among processors
+				\item Reduce time to solution
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\begin{tikzpicture}[scale=0.8]
+				% Serial execution
+				\node at (2.5, 5) {\textbf{Serial}};
+				\draw[thick, fill=blue!30] (0,4) rectangle (5,4.5);
+				\node at (2.5, 4.25) {Task (10 minutes)};
+
+				% Parallel execution
+				\node at (2.5, 3) {\textbf{Parallel (4 cores)}};
+				\foreach \y in {0,0.6,1.2,1.8} {
+					\draw[thick, fill=green!30] (0,\y) rectangle (1.25,\y+0.4);
+					\node at (0.625, \y+0.2) {\tiny Part};
+				}
+				\node at (3.5, 1) {\small (2.5 min each)};
+
+				% Speedup arrow
+				\draw[->, thick, red] (5.5, 4.25) -- (5.5, 1.8);
+				\node at (6.5, 3) {\small 4× faster};
+			\end{tikzpicture}
+			\vskip0.3em
+			\small
+			\textbf{Note:} Ideal speedup is rarely achieved due to overhead and serial portions
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \begin{frame}{Memory Hierarchy}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.55\textwidth}
             \textbf{Levels of Memory:}
             \begin{enumerate}
                 \item \textbf{Registers}: Fastest, smallest (bytes)
@@ -172,26 +218,27 @@
             \vskip0.5em
             \textbf{Key Principle:} Faster memory is smaller and more expensive
         \end{column}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.45\textwidth}
             \centering
             \vspace{1em}
-            \begin{tikzpicture}[scale=0.8]
-                % Triangle representing hierarchy - extended higher
-                \draw[thick, fill=red!20] (0,0) -- (4,0) -- (2,6.5) -- cycle;
-                
-                % Labels - not in the very top part
-                \node at (2, 5.2) {\small RAM};
-                \node at (2, 4.2) {\small L3 Cache};
-                \node at (2, 3.2) {\small L2 Cache};
-                \node at (2, 2.2) {\small L1 Cache};
-                \node at (2, 1.2) {\small Registers};
-                \node at (2, 0.4) {\small Disk};
-                
-                % Arrows for speed (bottom to top = slowest to fastest)
-                \draw[->, thick] (4.8, 0.5) -- (4.8, 6) node[midway, right] {Speed};
-                % Capacity arrow outside the triangle
-                \draw[->, thick] (-0.8, -0.5) -- (4.8, -0.5) node[midway, below] {Capacity};
-            \end{tikzpicture}
+			\begin{tikzpicture}[scale=0.8]
+				% Triangle representing hierarchy - extended higher
+				\draw[thick, fill=red! 20] (0,0) -- (4,0) -- (2,6.5) -- cycle;
+
+				% Labels - sorted from fastest (top) to slowest (bottom)
+				% Top part left empty (too narrow)
+				\node at (2, 3.6) {\tiny Registers};
+				\node at (2, 2.8) {\tiny L1 Cache};
+				\node at (2, 2.4) {\tiny L2 Cache};
+				\node at (2, 2.0) {\tiny L3 Cache};
+				\node at (2, 1.2) {\tiny RAM};
+				\node at (2, 0.4) {\tiny Disk};
+
+				% Arrows for speed (bottom to top = slowest to fastest)
+				\draw[->, thick] (4.4, 0.2) -- (4.4, 6.3) node[midway, right] {Speed};
+				% Capacity arrow outside the triangle
+				\draw[->, thick] (-0.2, -0.5) -- (4.2, -0.5) node[midway, below] {Capacity};
+			\end{tikzpicture}
         \end{column}
     \end{columns}
 \end{frame}
@@ -206,6 +253,7 @@
                 \item Limited scalability
                 \item Example: Multi-core CPU
             \end{itemize}
+            \vspace{1em}
             \centering
             \begin{tikzpicture}[scale=0.7]
                 % Cores
@@ -218,18 +266,19 @@
                 \node at (1.9, 0.9) {Shared Memory};
                 % Arrows
                 \foreach \x in {0.4,1.9,3.4} {
-                    \draw[->, thick] (\x, 2) -- (\x, 1.3);
+                    \draw[->, thick] (\x, 1.9) -- (\x, 1.4);
                 }
             \end{tikzpicture}
         \end{column}
         \begin{column}{0.5\textwidth}
             \textbf{Distributed Memory:}
             \begin{itemize}
-                \item Each node has own RAM
+                \item Each node has its own RAM
                 \item Explicit data transfer (MPI)
                 \item Highly scalable
                 \item Example: HPC cluster
             \end{itemize}
+            \vspace{1em}
             \centering
             \begin{tikzpicture}[scale=0.7]
                 % Node 1
@@ -237,42 +286,42 @@
                 \node at (0.4, 2.9) {\tiny Core};
                 \draw[thick, fill=blue!20] (0,1.5) rectangle (0.8,2.3);
                 \node at (0.4, 1.9) {\tiny Mem};
-                
+
                 % Node 2
                 \draw[thick, fill=green!20] (1.5,2.5) rectangle (2.3,3.3);
                 \node at (1.9, 2.9) {\tiny Core};
                 \draw[thick, fill=blue!20] (1.5,1.5) rectangle (2.3,2.3);
                 \node at (1.9, 1.9) {\tiny Mem};
-                
+
                 % Node 3
                 \draw[thick, fill=green!20] (3,2.5) rectangle (3.8,3.3);
                 \node at (3.4, 2.9) {\tiny Core};
                 \draw[thick, fill=blue!20] (3,1.5) rectangle (3.8,2.3);
                 \node at (3.4, 1.9) {\tiny Mem};
-                
+
                 % Network
-                \draw[thick, <->, red] (0.8, 1.9) -- (1.5, 1.9);
-                \draw[thick, <->, red] (2.3, 1.9) -- (3, 1.9);
-                \node at (1.9, 1.1) {\small Network};
+                \draw[thick, <->, red] (0.9, 1.9) -- (1.4, 1.9);
+                \draw[thick, <->, red] (2.4, 1.9) -- (2.9, 1.9);
+                \node at (1.9, 1.0) {\small Network};
             \end{tikzpicture}
         \end{column}
     \end{columns}
 \end{frame}
 
-\begin{frame}{Compute Nodes in an HPC Cluster}
+\begin{frame}{Compute Nodes in a HPC Cluster}
     \centering
     \begin{tikzpicture}[scale=0.85]
         % Big box for SLURM managed
-        \draw[thick, rounded corners, dashed] (-0.5,1.8) rectangle (9.5,4.8);
+        \draw[thick, rounded corners, dashed] (-0.5,1.9) rectangle (9.5,5.0);
         \node at (4.5, 4.5) {\textbf{SLURM managed}};
-        
+
         % Login node (at same level as compute nodes)
         \draw[thick, fill=yellow!20, rounded corners] (0,2.2) rectangle (1.8,4);
         \node at (0.9, 3.5) {\small Login};
         \node at (0.9, 3.1) {\small Node};
         \draw[thick, fill=blue!10] (0.2,2.4) rectangle (1.6,2.8);
         \node at (0.9, 2.6) {\tiny Memory};
-        
+
         % Compute nodes
         \foreach \x in {2.3,4.6,6.9} {
             \draw[thick, fill=green!20, rounded corners] (\x,2.2) rectangle (\x+1.8,4);
@@ -281,27 +330,28 @@
             \draw[thick, fill=blue!10] (\x+0.2,2.4) rectangle (\x+1.6,2.8);
             \node at (\x+0.9, 2.6) {\tiny Memory};
         }
-        
+
         % Storage - much wider
         \draw[thick, fill=purple!20, rounded corners] (-0.5,0) rectangle (9.5,1.5);
         \node at (4.5, 0.75) {Shared Storage};
-        
+
         % Storage connections
         \foreach \x in {0.9,3.2,5.5,7.8} {
-            \draw[->, thick, dashed] (\x, 2.2) -- (\x, 1.5);
+            \draw[->, thick, dashed] (\x, 2.2) -- (\x, 1.6);
         }
-        
+
         % Users SSH arrow
-        \node at (10.5, 3.1) {\tiny Users SSH};
-        \draw[->, thick] (10.2, 3.1) -- (1.8, 3.1);
+        \node at (-2.5, 3.1) {\small Users SSH};
+        \draw[->, thick] (-1.4, 3.1) -- (-0.1, 3.1);
     \end{tikzpicture}
-    
+
     \vskip0.5em
-    \textbf{Workflow:} Users connect to login node → Submit jobs to SLURM → Jobs run on compute nodes
+    \textbf{Workflow:} Users connect to the login node $\rightarrow$ Submit jobs to SLURM $\rightarrow$ Jobs run on compute nodes
 \end{frame}
 
 \begin{frame}{SLURM Terminology: CPUs vs Tasks}
-    \small
+    \footnotesize
+    {
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Key Terms:}
@@ -328,7 +378,7 @@
                 \midrule
                 Serial & 1 & 1 \\
                 Multi-threaded & 1 & 16 \\
-                MPI & 32 & 1 \\
+                MPI (distributed) & 32 & 1 \\
                 Hybrid & 4 & 8 \\
                 \bottomrule
             \end{tabular}
@@ -340,125 +390,100 @@
             \end{itemize}
         \end{column}
     \end{columns}
+    }
 \end{frame}
 
 \begin{frame}{Understanding Resource Allocation}
     \centering
     \vspace{0.5em}
-    \begin{tikzpicture}[scale=0.85]
-        % Title
-        \node at (5, 6.5) {\textbf{Different Job Layouts on a Cluster}};
-        
-        % Single Node - Serial Job
-        \node at (2, 5.5) {\small Serial Job};
-        \draw[thick, fill=gray!20] (0.5,3.5) rectangle (3.5,5);
-        \node at (2, 4.8) {\tiny Node 1};
-        \draw[thick, fill=green!40] (0.7,3.7) rectangle (1.3,4.6);
-        \node at (1, 4.15) {\tiny T};
-        \foreach \x in {1.5,1.9,2.3,2.7,3.1} {
-            \draw[thick, fill=gray!10] (\x,3.7) rectangle (\x+0.3,4.6);
-        }
-        
-        % Multi-threaded Job
-        \node at (6.5, 5.5) {\small Multi-threaded (OpenMP)};
-        \draw[thick, fill=gray!20] (5,3.5) rectangle (8,5);
-        \node at (6.5, 4.8) {\tiny Node 1};
-        \foreach \x in {5.2,5.6,6.0,6.4,6.8,7.2,7.6} {
-            \draw[thick, fill=green!40] (\x,3.7) rectangle (\x+0.3,4.6);
-            \node at (\x+0.15, 4.15) {\tiny T};
-        }
-        
-        % Distributed MPI Job
-        \node at (2, 2.5) {\small Distributed (MPI)};
-        \draw[thick, fill=gray!20] (0.5,0.5) rectangle (1.8,2);
-        \node at (1.15, 1.8) {\tiny N1};
-        \draw[thick, fill=blue!40] (0.6,0.6) rectangle (0.95,1.6);
-        \node at (0.775, 1.1) {\tiny T};
-        \draw[thick, fill=blue!40] (1.05,0.6) rectangle (1.4,1.6);
-        \node at (1.225, 1.1) {\tiny T};
-        \draw[thick, fill=blue!40] (1.45,0.6) rectangle (1.7,1.6);
-        \node at (1.575, 1.1) {\tiny T};
-        
-        \draw[thick, fill=gray!20] (2.1,0.5) rectangle (2.9,2);
-        \node at (2.5, 1.8) {\tiny N2};
-        \draw[thick, fill=blue!40] (2.2,0.6) rectangle (2.55,1.6);
-        \node at (2.375, 1.1) {\tiny T};
-        \draw[thick, fill=blue!40] (2.65,0.6) rectangle (2.8,1.6);
-        \node at (2.725, 1.1) {\tiny T};
-        
-        % Hybrid Job
-        \node at (6.5, 2.5) {\small Hybrid (MPI + OpenMP)};
-        \draw[thick, fill=gray!20] (5,0.5) rectangle (6.3,2);
-        \node at (5.65, 1.8) {\tiny N1};
-        \foreach \x in {5.1,5.5,5.9} {
-            \draw[thick, fill=purple!40] (\x,0.6) rectangle (\x+0.3,1.6);
-            \node at (\x+0.15, 1.1) {\tiny T};
-        }
-        
-        \draw[thick, fill=gray!20] (6.6,0.5) rectangle (7.9,2);
-        \node at (7.25, 1.8) {\tiny N2};
-        \foreach \x in {6.7,7.1,7.5} {
-            \draw[thick, fill=purple!40] (\x,0.6) rectangle (\x+0.3,1.6);
-            \node at (\x+0.15, 1.1) {\tiny T};
-        }
-        
-        % Legend with more spacing
-        \node at (10, 4.7) {\small Legend:};
-        \draw[thick, fill=green!40] (9.5,3.8) rectangle (9.8,4.1);
-        \node at (10.5, 3.95) {\tiny Threads};
-        \draw[thick, fill=blue!40] (9.5,3.3) rectangle (9.8,3.6);
-        \node at (10.5, 3.45) {\tiny MPI tasks};
-        \draw[thick, fill=purple!40] (9.5,2.8) rectangle (9.8,3.1);
-        \node at (10.5, 2.95) {\tiny Hybrid};
-    \end{tikzpicture}
+	\begin{tikzpicture}[scale=0.85]
+		% Title (centered)
+		\node at (7.8, 6.8) {\textbf{Different Job Layouts on a Cluster}};
+
+		% Single Node - Serial Job
+		\node at (2.2, 5.8) {\small Serial Job};
+		\draw[thick, fill=gray!20] (0.5,3.8) rectangle (3.9,5.3);
+		\node at (2.2, 5.05) {\tiny Node 1};
+		\draw[thick, fill=green!40] (0.75,4.0) rectangle (1.2,4.9);
+		\node at (0.975, 4.45) {\tiny 1T};
+		\foreach \x in {1.5,1.95,2.4,2.85,3.3} {
+			\draw[thick, fill=gray!10] (\x,4.0) rectangle (\x+0.4,4.9);
+			\node[gray] at (\x+0.2, 4.45) {\tiny idle};
+		}
+
+		% Multi-threaded Job (OpenMP) - now properly centered
+		\node at (7, 5.8) {\small Multi-threaded (OpenMP)};
+		\draw[thick, fill=gray!20] (5.2,3.8) rectangle (8.8,5.3);
+		\node at (7, 5.05) {\tiny Node 1};
+		\foreach \x in {5.55,6.05,6.55,7.05,7.55,8.05} {
+			\draw[thick, fill=green!40] (\x,4.0) rectangle (\x+0.4,4.9);
+			\node at (\x+0.2, 4.45) {\tiny 1T};
+		}
+		\node at (7, 3.5) {\tiny\textit{Shared memory}};
+
+		% Distributed MPI Job
+		\node at (2.2, 2.8) {\small Distributed (MPI)};
+		\node at (2.2, 0.3) {\tiny\textit{6 MPI tasks, 1 core/task, 1 thread/core}};
+		% Node 1 - MPI ranks 0-2
+		\draw[thick, fill=gray!20] (0.5,0.7) rectangle (2.2,2.3);
+		\node at (1.35, 2.05) {\tiny Node 1};
+		\node at (1.35, 1.75) {\tiny\textcolor{blue!70}{MPI rank 0-2}};
+		\foreach \x in {0.7,1.15,1.6} {
+			\draw[thick, fill=blue!40] (\x,0.85) rectangle (\x+0.4,1.6);
+			\node at (\x+0.2, 1.225) {\tiny 1T};
+		}
+		% Node 2 - MPI ranks 3-5
+		\draw[thick, fill=gray!20] (2.4,0.7) rectangle (4.1,2.3);
+		\node at (3.25, 2.05) {\tiny Node 2};
+		\node at (3.25, 1.75) {\tiny\textcolor{blue!70}{MPI rank 3-5}};
+		\foreach \x in {2.6,3.05,3.5} {
+			\draw[thick, fill=blue!40] (\x,0.85) rectangle (\x+0.4,1.6);
+			\node at (\x+0.2, 1.225) {\tiny 1T};
+		}
+
+		% Hybrid Job (MPI + OpenMP)
+		\node at (7, 2.8) {\small Hybrid (MPI + OpenMP)};
+		\node at (7, 0.3) {\tiny\textit{2 MPI tasks, 3 cores/task, 3 threads/core}};
+		% Node 1 - MPI rank 0
+		\draw[thick, fill=gray!20] (5.2,0.7) rectangle (6.9,2.3);
+		\node at (6.05, 2.05) {\tiny Node 1};
+		\node at (6.05, 1.75) {\tiny\textcolor{blue!70}{MPI rank 0}};
+		\foreach \x in {5.4,5.85,6.3} {
+			\draw[thick, fill=purple!40] (\x,0.85) rectangle (\x+0.4,1.6);
+			\node at (\x+0.2, 1.225) {\tiny 3T};
+		}
+		% Node 2 - MPI rank 1
+		\draw[thick, fill=gray!20] (7.1,0.7) rectangle (8.8,2.3);
+		\node at (7.95, 2.05) {\tiny Node 2};
+		\node at (7.95, 1.75) {\tiny\textcolor{blue!70}{MPI rank 1}};
+		\foreach \x in {7.3,7.75,8.2} {
+			\draw[thick, fill=purple!40] (\x,0.85) rectangle (\x+0.4,1.6);
+			\node at (\x+0.2, 1.225) {\tiny 3T};
+		}
+
+		% Enhanced Legend with more spacing
+		\node[anchor=west] at (9.8, 4.6) {\small\textbf{Legend:}};
+
+		\draw[thick, fill=green!40] (10,3.5) rectangle (10.4,3.8);
+		\node[anchor=west] at (10.5, 3.65) {\small Thread (shared memory)};
+
+		\draw[thick, fill=blue!40] (10,2.8) rectangle (10.4,3.1);
+		\node[anchor=west] at (10.5, 2.95) {\small MPI task (message passing)};
+
+		\draw[thick, fill=purple!40] (10,2.1) rectangle (10.4,2.4);
+		\node[anchor=west] at (10.5, 2.25) {\small Hybrid (MPI + threads)};
+
+		% Add communication arrows for MPI
+		\draw[->, thick, blue!60, dashed] (2.0, 1.4) -- (2.45, 1.4);
+		\draw[->, thick, blue!60, dashed] (2.45, 1.0) -- (2.0, 1.0);
+		\draw[->, thick, blue!60, dashed] (6.7, 1.4) -- (7.15, 1.4);
+		\draw[->, thick, blue!60, dashed] (7.15, 1.0) -- (6.7, 1.0);
+	\end{tikzpicture}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Understanding Parallelism}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}{Why Parallel Computing?}
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \textbf{Serial Computing Limitations:}
-            \begin{itemize}
-                \item CPU clock speeds plateaued (~2005)
-                \item Physical limits (power, heat)
-                \item Need for faster solutions
-            \end{itemize}
-            \vskip1em
-            \textbf{Solution: Parallelism}
-            \begin{itemize}
-                \item Use multiple cores simultaneously
-                \item Divide work among processors
-                \item Reduce time to solution
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            \begin{tikzpicture}[scale=0.8]
-                % Serial execution
-                \node at (2.5, 5) {\textbf{Serial}};
-                \draw[thick, fill=blue!30] (0,4) rectangle (5,4.5);
-                \node at (2.5, 4.25) {Task (10 minutes)};
-                
-                % Parallel execution
-                \node at (2.5, 3) {\textbf{Parallel (4 cores)}};
-                \foreach \y in {0,0.6,1.2,1.8} {
-                    \draw[thick, fill=green!30] (0,\y) rectangle (1.25,\y+0.4);
-                    \node at (0.625, \y+0.2) {\tiny Part};
-                }
-                \node at (3.5, 1) {\small (2.5 min each)};
-                
-                % Speedup arrow
-                \draw[->, thick, red] (5.5, 4.25) -- (5.5, 1.8);
-                \node at (6.5, 3) {\small 4× faster};
-            \end{tikzpicture}
-            \vskip0.3em
-            \small
-            \textbf{Note:} Ideal speedup is rarely achieved due to overhead and serial portions
-        \end{column}
-    \end{columns}
-\end{frame}
 
 \begin{frame}{Levels of Parallelism - Part 1}
     \begin{enumerate}
@@ -469,7 +494,7 @@
             \item Not programmable by users
         \end{itemize}
         \vskip1em
-        
+
         \item \textbf{Vectorization (SIMD)}
         \begin{itemize}
             \item Single Instruction, Multiple Data
@@ -489,7 +514,7 @@
             \item Access shared memory space
         \end{itemize}
         \vskip1em
-        
+
         \item \textbf{Process-Level Parallelism (Distributed Memory)}
         \begin{itemize}
             \item Multiple processes across nodes
@@ -501,6 +526,7 @@
 
 
 \begin{frame}{Vectorization (SIMD)}
+	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Concept:} Apply same operation to multiple data elements simultaneously
@@ -510,42 +536,42 @@
                 C[0:3] = A[0:3] + B[0:3]
             \end{align*}
             \vskip0.5em
-            \textbf{Without SIMD:}
-            \begin{itemize}
-                \item 4 separate additions
-                \item 4 clock cycles
-            \end{itemize}
-            \vskip0.5em
-            \textbf{With SIMD:}
-            \begin{itemize}
-                \item 1 vector addition
-                \item 1 clock cycle
-                \item 4× speedup!
-            \end{itemize}
+            %\centering
+			\begin{tikzpicture}[scale=0.75]
+				% Serial
+				\node at (2.5, 5.5) {\textbf{Serial (Scalar)}};
+				\foreach \y/\n in {5/0,4.5/1,4/2,3.5/3} {
+					\node[left] at (-0.2,\y-0.1) {\tiny A[\n], B[\n]};
+					\draw[->, thick] (0.5,\y) -- (1.2,\y);
+					\draw[->, thick] (0.5,\y-0.2) -- (1.2,\y-0.2);
+					\draw[thick, fill=blue!20] (1.2,\y-0.3) rectangle (2.2,\y+0.1);
+					\node at (1.7, \y-0.1) {\tiny +};
+					\draw[->, thick] (2.2,\y-0.1) -- (3,\y-0.1) node[right] {\tiny C[\n]};
+				}
+
+				% SIMD
+				\node at (2.5, 2.5) {\textbf{SIMD (Vector)}};
+				\node[left] at (-0.2,1.75) {\tiny A[0:3], B[0:3]};
+				\draw[->, thick, blue] (0.8,2) -- (1.2,2);
+				\draw[->, thick, red] (0.8,1.5) -- (1.2,1.5);
+				\draw[thick, fill=green!20] (1.2,1.3) rectangle (2.2,2.2);
+				\node at (1.7, 1.75) {\small +};
+				\draw[->, thick, purple] (2.2,1.75) -- (3,1.75) node[right] {\tiny C[0:3]};
+			\end{tikzpicture}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \centering
-            \begin{tikzpicture}[scale=0.75]
-                % Serial
-                \node at (2.5, 5.5) {\textbf{Serial (Scalar)}};
-                \foreach \y/\n in {5/0,4.5/1,4/2,3.5/3} {
-                    \node[left] at (-0.2,\y-0.1) {\tiny A[\n], B[\n]};
-                    \draw[->, thick] (0.5,\y) -- (1.2,\y);
-                    \draw[->, thick] (0.5,\y-0.2) -- (1.2,\y-0.2);
-                    \draw[thick, fill=blue!20] (1.2,\y-0.3) rectangle (2.2,\y+0.1);
-                    \node at (1.7, \y-0.1) {\tiny +};
-                    \draw[->, thick] (2.2,\y-0.1) -- (3,\y-0.1) node[right] {\tiny C[\n]};
-                }
-                
-                % SIMD
-                \node at (2.5, 2.5) {\textbf{SIMD (Vector)}};
-                \node[left] at (-0.2,1.75) {\tiny A[0:3], B[0:3]};
-                \draw[->, thick, blue] (0.8,2) -- (1.2,2);
-                \draw[->, thick, red] (0.8,1.5) -- (1.2,1.5);
-                \draw[thick, fill=green!20] (1.2,1.3) rectangle (2.2,2.2);
-                \node at (1.7, 1.75) {\small +};
-                \draw[->, thick, purple] (2.2,1.75) -- (3,1.75) node[right] {\tiny C[0:3]};
-            \end{tikzpicture}
+            \textbf{Without SIMD:}
+		\begin{itemize}
+			\item 4 separate additions
+			\item 4 clock cycles
+		\end{itemize}
+		\vskip0.5em
+		\textbf{With SIMD:}
+		\begin{itemize}
+			\item 1 vector addition
+			\item 1 clock cycle
+			\item 4× speedup!
+		\end{itemize}
             \vskip0.5em
             \textbf{Modern CPUs:}
             \begin{itemize}
@@ -581,21 +607,21 @@ for (int i = 0; i < N; i++) {
                 % Process - with more spacing
                 \draw[thick, rounded corners, fill=yellow!10] (0,0) rectangle (5.5,5.5);
                 \node at (2.75, 5.1) {\textbf{Process}};
-                
+
                 % Threads - wider boxes
                 \draw[thick, fill=green!20] (0.5,3.3) rectangle (1.8,4.8);
                 \node at (1.15, 4.05) {\tiny Thread 1};
-                
+
                 \draw[thick, fill=green!20] (2.2,3.3) rectangle (3.5,4.8);
                 \node at (2.85, 4.05) {\tiny Thread 2};
-                
+
                 \draw[thick, fill=green!20] (3.9,3.3) rectangle (5.2,4.8);
                 \node at (4.55, 4.05) {\tiny Thread 3};
-                
+
                 % Shared memory
                 \draw[thick, fill=blue!20] (0.5,0.5) rectangle (5,2.8);
                 \node at (2.75, 1.65) {Shared Memory};
-                
+
                 % Arrows
                 \draw[<->, thick] (1.15, 3.3) -- (1.15, 2.8);
                 \draw[<->, thick] (2.85, 3.3) -- (2.85, 2.8);
@@ -608,7 +634,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Message Passing (Distributed Memory)}
-    \small
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Message Passing Interface (MPI):}
@@ -628,6 +654,7 @@ for (int i = 0; i < N; i++) {
             \end{itemize}
         \end{column}
         \begin{column}{0.5\textwidth}
+            \vspace{2em}
             \centering
             \begin{tikzpicture}[scale=0.7]
                 % Process 0
@@ -635,30 +662,30 @@ for (int i = 0; i < N; i++) {
                 \node at (0.75, 5.2) {\tiny Proc 0};
                 \draw[thick, fill=blue!20] (0.1,4.1) rectangle (1.4,4.8);
                 \node at (0.75, 4.45) {\tiny Mem};
-                
+
                 % Process 1
                 \draw[thick, rounded corners, fill=yellow!10] (2.5,4) rectangle (4,5.5);
                 \node at (3.25, 5.2) {\tiny Proc 1};
                 \draw[thick, fill=blue!20] (2.6,4.1) rectangle (3.9,4.8);
                 \node at (3.25, 4.45) {\tiny Mem};
-                
+
                 % Process 2
                 \draw[thick, rounded corners, fill=yellow!10] (0,1.5) rectangle (1.5,3);
                 \node at (0.75, 2.7) {\tiny Proc 2};
                 \draw[thick, fill=blue!20] (0.1,1.6) rectangle (1.4,2.3);
                 \node at (0.75, 1.95) {\tiny Mem};
-                
+
                 % Process 3
                 \draw[thick, rounded corners, fill=yellow!10] (2.5,1.5) rectangle (4,3);
                 \node at (3.25, 2.7) {\tiny Proc 3};
                 \draw[thick, fill=blue!20] (2.6,1.6) rectangle (3.9,2.3);
                 \node at (3.25, 1.95) {\tiny Mem};
-                
+
                 % Communication arrows
                 \draw[->, thick, red] (1.5, 4.8) -- (2.5, 4.8) node[midway, above] {\tiny msg};
                 \draw[->, thick, red] (0.75, 4) -- (0.75, 3) node[midway, right] {\tiny msg};
                 \draw[->, thick, red] (2.5, 2.3) -- (1.5, 2.3) node[midway, below] {\tiny msg};
-                
+
                 % Network
                 \node at (2, 0.5) {\textbf{Network}};
             \end{tikzpicture}
@@ -669,8 +696,9 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Hybrid Parallelization}
+	\footnotesize
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.65\textwidth}
             \textbf{Combining MPI + OpenMP:}
             \begin{itemize}
                 \item MPI for inter-node communication
@@ -687,36 +715,37 @@ for (int i = 0; i < N; i++) {
                 \item Flexible resource allocation
             \end{itemize}
         \end{column}
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.35\textwidth}
+            \vspace{2em}
             \begin{tikzpicture}[scale=0.7]
                 % Node 1
                 \draw[thick, rounded corners, fill=gray!10] (0,3) rectangle (3.8,5.5);
                 \node at (1.9, 5.2) {\textbf{\small Node 1}};
-                
+
                 % MPI process 1
                 \draw[thick, fill=yellow!20] (0.3,3.3) rectangle (3.5,4.9);
                 \node at (1.9, 4.7) {\tiny MPI Process 0};
-                
+
                 % OpenMP threads - wider boxes
                 \foreach \x in {0.5,1.2,1.9,2.6} {
                     \draw[thick, fill=green!30] (\x,3.5) rectangle (\x+0.65,4.4);
                     \node at (\x+0.325, 3.95) {\scriptsize T};
                 }
-                
+
                 % Node 2
                 \draw[thick, rounded corners, fill=gray!10] (0,0) rectangle (3.8,2.5);
                 \node at (1.9, 2.3) {\textbf{\small Node 2}};
-                
+
                 % MPI process 2
                 \draw[thick, fill=yellow!20] (0.3,0.3) rectangle (3.5,1.9);
                 \node at (1.9, 1.7) {\tiny MPI Process 1};
-                
+
                 % OpenMP threads - wider boxes
                 \foreach \x in {0.5,1.2,1.9,2.6} {
                     \draw[thick, fill=green!30] (\x,0.5) rectangle (\x+0.65,1.4);
                     \node at (\x+0.325, 0.95) {\scriptsize T};
                 }
-                
+
                 % MPI communication
                 \draw[<->, thick, red, dashed] (1.9, 3) -- (1.9, 2.5);
                 \node at (4.2, 2.75) {\tiny MPI};
@@ -728,21 +757,22 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Understanding Speed-Up}
+	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Definition:}
             \begin{itemize}
                 \item Speed-up measures how much faster a parallel program runs compared to serial
-                \item Formula: 
+                \item Definition:
                 \[
                 S = \frac{T_{\text{serial}}}{T_{\text{parallel}}}
                 \]
             \end{itemize}
-            \vskip1em
+            \vskip.1em
             \textbf{Efficiency:}
             \begin{itemize}
                 \item Measures how well we use processors
-                \item Formula: 
+                \item Definition:
                 \[
                 E = \frac{S}{N} = \frac{T_{\text{serial}}}{N \times T_{\text{parallel}}}
                 \]
@@ -773,7 +803,7 @@ for (int i = 0; i < N; i++) {
                 ]
                 \addplot[black, dashed, thick, domain=1:16] {x};
                 \addlegendentry{Ideal (linear)}
-                
+
                 \addplot[blue, thick, mark=*, samples at={1,2,4,8,16}] coordinates {
                     (1,1) (2,1.9) (4,3.6) (8,6.4) (16,11)
                 };
@@ -785,6 +815,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Strong Scaling vs Weak Scaling}
+	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Strong Scaling:}
@@ -835,8 +866,9 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Deriving Amdahl's Law}
+	\footnotesize
     \textbf{The Fundamental Question:} What limits parallel speedup?
-    \vskip1em
+    \vskip.2em
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Key Insight:}
@@ -872,11 +904,12 @@ for (int i = 0; i < N; i++) {
             \]
         \end{column}
     \end{columns}
-    \vskip1em
+    \vskip.2em
     \textbf{Implication:} Maximum speedup is limited by serial fraction!
 \end{frame}
 
 \begin{frame}[fragile]{Amdahl's Law: The Speedup Limit}
+	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{The Formula:}
@@ -912,13 +945,13 @@ for (int i = 0; i < N; i++) {
                 ]
                 \addplot[blue, thick, domain=1:64, samples=50] {1/((1-0.95) + 0.95/x)};
                 \addlegendentry{95\% parallel (max=20×)}
-                
+
                 \addplot[red, thick, domain=1:64, samples=50] {1/((1-0.75) + 0.75/x)};
                 \addlegendentry{75\% parallel (max=4×)}
-                
+
                 \addplot[green, thick, domain=1:64, samples=50] {1/((1-0.50) + 0.50/x)};
                 \addlegendentry{50\% parallel (max=2×)}
-                
+
                 \addplot[black, dashed, domain=1:20] {x};
                 \addlegendentry{Ideal (100\%)}
                 \end{axis}
@@ -934,10 +967,11 @@ for (int i = 0; i < N; i++) {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{What is SLURM?}
+	\footnotesize
     \textbf{Simple Linux Utility for Resource Management}
     \vskip1em
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.7\textwidth}
             \textbf{Functions:}
             \begin{itemize}
                 \item \textbf{Resource Manager}: Allocate compute resources
@@ -953,14 +987,15 @@ for (int i = 0; i < N; i++) {
                 \item Provides accounting and reporting
             \end{itemize}
         \end{column}
-        \begin{column}{0.5\textwidth}
-            \textbf{Job Lifecycle:}
+        \begin{column}{0.3\textwidth}
+            \textbf{Job Lifecycle:} \\
+            \vspace{2em}
             \begin{tikzpicture}[node distance=1.2cm, scale=0.7, every node/.style={scale=0.8}]
                 \node[draw, rectangle, fill=yellow!20] (submit) {Job Submitted};
                 \node[draw, rectangle, fill=orange!20, below of=submit] (queue) {In Queue};
                 \node[draw, rectangle, fill=green!20, below of=queue] (run) {Running};
                 \node[draw, rectangle, fill=blue!20, below of=run] (complete) {Completed};
-                
+
                 \draw[->, thick] (submit) -- (queue);
                 \draw[->, thick] (queue) -- (run) node[midway, right] {\tiny Resources available};
                 \draw[->, thick] (run) -- (complete);
@@ -970,7 +1005,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Common SLURM Commands}
-    \small
+	\scriptsize
     \begin{tabular}{p{4.5cm}p{6.5cm}}
         \toprule
         \textbf{Command} & \textbf{Description} \\
@@ -987,6 +1022,7 @@ for (int i = 0; i < N; i++) {
         \bottomrule
     \end{tabular}
     \vskip0.8em
+    \footnotesize
     \textbf{Useful squeue options:}
     \begin{itemize}
         \item \texttt{-l}: Long format with more details
@@ -1021,7 +1057,7 @@ python my_script.py
             \end{lstlisting}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \small
+            \scriptsize
             \textbf{Key Options:}
             \begin{itemize}
                 \item \texttt{--job-name}: Job identifier
@@ -1045,9 +1081,9 @@ python my_script.py
 \end{frame}
 
 \begin{frame}[fragile]{Example: Serial Job}
-    \small
+    \footnotesize
     \textbf{Simplest case: Single core job}
-    \vskip0.8em
+    \vskip0.4em
     \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=serial_job
@@ -1063,15 +1099,15 @@ echo "Number of cores: $SLURM_CPUS_PER_TASK"
 
 python my_serial_script.py
     \end{lstlisting}
-    \vskip0.8em
+    \vskip0.4em
     \textbf{Resources:} 1 node, 1 core, 2 GB RAM, 30 minutes
 \end{frame}
 
-\begin{frame}[fragile]{Example: Multi-threaded (OpenMP) Job}
-    \small
+\begin{frame}[fragile]{Example: Multi-threaded {\LARGE (OpenMP)} Job}
+    \footnotesize
     \textbf{Using multiple cores on a single node}
-    \vskip0.8em
-    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
+    \vskip0.2em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=openmp_job
 #SBATCH --output=openmp_%j.log
@@ -1087,15 +1123,15 @@ echo "Using $OMP_NUM_THREADS OpenMP threads"
 
 ./my_openmp_program
     \end{lstlisting}
-    \vskip0.8em
+    \vskip0.2em
     \textbf{Resources:} 1 task, 16 cores for threading, 32 GB RAM
 \end{frame}
 
 \begin{frame}[fragile]{Example: MPI Job (Distributed)}
-    \small
+    \footnotesize
     \textbf{Multiple tasks across nodes}
     \vskip0.8em
-    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=mpi_job
 #SBATCH --output=mpi_%j.log
@@ -1117,10 +1153,10 @@ mpirun ./my_mpi_program
 \end{frame}
 
 \begin{frame}[fragile]{Example: Hybrid MPI + OpenMP Job}
-    \small
+    \footnotesize
     \textbf{Combining distributed and shared memory parallelism}
     \vskip0.8em
-    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=hybrid_job
 #SBATCH --output=hybrid_%j.log
@@ -1144,9 +1180,10 @@ mpirun ./my_hybrid_program
 
 
 \begin{frame}{Resource Allocation Strategies}
+	\footnotesize
     \textbf{Choosing the Right Configuration}
     \vskip1em
-    \small
+    \tiny
     \begin{tabular}{p{3.5cm}p{3cm}p{4.5cm}}
         \toprule
         \textbf{Job Type} & \textbf{SLURM Config} & \textbf{Use Case} \\
@@ -1179,13 +1216,14 @@ mpirun ./my_hybrid_program
 \end{frame}
 
 \begin{frame}[fragile]{Job Arrays: Running Many Similar Jobs}
+	\footnotesize
     \textbf{Scenario:} Need to run same program with different parameters
-    \vskip1em
+    \vskip.2em
     \textbf{Without Job Arrays:} Submit 100 separate jobs, manage 100 job IDs (tedious!)
-    \vskip0.5em
+    \vskip0.1em
     \textbf{With Job Arrays:} Single submission, one job ID with array indices (easy!)
-    \vskip1em
-    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
+    \vskip.2em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 #!/bin/bash
 #SBATCH --job-name=array_job
 #SBATCH --output=job_%A_%a.log
@@ -1203,13 +1241,9 @@ python process.py --id $PARAM
 \end{frame}
 
 \begin{frame}{Job Arrays: Advanced Features}
-    \textbf{Special Variables:}
-    \begin{itemize}
-        \item \texttt{\%A}: Job array master ID
-        \item \texttt{\%a}: Individual array task ID
-        \item \texttt{\$SLURM\_ARRAY\_TASK\_ID}: Current array index
-    \end{itemize}
-    \vskip1em
+    \begin{columns}[T]
+	\begin{column}{0.5\textwidth}
+	\footnotesize
     \textbf{Array Syntax Options:}
     \begin{itemize}
         \item \texttt{--array=1-100}: Indices 1 through 100
@@ -1217,7 +1251,18 @@ python process.py --id $PARAM
         \item \texttt{--array=1,5,10,15}: Specific indices
         \item \texttt{--array=1-100\%10}: Limit to 10 concurrent tasks
     \end{itemize}
-    \vskip1em
+    \vskip.2em
+    \textbf{Special Variables:}
+    \begin{itemize}
+	\item \texttt{\%A}: Job array master ID
+	\item \texttt{\%a}: Individual array task ID
+	\item \texttt{\$SLURM\_ARRAY\_TASK\_ID}: Current array index
+	\end{itemize}
+    \vskip.2em
+    \end{column}
+	\begin{column}{0.5\textwidth}
+	\footnotesize
+	\vspace{5em}
     \textbf{Benefits:}
     \begin{itemize}
         \item Easier management (one job ID)
@@ -1225,10 +1270,12 @@ python process.py --id $PARAM
         \item Better for cluster scheduler
         \item Can limit concurrent tasks
     \end{itemize}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}[fragile]{Interactive Jobs with srun}
-    \small
+    \footnotesize
     \textbf{Run a single command interactively:}
     \vskip0.8em
     \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
@@ -1250,10 +1297,10 @@ srun --ntasks=1 \
 \end{frame}
 
 \begin{frame}[fragile]{Interactive Jobs with salloc}
-    \small
+    \footnotesize
     \textbf{Allocate resources for interactive shell:}
-    \vskip0.8em
-    \begin{lstlisting}[language=bash, basicstyle=\scriptsize\ttfamily]
+    \vskip0.2em
+    \begin{lstlisting}[language=bash, basicstyle=\tiny\ttfamily]
 # Allocate resources
 salloc --nodes=1 \
        --ntasks=4 \
@@ -1267,7 +1314,7 @@ python  # Interactive Python session
 # ... work interactively ...
 exit  # Release resources when done
     \end{lstlisting}
-    \vskip1em
+    \vskip.1em
     \textbf{Characteristics:}
     \begin{itemize}
         \item Interactive shell session on compute node
@@ -1281,9 +1328,9 @@ exit  # Release resources when done
 \section{Translating Concepts into Projects}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Programming Languages and Parallel Computing}
-    \small
-    \begin{tabular}{p{2cm}p{2.5cm}p{6cm}}
+\begin{frame}{{\Large Programming Languages and Parallel Computing}}
+    \footnotesize
+    \begin{tabular}{p{2cm}p{4cm}p{6cm}}
         \toprule
         \textbf{Language} & \textbf{Paradigm} & \textbf{Common Tools} \\
         \midrule
@@ -1302,12 +1349,13 @@ exit  # Release resources when done
         C/C++ & Multi-threading & OpenMP, pthreads, TBB \\
               & Message passing & MPI \\
               & Vectorization & Compiler auto-vectorization \\
-        \bottomrule
+        %\bottomrule
     \end{tabular}
 \end{frame}
 
-\begin{frame}[fragile]{Python: Multi-threading vs Multiprocessing}
-    \small
+\begin{frame}[fragile]{{\LARGE Python: Multi-threading vs Multiprocessing}}
+	\vspace{-1em}
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Threading (GIL limitation):}
@@ -1322,7 +1370,7 @@ def compute(x):
 with ThreadPoolExecutor(max_workers=4) as ex:
     results = ex.map(compute, range(100))
             \end{lstlisting}
-            \vskip0.5em
+            \vskip0.2em
             \textbf{Multiprocessing:}
             \begin{lstlisting}[language=Python, basicstyle=\tiny\ttfamily]
 from multiprocessing import Pool
@@ -1360,9 +1408,10 @@ n_cores = int(os.getenv(
 \end{frame}
 
 \begin{frame}[fragile]{Python: MPI with mpi4py}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \textbf{Distributed memory parallelism in Python}
-    \vskip0.8em
+    \vskip0.2em
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Example Code:}
@@ -1402,7 +1451,7 @@ module load openmpi python/3.9
 
 mpirun python my_mpi_script.py
             \end{lstlisting}
-            \vskip0.8em
+            \vskip0.2em
             \textbf{Key Points:}
             \begin{itemize}
                 \item Use \texttt{mpirun} to launch
@@ -1566,7 +1615,7 @@ results <- unlist(results)
 \end{frame}
 
 \begin{frame}[fragile]{R: Parallel Package - Part 2}
-    \small
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{SLURM Job Script:}
@@ -1612,7 +1661,8 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Debugging Parallel Programs}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Common Issues:}
@@ -1639,22 +1689,26 @@ stopCluster(cl)
                 \item \textbf{Validate serial code first}
                 \item \textbf{Start with small scale}
                 \begin{itemize}
+                    \tiny
                     \item 2-4 processes/threads
                     \item Small data sets
                 \end{itemize}
                 \item \textbf{Compare results}
                 \begin{itemize}
+                    \tiny
                     \item Serial vs parallel
                     \item Different core counts
                 \end{itemize}
                 \item \textbf{Use debugging tools}
                 \begin{itemize}
+                    \tiny
                     \item Valgrind for memory
                     \item GDB for segfaults
                     \item Profilers for performance
                 \end{itemize}
                 \item \textbf{Monitor resource usage}
                 \begin{itemize}
+                    \tiny
                     \item Check CPU utilization
                     \item Memory consumption
                     \item Network traffic (MPI)
@@ -1665,7 +1719,8 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Performance Optimization Tips}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \begin{enumerate}
@@ -1675,14 +1730,14 @@ stopCluster(cl)
                     \item Focus on hot spots
                     \item Measure, don't guess
                 \end{itemize}
-                
+
                 \item \textbf{Optimize Serial Code First}
                 \begin{itemize}
                     \item Algorithm improvements
                     \item Data structures
                     \item Memory access patterns
                 \end{itemize}
-                
+
                 \item \textbf{Minimize Communication}
                 \begin{itemize}
                     \item Reduce MPI calls
@@ -1700,14 +1755,14 @@ stopCluster(cl)
                     \item Dynamic load balancing
                     \item Avoid idle processes
                 \end{itemize}
-                
+
                 \item \textbf{Use Appropriate Tools}
                 \begin{itemize}
                     \item Vectorized operations
                     \item Efficient libraries (BLAS, LAPACK)
                     \item Compiler optimizations
                 \end{itemize}
-                
+
                 \item \textbf{Memory Efficiency}
                 \begin{itemize}
                     \item Cache-friendly access
@@ -1720,7 +1775,7 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}[fragile]{Scaling Studies}
-    \small
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Strong Scaling:}
@@ -1738,14 +1793,10 @@ stopCluster(cl)
                 \item Measure time per processor
                 \item Goal: Constant time
             \end{itemize}
-            \vskip0.5em
-            \textbf{Key Metrics:}
-            \begin{itemize}
-                \item Efficiency = Speedup / N\_cores
-                \item Aim for $>$80\% efficiency
-            \end{itemize}
+
         \end{column}
         \begin{column}{0.5\textwidth}
+            \centering
             \begin{tikzpicture}[scale=0.7]
                 \begin{axis}[
                     width=6cm,
@@ -1760,21 +1811,28 @@ stopCluster(cl)
                 ]
                 \addplot[black, dashed, thick, domain=1:32] {x};
                 \addlegendentry{Ideal}
-                
+
                 \addplot[blue, thick, mark=*, samples at={1,2,4,8,16,32}] {x*0.9};
                 \addlegendentry{Good scaling}
-                
-                \addplot[red, thick, mark=square*, samples at={1,2,4,8,16,32}] {10*log2(x)/log2(2)};
+
+                \addplot[red, thick, mark=square*, samples at={1,2,4,8,16,32}] {5*log2(x)/log2(10)};
                 \addlegendentry{Poor scaling}
                 \end{axis}
             \end{tikzpicture}
             \vskip0.5em
+            \tiny
             \textbf{What to report:}
             \begin{itemize}
                 \item Speedup vs core count
                 \item Parallel efficiency
                 \item Time breakdown (compute vs comm.)
             \end{itemize}
+            \vskip0.5em
+			\textbf{Key Metrics:}
+			\begin{itemize}
+				\item Efficiency = Speedup / N\_cores
+				\item Aim for $>$80\% efficiency
+			\end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
@@ -1783,13 +1841,15 @@ stopCluster(cl)
 \section{Q\&A and Interaction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Exercise 1: Writing Your First SLURM Script}
-    \small
+\begin{frame}{{\LARGE Exercise 1: Writing Your First SLURM Script}}
+	\vspace{-1em}
+    \footnotesize
     \textbf{Task:} Create a simple SLURM job script
     \vskip0.8em
     \begin{enumerate}
         \item Create a script that:
         \begin{itemize}
+            \footnotesize
             \item Prints the hostname
             \item Prints available environment variables
             \item Runs a simple calculation
@@ -1804,12 +1864,14 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Exercise 2: Parallel Python Script}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \textbf{Task:} Write a parallel Python program
     \vskip0.8em
     \begin{enumerate}
         \item Create a script that:
         \begin{itemize}
+		    \footnotesize
             \item Computes sum of squares: $\sum_{i=1}^{N} i^2$
             \item Uses multiprocessing with 4 workers
             \item Compares with serial version
@@ -1827,7 +1889,8 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Exercise 3: Job Arrays}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \textbf{Task:} Use job arrays for parameter sweep
     \vskip0.8em
     \begin{enumerate}
@@ -1852,9 +1915,11 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Common Pitfalls - Resource Issues}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \textbf{Resource-Related Problems:}
     \vskip0.8em
+    \tiny
     \begin{tabular}{p{4.5cm}p{6cm}}
         \toprule
         \textbf{Pitfall} & \textbf{Solution} \\
@@ -1869,6 +1934,7 @@ stopCluster(cl)
         \bottomrule
     \end{tabular}
     \vskip1em
+    \footnotesize
     \textbf{Prevention:}
     \begin{itemize}
         \item Start with test runs on small data
@@ -1877,10 +1943,12 @@ stopCluster(cl)
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Common Pitfalls - Code and Environment}
-    \small
+\begin{frame}{{\LARGE Common Pitfalls - Code and Environment}}
+	\vspace{-1em}
+    \footnotesize
     \textbf{Code and Environment Issues:}
     \vskip0.8em
+    \tiny
     \begin{tabular}{p{4.5cm}p{6cm}}
         \toprule
         \textbf{Pitfall} & \textbf{Solution} \\
@@ -1895,6 +1963,7 @@ stopCluster(cl)
         \bottomrule
     \end{tabular}
     \vskip1em
+    \footnotesize
     \textbf{Best Practice:}
     \begin{itemize}
         \item Test scripts locally before submitting
@@ -1903,91 +1972,119 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Common Pitfalls - Debugging Strategies}
-    \small
-    \textbf{General Debugging Approach:}
-    \vskip1em
-    \begin{enumerate}
-        \item \textbf{Check Error Logs}
-        \begin{itemize}
-            \item Always read \texttt{stderr} file first
-            \item Look for error messages and stack traces
-            \item Check SLURM output for resource issues
-        \end{itemize}
-        \vskip0.5em
-        
-        \item \textbf{Test Interactively}
-        \begin{itemize}
-            \item Use \texttt{salloc} or \texttt{srun} for interactive sessions
-            \item Run commands manually to isolate issues
-            \item Verify modules and environment variables
-        \end{itemize}
-        \vskip0.5em
-        
-        \item \textbf{Start Small, Scale Up}
-        \begin{itemize}
-            \item Test with minimal resources (1 core, small data)
-            \item Verify correctness before scaling
-            \item Gradually increase resources and problem size
-        \end{itemize}
-        \vskip0.5em
-        
-        \item \textbf{Use Cluster Documentation}
-        \begin{itemize}
-            \item Check cluster-specific quirks
-            \item Review example job scripts
-            \item Contact support if stuck
-        \end{itemize}
-    \end{enumerate}
+	\vspace{-1em}
+    \footnotesize
+    \begin{columns}[T]
+	    \begin{column}{0.5\textwidth}
+		    \textbf{General Debugging Approach:}
+		    \vskip.2em
+		    \begin{enumerate}
+		        \item \textbf{Check Error Logs}
+		        \begin{itemize}
+				    \footnotesize
+		            \item Always read \texttt{stderr} file first
+		            \item Look for error messages and stack traces
+		            \item Check SLURM output for resource issues
+		        \end{itemize}
+		        \vskip0.5em
+
+		        \item \textbf{Test Interactively}
+		        \begin{itemize}
+				    \footnotesize
+		            \item Use \texttt{salloc} or \texttt{srun} for interactive sessions
+		            \item Run commands manually to isolate issues
+		            \item Verify modules and environment variables
+		        \end{itemize}
+		    \end{enumerate}
+		\end{column}
+	    \begin{column}{0.5\textwidth}
+	        \begin{enumerate}
+		        \setcounter{enumi}{2}
+		        \item \textbf{Start Small, Scale Up}
+		        \begin{itemize}
+				    \footnotesize
+		            \item Test with minimal resources (1 core, small data)
+		            \item Verify correctness before scaling
+		            \item Gradually increase resources and problem size
+		        \end{itemize}
+		        \vskip0.5em
+
+		        \item \textbf{Use Cluster Documentation}
+		        \begin{itemize}
+				    \footnotesize
+		            \item Check cluster-specific quirks
+		            \item Review example job scripts
+		            \item Contact support if stuck
+		        \end{itemize}
+	        \end{enumerate}
+	    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Resource Estimation Guidelines}
-    \small
+	\vspace{-1em}
+    \footnotesize
+    \begin{columns}[T]
+	\begin{column}{0.55\textwidth}
     \textbf{How to estimate resources needed:}
     \vskip0.8em
     \begin{enumerate}
         \item \textbf{Memory:}
         \begin{itemize}
+    \footnotesize
             \item Run small test with \texttt{/usr/bin/time -v}
             \item Check "Maximum resident set size"
             \item Add 20-30\% buffer
             \item Formula: $\text{mem} = \text{data\_size} \times \text{copies} \times 1.3$
         \end{itemize}
-        \vskip0.5em
-        
+        \vskip0.2em
+
         \item \textbf{Time:}
         \begin{itemize}
+    \footnotesize
             \item Time small problem
             \item Extrapolate to full size
             \item Add buffer for overhead
             \item Consider: $T_{\text{parallel}} \approx \frac{T_{\text{serial}}}{N_{\text{cores}} \times \text{efficiency}}$
         \end{itemize}
-        \vskip0.5em
-        
+        \vskip0.2em
+    \end{enumerate}
+    \end{column}
+	\begin{column}{0.45\textwidth}
+	\vspace{6em}
+    \begin{enumerate}
+	        \setcounter{enumi}{2}
         \item \textbf{Cores:}
         \begin{itemize}
+    \footnotesize
             \item Start with small counts (4-8)
             \item Measure speedup
             \item Check parallel efficiency
             \item Don't over-allocate (diminishing returns)
         \end{itemize}
     \end{enumerate}
+    \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Best Practices - Job Management}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Job Submission:}
             \begin{itemize}
+			    \footnotesize
                 \item Use descriptive job names
                 \item Always specify time limits
                 \item Use \texttt{\%j} in output files
                 \item Test on small scale first
-                \item Check queue before many jobs
+                \item Check queue before submitting many jobs
             \end{itemize}
             \vskip1em
             \textbf{Resource Usage:}
             \begin{itemize}
+			    \footnotesize
                 \item Request what you need
                 \item Don't monopolize resources
                 \item Use job arrays for similar jobs
@@ -1998,14 +2095,16 @@ stopCluster(cl)
         \begin{column}{0.5\textwidth}
             \textbf{Job Monitoring:}
             \begin{itemize}
+			    \footnotesize
                 \item Check job status: \texttt{squeue -u \$USER}
-                \item Review completed jobs: \texttt{sacct}
-                \item Monitor running jobs: \texttt{sstat}
+                \item Review completed jobs: \texttt{sacct}, \texttt{seff}
+                \item Monitor running jobs: \texttt{sstat}, \texttt{Seffi}
                 \item Check efficiency after completion
             \end{itemize}
             \vskip1em
             \textbf{Error Handling:}
             \begin{itemize}
+			    \footnotesize
                 \item Always capture stderr
                 \item Use unique log file names
                 \item Implement checkpointing for long jobs
@@ -2016,7 +2115,8 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Best Practices - Code Development}
-    \small
+	\vspace{-1em}
+	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Development Workflow:}
@@ -2027,7 +2127,7 @@ stopCluster(cl)
                 \item Profile before optimizing
                 \item Document your workflow
             \end{itemize}
-            \vskip1em
+            \vskip.2em
             \textbf{Testing Strategy:}
             \begin{itemize}
                 \item Unit tests for components
@@ -2046,7 +2146,7 @@ stopCluster(cl)
                 \item Clear commenting
                 \item README with instructions
             \end{itemize}
-            \vskip1em
+            \vskip.2em
             \textbf{Performance:}
             \begin{itemize}
                 \item Optimize algorithms first
@@ -2060,20 +2160,23 @@ stopCluster(cl)
 \end{frame}
 
 \begin{frame}{Best Practices - Data Management}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Storage Strategy:}
             \begin{itemize}
-                \item Use scratch for temporary files
-                \item Back up important results
+			    \footnotesize
+                \item \textbf{Use work/scratch} for temporary files
+                \item \textbf{Back up} important results to the NAS
                 \item Compress large files
-                \item Clean up after jobs complete
+                \item \textbf{Clean up} after jobs complete
                 \item Document data provenance
             \end{itemize}
             \vskip1em
             \textbf{File Organization:}
             \begin{itemize}
+			    \footnotesize
                 \item Meaningful directory structure
                 \item Consistent naming conventions
                 \item Separate raw and processed data
@@ -2083,6 +2186,7 @@ stopCluster(cl)
         \begin{column}{0.5\textwidth}
             \textbf{I/O Optimization:}
             \begin{itemize}
+			    \footnotesize
                 \item Batch small files
                 \item Use appropriate formats (HDF5, NetCDF)
                 \item Minimize random access
@@ -2092,20 +2196,23 @@ stopCluster(cl)
             \vskip1em
             \textbf{Collaboration:}
             \begin{itemize}
-                \item Share code via repositories
-                \item Document dependencies
-                \item Use containers if available
+			    \footnotesize
+                \item \textbf{Communicate} with the team
+                \item \textbf{Share} code via repositories
+                \item \textbf{Document} dependencies
+                \item \textbf{Use containers} if available
                 \item Follow cluster policies
-                \item Communicate with team
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
 \begin{frame}{Additional Resources}
-    \small
+	\vspace{-1em}
+    \footnotesize
     \textbf{Documentation:}
     \begin{itemize}
+        \footnotesize
         \item SLURM Official Documentation: \texttt{https://slurm.schedmd.com/}
         \item Your cluster's wiki/documentation
         \item \texttt{man sbatch}, \texttt{man srun}, etc.
@@ -2113,6 +2220,7 @@ stopCluster(cl)
     \vskip0.8em
     \textbf{Learning Resources:}
     \begin{itemize}
+        \footnotesize
         \item HPC Carpentry: \texttt{https://www.hpc-carpentry.org/}
         \item XSEDE Training: \texttt{https://www.xsede.org/for-users/training}
         \item OpenMP Tutorial: \texttt{https://www.openmp.org/resources/tutorials-articles/}
@@ -2121,18 +2229,20 @@ stopCluster(cl)
     \vskip0.8em
     \textbf{Tools:}
     \begin{itemize}
-        \item Performance profilers: \texttt{gprof}, \texttt{perf}, \texttt{Intel VTune}
+	    \footnotesize
+        \item Performance profilers: \texttt{gprof}, \texttt{perf}, \texttt{Intel VTune}, \texttt{nvprof}, \texttt{NVIDIA Nsight}
         \item Debuggers: \texttt{gdb}, \texttt{valgrind}, \texttt{DDT}
-        \item Job monitoring: \texttt{squeue}, \texttt{sacct}, \texttt{scontrol}
+        \item Job monitoring: \texttt{squeue}, \texttt{sacct}, \texttt{scontrol}, \texttt{seff}, \texttt{Seffi}
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Questions?}
+	\vspace{-2em}
     \begin{center}
         \Huge Thank You!
-        \vskip2em
+        \vskip1em
         \Large Questions and Discussion
-        \vskip2em
+        \vskip1em
         \normalsize
         \textbf{Contact Information:}\\
         {[}Your contact information here{]}
