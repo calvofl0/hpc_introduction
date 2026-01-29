@@ -1,0 +1,133 @@
+title = "Quiz 2: Understanding Parallelism"
+
+# Question 1: Levels of Parallelism
+[[slides]]
+[slides.MultipleChoice]
+title = "Which level of parallelism is automatic and handled entirely by the hardware, requiring no programmer effort?"
+introduce_question = 5000
+time_limit = 20000
+points_awarded = 1000
+answers = [
+    { content.Text = "Instruction-Level Parallelism (ILP)", correct = true },
+    { content.Text = "Thread-Level Parallelism (OpenMP)", correct = false },
+    { content.Text = "Process-Level Parallelism (MPI)", correct = false },
+    { content.Text = "GPU Parallelism (CUDA)", correct = false },
+]
+
+# Question 2: SIMD Concept
+[[slides]]
+[slides.MultipleChoice]
+title = "What does SIMD (Single Instruction, Multiple Data) allow a processor to do?"
+introduce_question = 5000
+time_limit = 20000
+points_awarded = 1000
+answers = [
+    { content.Text = "Apply the same operation to multiple data elements simultaneously", correct = true },
+    { content.Text = "Run multiple different instructions on the same data", correct = false },
+    { content.Text = "Execute instructions out of order for optimization", correct = false },
+    { content.Text = "Share memory between different CPU cores", correct = false },
+]
+
+# Question 3: OpenMP vs MPI
+[[slides]]
+[slides.MultipleChoice]
+title = "What is the key difference between OpenMP and MPI?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "OpenMP uses shared memory within a node; MPI uses message passing across nodes", correct = true },
+    { content.Text = "OpenMP is faster than MPI in all cases", correct = false },
+    { content.Text = "MPI can only run on a single node", correct = false },
+    { content.Text = "OpenMP requires explicit message passing between threads", correct = false },
+]
+
+# Question 4: Parallelism Hierarchy (Effort)
+[[slides]]
+[slides.Order]
+title = "Order these parallelism levels from LEAST programmer effort to MOST programmer effort:"
+introduce_question = 5000
+time_limit = 45000
+points_awarded = 2000
+answers = ["ILP (Hardware automatic)", "SIMD (Compiler-assisted)", "Threads/OpenMP", "MPI (Message Passing)", "GPU/Accelerators"]
+axis_labels = { from = "Least effort", to = "Most effort" }
+
+# Question 5: Speed-Up Calculation
+[[slides]]
+[slides.TypeAnswer]
+title = "A program takes 100 seconds on 1 core and 25 seconds on 8 cores. What is the speed-up?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = ["4", "4x", "4×", "4.0"]
+case_sensitive = false
+
+# Question 6: Strong vs Weak Scaling
+[[slides]]
+[slides.MultipleChoice]
+title = "In strong scaling, what stays fixed as you add more processors?"
+introduce_question = 5000
+time_limit = 20000
+points_awarded = 1000
+answers = [
+    { content.Text = "The total problem size", correct = true },
+    { content.Text = "The problem size per processor", correct = false },
+    { content.Text = "The execution time", correct = false },
+    { content.Text = "The number of nodes", correct = false },
+]
+
+# Question 7: Amdahl's Law Insight
+[[slides]]
+[slides.MultipleChoice]
+title = "According to Amdahl's Law, if 5% of your code is serial (cannot be parallelized), what is the maximum theoretical speedup with infinite processors?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 2000
+answers = [
+    { content.Text = "20×", correct = true },
+    { content.Text = "5×", correct = false },
+    { content.Text = "95×", correct = false },
+    { content.Text = "Unlimited", correct = false },
+]
+
+# Question 8: Gustafson's Law
+[[slides]]
+[slides.MultipleChoice]
+title = "How does Gustafson's Law differ from Amdahl's Law?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "Gustafson assumes the problem size scales with the number of processors", correct = true },
+    { content.Text = "Gustafson ignores the serial portion of code", correct = false },
+    { content.Text = "Gustafson only applies to GPU computing", correct = false },
+    { content.Text = "Gustafson predicts lower speedups than Amdahl", correct = false },
+]
+
+# Question 9: Hybrid Parallelization
+[[slides]]
+[slides.MultipleChoice]
+title = "In a hybrid MPI+OpenMP setup, what role does each typically play?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "MPI for inter-node communication, OpenMP for intra-node parallelism", correct = true },
+    { content.Text = "MPI for intra-node, OpenMP for inter-node communication", correct = false },
+    { content.Text = "Both MPI and OpenMP handle inter-node communication equally", correct = false },
+    { content.Text = "OpenMP replaces MPI entirely in modern clusters", correct = false },
+]
+
+# Question 10: GPU Architecture
+[[slides]]
+[slides.MultipleChoice]
+title = "Compared to a CPU, what characterizes a GPU's architecture?"
+introduce_question = 5000
+time_limit = 20000
+points_awarded = 1000
+answers = [
+    { content.Text = "Thousands of simple cores optimized for data parallelism", correct = true },
+    { content.Text = "Fewer but more powerful cores for complex logic", correct = false },
+    { content.Text = "Faster clock speeds but less memory", correct = false },
+    { content.Text = "Direct access to system RAM without transfers", correct = false },
+]
