@@ -1,0 +1,105 @@
+title = "Quiz 1: Demystifying HPC Hardware"
+
+# Question 1: HPC Goals
+[[slides]]
+[slides.MultipleChoice]
+title = "What are the three main goals of High-Performance Computing?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "Solve problems faster, solve larger problems, solve more problems simultaneously", correct = true },
+    { content.Text = "Use more electricity, generate more heat, require more cooling", correct = false },
+    { content.Text = "Replace human workers, automate everything, eliminate errors", correct = false },
+    { content.Text = "Reduce costs, simplify code, avoid parallelism", correct = false },
+]
+
+# Question 2: CPU Architecture Terminology
+[[slides]]
+[slides.MultipleChoice]
+title = "In CPU architecture, what is a 'core'?"
+introduce_question = 5000
+time_limit = 20000
+points_awarded = 1000
+answers = [
+    { content.Text = "An independent processing unit within a CPU", correct = true },
+    { content.Text = "The physical connector for a CPU on the motherboard", correct = false },
+    { content.Text = "A virtual processing unit created by hyperthreading", correct = false },
+    { content.Text = "The entire processor chip", correct = false },
+]
+
+# Question 3: Memory Hierarchy
+[[slides]]
+[slides.Order]
+title = "Order these memory types from FASTEST to SLOWEST:"
+introduce_question = 5000
+time_limit = 45000
+points_awarded = 2000
+answers = ["Registers", "L1 Cache", "L3 Cache", "RAM", "Disk Storage"]
+axis_labels = { from = "Fastest", to = "Slowest" }
+
+# Question 4: Why Parallelism?
+[[slides]]
+[slides.MultipleChoice]
+title = "Why did the computing industry shift toward multi-core processors around 2005?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "CPU clock speeds plateaued due to physical limits (power, heat)", correct = true },
+    { content.Text = "Single-core processors became too expensive to manufacture", correct = false },
+    { content.Text = "Software developers demanded more cores", correct = false },
+    { content.Text = "Memory became faster than processors", correct = false },
+]
+
+# Question 5: Shared vs Distributed Memory
+[[slides]]
+[slides.MultipleChoice]
+title = "In a distributed memory architecture, how do processes on different nodes exchange data?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "Through explicit message passing (e.g., MPI)", correct = true },
+    { content.Text = "By directly reading each other's RAM", correct = false },
+    { content.Text = "Through shared cache memory", correct = false },
+    { content.Text = "Data exchange is not possible between nodes", correct = false },
+]
+
+# Question 6: Cluster Components
+[[slides]]
+[slides.MultipleChoice]
+title = "When you SSH into an HPC cluster, which node do you connect to?"
+introduce_question = 5000
+time_limit = 20000
+points_awarded = 1000
+answers = [
+    { content.Text = "The login node", correct = true },
+    { content.Text = "A compute node", correct = false },
+    { content.Text = "The storage node", correct = false },
+    { content.Text = "Any available node", correct = false },
+]
+
+# Question 7: SLURM Terminology
+[[slides]]
+[slides.MultipleChoice]
+title = "In SLURM, what does 'CPU' typically refer to?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "A core (or hardware thread), not a physical CPU socket", correct = true },
+    { content.Text = "A physical CPU chip", correct = false },
+    { content.Text = "A complete compute node", correct = false },
+    { content.Text = "A user's job allocation", correct = false },
+]
+
+# Question 8: Resource Calculation
+[[slides]]
+[slides.TypeAnswer]
+title = "If you request 4 tasks with 8 CPUs per task, how many total cores will be allocated?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = ["32", "32 cores", "32 CPUs"]
+case_sensitive = false
