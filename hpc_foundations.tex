@@ -1182,6 +1182,283 @@ for (int i = 0; i < N; i++) {
     \textbf{Reality:} Most HPC users benefit from Gustafson's perspective---more resources let you tackle bigger, more interesting problems!
 \end{frame}
 
+\begin{frame}{Parallel Patterns: The Big Picture}
+	\footnotesize
+	\textbf{Key insight:} Most parallel problems fit one of these communication patterns:
+	\vskip0.5em
+	\begin{center}
+	\begin{tabular}{|l|c|l|l|}
+		\hline
+		\textbf{Pattern} & \textbf{Communication} & \textbf{Examples} & \textbf{Strategy} \\
+		\hline
+		Embarrassingly & \multirow{2}{*}{None} & Monte Carlo, rendering, & Simple \\
+		Parallel & & parameter sweeps & distribution \\
+		\hline
+		Reduction & All $\to$ One & Sum, max, dot product & Tree reduction \\
+		\hline
+		\multirow{2}{*}{Stencil} & \multirow{2}{*}{Neighbors} & PDEs, image filters, & Domain decomp. \\
+		& & simulations & + halo exchange \\
+		\hline
+		All-to-All & Everyone $\leftrightarrow$ All & FFT, sorting, dense LA & Collectives \\
+		\hline
+		Irregular & Data-dependent & Graphs, adaptive mesh & Task-based \\
+		\hline
+	\end{tabular}
+	\end{center}
+	\vskip0.5em
+	\textbf{Your first question:} What's the communication pattern of my problem?
+\end{frame}
+
+\begin{frame}{Common Parallel Patterns}
+	\begin{columns}[T]
+		\begin{column}{0.33\textwidth}
+			\centering
+			\textbf{Map}\\[0.3em]
+			\begin{tikzpicture}[scale=0.6]
+				% Input array
+				\foreach \i in {0,...,3} {
+					\draw[fill=blue!20] (\i*0.7, 1.5) rectangle (\i*0.7+0.5, 2);
+					\node at (\i*0.7+0.25, 1.75) {\tiny \i};
+				}
+				% Arrows
+				\foreach \i in {0,...,3} {
+					\draw[->, thick] (\i*0.7+0.25, 1.4) -- (\i*0.7+0.25, 0.6);
+					\node at (\i*0.7+0.25, 1.0) {\tiny f};
+				}
+				% Output array
+				\foreach \i in {0,...,3} {
+					\draw[fill=green!20] (\i*0.7, 0) rectangle (\i*0.7+0.5, 0.5);
+				}
+			\end{tikzpicture}
+			\\[0.3em]
+			\scriptsize Same operation\\on each element\\[0.3em]
+			\tiny\textit{Julia set, ray tracing}
+		\end{column}
+		\begin{column}{0.33\textwidth}
+			\centering
+			\textbf{Reduce}\\[0.3em]
+			\begin{tikzpicture}[scale=0.6]
+				% Input array
+				\foreach \i in {0,...,3} {
+					\draw[fill=blue!20] (\i*0.7, 2) rectangle (\i*0.7+0.5, 2.5);
+				}
+				% Tree reduction
+				\draw[->, thick] (0.25, 1.9) -- (0.6, 1.4);
+				\draw[->, thick] (0.95, 1.9) -- (0.6, 1.4);
+				\draw[->, thick] (1.65, 1.9) -- (2.0, 1.4);
+				\draw[->, thick] (2.35, 1.9) -- (2.0, 1.4);
+				\draw[fill=yellow!30] (0.35, 1.0) rectangle (0.85, 1.4);
+				\draw[fill=yellow!30] (1.75, 1.0) rectangle (2.25, 1.4);
+				\draw[->, thick] (0.6, 0.9) -- (1.1, 0.4);
+				\draw[->, thick] (2.0, 0.9) -- (1.5, 0.4);
+				% Output
+				\draw[fill=green!30] (1.05, 0) rectangle (1.55, 0.4);
+			\end{tikzpicture}
+			\\[0.3em]
+			\scriptsize Combine all into\\one result\\[0.3em]
+			\tiny\textit{Sum, max, histogram}
+		\end{column}
+		\begin{column}{0.33\textwidth}
+			\centering
+			\textbf{Stencil}\\[0.3em]
+			\begin{tikzpicture}[scale=0.5]
+				% Grid
+				\foreach \i in {0,...,4} {
+					\foreach \j in {0,...,4} {
+						\draw[fill=gray!10] (\i*0.5, \j*0.5) rectangle (\i*0.5+0.45, \j*0.5+0.45);
+					}
+				}
+				% Highlight center and neighbors
+				\draw[fill=red!30] (1.0, 1.0) rectangle (1.45, 1.45);
+				\draw[fill=orange!30] (1.0, 0.5) rectangle (1.45, 0.95);
+				\draw[fill=orange!30] (1.0, 1.5) rectangle (1.45, 1.95);
+				\draw[fill=orange!30] (0.5, 1.0) rectangle (0.95, 1.45);
+				\draw[fill=orange!30] (1.5, 1.0) rectangle (1.95, 1.45);
+				% Arrow
+				\draw[->, thick] (2.7, 1.2) -- (3.3, 1.2);
+				% Result
+				\draw[fill=green!30] (3.5, 1.0) rectangle (3.95, 1.45);
+			\end{tikzpicture}
+			\\[0.3em]
+			\scriptsize Each element uses\\its neighbors\\[0.3em]
+			\tiny\textit{Heat eq., blur, CFD}
+		\end{column}
+	\end{columns}
+	\vskip1em
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\centering
+			\textbf{Map-Reduce}\\[0.3em]
+			\begin{tikzpicture}[scale=0.55]
+				% Data
+				\draw[fill=blue!20] (0, 1.5) rectangle (2.5, 2);
+				\node at (1.25, 1.75) {\tiny Data};
+				% Map phase
+				\draw[->, thick] (0.4, 1.4) -- (0.4, 0.9);
+				\draw[->, thick] (1.25, 1.4) -- (1.25, 0.9);
+				\draw[->, thick] (2.1, 1.4) -- (2.1, 0.9);
+				\draw[fill=yellow!30] (0.1, 0.5) rectangle (0.7, 0.85);
+				\draw[fill=yellow!30] (0.95, 0.5) rectangle (1.55, 0.85);
+				\draw[fill=yellow!30] (1.8, 0.5) rectangle (2.4, 0.85);
+				\node at (1.25, 0.67) {\tiny Map};
+				% Reduce
+				\draw[->, thick] (0.4, 0.4) -- (1.1, 0.1);
+				\draw[->, thick] (1.25, 0.4) -- (1.25, 0.1);
+				\draw[->, thick] (2.1, 0.4) -- (1.4, 0.1);
+				\draw[fill=green!30] (0.95, -0.3) rectangle (1.55, 0.05);
+				\node at (1.25, -0.12) {\tiny Result};
+			\end{tikzpicture}
+			\\[0.2em]
+			\scriptsize Process locally, then combine\\
+			\tiny\textit{Word count, statistics, ML}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\textbf{Pipeline}\\[0.3em]
+			\begin{tikzpicture}[scale=0.55]
+				% Stages
+				\draw[fill=blue!20] (0, 0.8) rectangle (0.8, 1.3);
+				\node at (0.4, 1.05) {\tiny S1};
+				\draw[fill=yellow!20] (1.2, 0.8) rectangle (2.0, 1.3);
+				\node at (1.6, 1.05) {\tiny S2};
+				\draw[fill=green!20] (2.4, 0.8) rectangle (3.2, 1.3);
+				\node at (2.8, 1.05) {\tiny S3};
+				% Arrows
+				\draw[->, thick] (0.85, 1.05) -- (1.15, 1.05);
+				\draw[->, thick] (2.05, 1.05) -- (2.35, 1.05);
+				% Data items
+				\node at (0.4, 0.4) {\tiny a,b,c};
+				\node at (1.6, 0.4) {\tiny a,b};
+				\node at (2.8, 0.4) {\tiny a};
+			\end{tikzpicture}
+			\\[0.2em]
+			\scriptsize Data flows through stages\\
+			\tiny\textit{Video processing, compilers}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Choosing Your Parallelization Strategy}
+	\footnotesize
+	\begin{center}
+	\begin{tikzpicture}[
+		decision/.style={diamond, draw, fill=blue!10, text width=2.2cm, align=center, inner sep=1pt, font=\tiny},
+		result/.style={rectangle, draw, fill=green!20, text width=1.8cm, align=center, rounded corners, font=\tiny},
+		arrow/.style={->, thick, >=stealth},
+		scale=0.9
+	]
+		% Root
+		\node[decision] (root) at (0, 0) {Simple loop structure?};
+
+		% Left branch - Yes (loops)
+		\node[decision] (indep) at (-3.5, -1.5) {Iterations independent?};
+
+		% Right branch - No (not loops)
+		\node[decision] (recur) at (3.5, -1.5) {Recursive or irregular?};
+
+		% Left-left: independent iterations
+		\node[decision] (uniform) at (-5.5, -3) {Uniform work per iteration?};
+
+		% Left-right: dependencies
+		\node[decision] (deptype) at (-1.5, -3) {Dependency type?};
+
+		% Results
+		\node[result] (static) at (-6.5, -4.5) {\texttt{static}\\ schedule};
+		\node[result] (dynamic) at (-4.5, -4.5) {\texttt{dynamic}\\ schedule};
+		\node[result] (reduce) at (-2.5, -4.5) {Reduction\\ primitives};
+		\node[result] (stencil) at (-0.5, -4.5) {Domain\\ decomp.};
+		\node[result] (tasks) at (2.5, -4.5) {OpenMP\\ tasks};
+		\node[result] (taskgraph) at (4.5, -4.5) {Task graphs\\ runtime};
+
+		% Arrows
+		\draw[arrow] (root) -- node[above left, font=\tiny] {Yes} (indep);
+		\draw[arrow] (root) -- node[above right, font=\tiny] {No} (recur);
+		\draw[arrow] (indep) -- node[above left, font=\tiny] {Yes} (uniform);
+		\draw[arrow] (indep) -- node[above right, font=\tiny] {No} (deptype);
+		\draw[arrow] (uniform) -- node[left, font=\tiny] {Yes} (static);
+		\draw[arrow] (uniform) -- node[right, font=\tiny] {No} (dynamic);
+		\draw[arrow] (deptype) -- node[left, font=\tiny] {Reduce} (reduce);
+		\draw[arrow] (deptype) -- node[right, font=\tiny] {Stencil} (stencil);
+		\draw[arrow] (recur) -- node[left, font=\tiny] {Recursive} (tasks);
+		\draw[arrow] (recur) -- node[right, font=\tiny] {Irregular} (taskgraph);
+	\end{tikzpicture}
+	\end{center}
+	\vskip0.3em
+	\textbf{Key questions to ask:}
+	\begin{itemize}
+		\item What's the communication pattern? (none / reduction / neighbors / all-to-all)
+		\item Is the work per element uniform or variable?
+		\item Do I know the work structure at compile time or only at runtime?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Beyond Basic Patterns: Domain Strategies}
+	\footnotesize
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\textbf{Domain Decomposition}
+			\begin{center}
+			\begin{tikzpicture}[scale=0.5]
+				% Original domain
+				\draw[thick] (0, 0) rectangle (3, 3);
+				\draw[dashed] (1.5, 0) -- (1.5, 3);
+				\draw[dashed] (0, 1.5) -- (3, 1.5);
+				\node[fill=red!20] at (0.75, 2.25) {\tiny P0};
+				\node[fill=blue!20] at (2.25, 2.25) {\tiny P1};
+				\node[fill=green!20] at (0.75, 0.75) {\tiny P2};
+				\node[fill=yellow!20] at (2.25, 0.75) {\tiny P3};
+				% Arrow
+				\node at (1.5, -0.5) {\tiny Split space};
+			\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item Split physical space among processes
+				\item Each owns a subdomain
+				\item Exchange boundaries (halo/ghost cells)
+				\item \textit{PDEs, fluid dynamics, weather}
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\textbf{Model Coupling}
+			\begin{center}
+			\begin{tikzpicture}[scale=0.5]
+				\draw[thick, fill=blue!20, rounded corners] (0, 2) rectangle (2, 3);
+				\node at (1, 2.5) {\tiny Ocean};
+				\draw[thick, fill=cyan!20, rounded corners] (0, 0) rectangle (2, 1);
+				\node at (1, 0.5) {\tiny Atmos.};
+				\draw[<->, thick] (1, 1.1) -- (1, 1.9);
+				\node[right, font=\tiny] at (1.1, 1.5) {exchange};
+			\end{tikzpicture}
+			\end{center}
+			\begin{itemize}
+				\item Different physics/codes
+				\item Exchange data at interfaces
+				\item Often different time scales
+				\item \textit{Climate, multi-physics}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+	\vskip1em
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\textbf{Ensemble Runs}
+			\begin{itemize}
+				\item Same code, different inputs
+				\item Embarrassingly parallel at job level
+				\item \textit{UQ, ML hyperparameters, Monte Carlo}
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\textbf{Particle Methods}
+			\begin{itemize}
+				\item Distribute particles/agents
+				\item Dynamic load balancing
+				\item \textit{N-body, molecular dynamics}
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
 \begin{frame}{}
 	\vfill
 	\centering
