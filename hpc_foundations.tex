@@ -1300,13 +1300,13 @@ for (int i = 0; i < N; i++) {
 				\draw[fill=yellow!30] (0.1, 0.5) rectangle (0.7, 0.85);
 				\draw[fill=yellow!30] (0.95, 0.5) rectangle (1.55, 0.85);
 				\draw[fill=yellow!30] (1.8, 0.5) rectangle (2.4, 0.85);
-				\node at (1.25, 0.67) {\tiny Map};
+				\node[right] at (2.5, 0.67) {\tiny Map};
 				% Reduce
 				\draw[->, thick] (0.4, 0.4) -- (1.1, 0.1);
 				\draw[->, thick] (1.25, 0.4) -- (1.25, 0.1);
 				\draw[->, thick] (2.1, 0.4) -- (1.4, 0.1);
 				\draw[fill=green!30] (0.95, -0.3) rectangle (1.55, 0.05);
-				\node at (1.25, -0.12) {\tiny Result};
+				\node[right] at (1.6, -0.12) {\tiny Result};
 			\end{tikzpicture}
 			\\[0.2em]
 			\scriptsize Process locally, then combine\\
@@ -1315,24 +1315,39 @@ for (int i = 0; i < N; i++) {
 		\begin{column}{0.5\textwidth}
 			\centering
 			\textbf{Pipeline}\\[0.3em]
-			\begin{tikzpicture}[scale=0.55]
-				% Stages
-				\draw[fill=blue!20] (0, 0.8) rectangle (0.8, 1.3);
-				\node at (0.4, 1.05) {\tiny S1};
-				\draw[fill=yellow!20] (1.2, 0.8) rectangle (2.0, 1.3);
-				\node at (1.6, 1.05) {\tiny S2};
-				\draw[fill=green!20] (2.4, 0.8) rectangle (3.2, 1.3);
-				\node at (2.8, 1.05) {\tiny S3};
-				% Arrows
-				\draw[->, thick] (0.85, 1.05) -- (1.15, 1.05);
-				\draw[->, thick] (2.05, 1.05) -- (2.35, 1.05);
-				% Data items
-				\node at (0.4, 0.4) {\tiny a,b,c};
-				\node at (1.6, 0.4) {\tiny a,b};
-				\node at (2.8, 0.4) {\tiny a};
+			\begin{tikzpicture}[scale=0.45]
+				% Time labels on left
+				\node[left, font=\tiny] at (-0.3, 2.4) {t=1};
+				\node[left, font=\tiny] at (-0.3, 1.6) {t=2};
+				\node[left, font=\tiny] at (-0.3, 0.8) {t=3};
+				\node[left, font=\tiny] at (-0.3, 0.0) {t=4};
+				% Stage labels on top
+				\node[above, font=\tiny] at (0.4, 2.9) {S1};
+				\node[above, font=\tiny] at (1.4, 2.9) {S2};
+				\node[above, font=\tiny] at (2.4, 2.9) {S3};
+				% t=1: only S1 works on item a
+				\draw[fill=blue!30] (0, 2.2) rectangle (0.8, 2.7);
+				\node at (0.4, 2.45) {\tiny a};
+				% t=2: S1 works on b, S2 works on a
+				\draw[fill=blue!30] (0, 1.4) rectangle (0.8, 1.9);
+				\node at (0.4, 1.65) {\tiny b};
+				\draw[fill=yellow!30] (1.0, 1.4) rectangle (1.8, 1.9);
+				\node at (1.4, 1.65) {\tiny a};
+				% t=3: S1 works on c, S2 works on b, S3 works on a
+				\draw[fill=blue!30] (0, 0.6) rectangle (0.8, 1.1);
+				\node at (0.4, 0.85) {\tiny c};
+				\draw[fill=yellow!30] (1.0, 0.6) rectangle (1.8, 1.1);
+				\node at (1.4, 0.85) {\tiny b};
+				\draw[fill=green!30] (2.0, 0.6) rectangle (2.8, 1.1);
+				\node at (2.4, 0.85) {\tiny a};
+				% t=4: S2 works on c, S3 works on b
+				\draw[fill=yellow!30] (1.0, -0.2) rectangle (1.8, 0.3);
+				\node at (1.4, 0.05) {\tiny c};
+				\draw[fill=green!30] (2.0, -0.2) rectangle (2.8, 0.3);
+				\node at (2.4, 0.05) {\tiny b};
 			\end{tikzpicture}
 			\\[0.2em]
-			\scriptsize Data flows through stages\\
+			\scriptsize 3 items in 4 steps (not 9)\\
 			\tiny\textit{Video processing, compilers}
 		\end{column}
 	\end{columns}
@@ -1342,48 +1357,57 @@ for (int i = 0; i < N; i++) {
 	\footnotesize
 	\begin{center}
 	\begin{tikzpicture}[
-		decision/.style={diamond, draw, fill=blue!10, text width=2.2cm, align=center, inner sep=1pt, font=\tiny},
-		result/.style={rectangle, draw, fill=green!20, text width=1.8cm, align=center, rounded corners, font=\tiny},
+		decision/.style={signal, signal to=east and west, draw, fill=blue!10, text width=1.9cm, align=center, inner sep=2pt, font=\tiny, minimum height=0.7cm},
+		result/.style={rectangle, draw, fill=green!20, text width=1.6cm, align=center, rounded corners, font=\tiny},
+		example/.style={font=\tiny\itshape, text width=1.6cm, align=center},
 		arrow/.style={->, thick, >=stealth},
-		scale=0.9
+		scale=0.85
 	]
 		% Root
-		\node[decision] (root) at (0, 0) {Simple loop structure?};
+		\node[decision] (root) at (0, 0) {Known loop bounds?};
 
-		% Left branch - Yes (loops)
-		\node[decision] (indep) at (-3.5, -1.5) {Iterations independent?};
+		% Left branch - for-like (loops)
+		\node[decision] (indep) at (-3.5, -1.4) {Iterations independent?};
 
-		% Right branch - No (not loops)
-		\node[decision] (recur) at (3.5, -1.5) {Recursive or irregular?};
+		% Right branch - while-like (not loops)
+		\node[decision] (recur) at (3.5, -1.4) {Recursive or irregular?};
 
 		% Left-left: independent iterations
-		\node[decision] (uniform) at (-5.5, -3) {Uniform work per iteration?};
+		\node[decision] (uniform) at (-5.5, -2.8) {Uniform work?};
 
 		% Left-right: dependencies
-		\node[decision] (deptype) at (-1.5, -3) {Dependency type?};
+		\node[decision] (deptype) at (-1.5, -2.8) {Dependency type?};
 
 		% Results
-		\node[result] (static) at (-6.5, -4.5) {\texttt{static}\\ schedule};
-		\node[result] (dynamic) at (-4.5, -4.5) {\texttt{dynamic}\\ schedule};
-		\node[result] (reduce) at (-2.5, -4.5) {Reduction\\ primitives};
-		\node[result] (stencil) at (-0.5, -4.5) {Domain\\ decomp.};
-		\node[result] (tasks) at (2.5, -4.5) {OpenMP\\ tasks};
-		\node[result] (taskgraph) at (4.5, -4.5) {Task graphs\\ runtime};
+		\node[result] (static) at (-6.5, -4.2) {\texttt{static}\\ schedule};
+		\node[result] (dynamic) at (-4.5, -4.2) {\texttt{dynamic}\\ schedule};
+		\node[result] (reduce) at (-2.5, -4.2) {Reduction\\ primitives};
+		\node[result] (stencil) at (-0.5, -4.2) {Domain\\ decomp.};
+		\node[result] (tasks) at (2.5, -4.2) {OpenMP\\ tasks};
+		\node[result] (taskgraph) at (4.5, -4.2) {Task graphs\\ runtime};
+
+		% Examples below results
+		\node[example] at (-6.5, -5.0) {matrix mult.};
+		\node[example] at (-4.5, -5.0) {Julia set};
+		\node[example] at (-2.5, -5.0) {dot product};
+		\node[example] at (-0.5, -5.0) {heat equation};
+		\node[example] at (2.5, -5.0) {quicksort};
+		\node[example] at (4.5, -5.0) {graph traversal};
 
 		% Arrows
-		\draw[arrow] (root) -- node[above left, font=\tiny] {Yes} (indep);
-		\draw[arrow] (root) -- node[above right, font=\tiny] {No} (recur);
+		\draw[arrow] (root) -- node[above left, font=\tiny] {for-like} (indep);
+		\draw[arrow] (root) -- node[above right, font=\tiny] {while-like} (recur);
 		\draw[arrow] (indep) -- node[above left, font=\tiny] {Yes} (uniform);
 		\draw[arrow] (indep) -- node[above right, font=\tiny] {No} (deptype);
 		\draw[arrow] (uniform) -- node[left, font=\tiny] {Yes} (static);
 		\draw[arrow] (uniform) -- node[right, font=\tiny] {No} (dynamic);
 		\draw[arrow] (deptype) -- node[left, font=\tiny] {Reduce} (reduce);
-		\draw[arrow] (deptype) -- node[right, font=\tiny] {Stencil} (stencil);
+		\draw[arrow] (deptype) -- node[right, font=\tiny] {Neighbor} (stencil);
 		\draw[arrow] (recur) -- node[left, font=\tiny] {Recursive} (tasks);
 		\draw[arrow] (recur) -- node[right, font=\tiny] {Irregular} (taskgraph);
 	\end{tikzpicture}
 	\end{center}
-	\vskip0.3em
+	\vskip0.2em
 	\textbf{Key questions to ask:}
 	\begin{itemize}
 		\item What's the communication pattern? (none / reduction / neighbors / all-to-all)
