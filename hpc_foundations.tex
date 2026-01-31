@@ -937,7 +937,8 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Strong Scaling vs Weak Scaling}
-	\footnotesize
+	\vspace{-1em}
+	\scriptsize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Strong Scaling:}
@@ -1210,6 +1211,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Common Parallel Patterns}
+	\vspace{-1em}
 	\begin{columns}[T]
 		\begin{column}{0.33\textwidth}
 			\centering
@@ -1286,7 +1288,9 @@ for (int i = 0; i < N; i++) {
 	\end{columns}
 	\vskip1em
 	\begin{columns}[T]
-		\begin{column}{0.5\textwidth}
+		\begin{column}{0.1\textwidth}
+		\end{column}
+		\begin{column}{0.4\textwidth}
 			\centering
 			\textbf{Map-Reduce}\\[0.3em]
 			\begin{tikzpicture}[scale=0.55]
@@ -1312,7 +1316,7 @@ for (int i = 0; i < N; i++) {
 			\scriptsize Process locally, then combine\\
 			\tiny\textit{Word count, statistics, ML}
 		\end{column}
-		\begin{column}{0.5\textwidth}
+		\begin{column}{0.4\textwidth}
 			\centering
 			\textbf{Pipeline}\\[0.3em]
 			\begin{tikzpicture}[scale=0.45]
@@ -1350,10 +1354,13 @@ for (int i = 0; i < N; i++) {
 			\scriptsize 3 items in 5 steps (not 9)\\
 			\tiny\textit{Video processing, compilers}
 		\end{column}
+		\begin{column}{0.1\textwidth}
+		\end{column}
 	\end{columns}
 \end{frame}
 
 \begin{frame}{Choosing Your Parallelization Strategy}
+	\vspace{-1em}
 	\footnotesize
 	\begin{center}
 	\begin{tikzpicture}[
@@ -1397,8 +1404,8 @@ for (int i = 0; i < N; i++) {
 		% Arrows
 		\draw[arrow] (root) -- node[above left, font=\tiny] {for-like} (indep);
 		\draw[arrow] (root) -- node[above right, font=\tiny] {while-like} (recur);
-		\draw[arrow] (indep) -- node[above left, font=\tiny] {Yes} (uniform);
-		\draw[arrow] (indep) -- node[above right, font=\tiny] {No} (deptype);
+		\draw[arrow] (indep) -- node[left, xshift=-2pt, font=\tiny] {Yes} (uniform);
+		\draw[arrow] (indep) -- node[right, xshift=2pt, font=\tiny] {No} (deptype);
 		\draw[arrow] (uniform) -- node[left, font=\tiny] {Yes} (static);
 		\draw[arrow] (uniform) -- node[right, font=\tiny] {No} (dynamic);
 		\draw[arrow] (deptype) -- node[left, font=\tiny] {Reduce} (reduce);
@@ -1416,7 +1423,8 @@ for (int i = 0; i < N; i++) {
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Beyond Basic Patterns: Domain Strategies}
+\begin{frame}{\LARGE Beyond Basic Patterns}
+	\vspace{-1em}
 	\footnotesize
 	\begin{columns}[T]
 		\begin{column}{0.5\textwidth}
@@ -1435,6 +1443,7 @@ for (int i = 0; i < N; i++) {
 				\node at (1.5, -0.5) {\tiny Split space};
 			\end{tikzpicture}
 			\end{center}
+			\vspace{-1.5em}
 			\begin{itemize}
 				\item Split physical space among processes
 				\item Each owns a subdomain
