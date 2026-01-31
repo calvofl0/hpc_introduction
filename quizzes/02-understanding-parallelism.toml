@@ -131,3 +131,31 @@ answers = [
     { content.Text = "Faster clock speeds but less memory", correct = false },
     { content.Text = "Direct access to system RAM without transfers", correct = false },
 ]
+
+# Question 11: Communication Patterns
+[[slides]]
+[slides.MultipleChoice]
+title = "Climate analysis workflow: (1) Process 1000 weather station files independently to extract temperatures, (2) Compute the global average from all values. What are the communication patterns?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "1. Embarrassingly parallel, 2. Reduction", correct = true },
+    { content.Text = "1. Reduction, 2. Embarrassingly parallel", correct = false },
+    { content.Text = "1. Stencil, 2. All-to-all", correct = false },
+    { content.Text = "1. All-to-all, 2. Stencil", correct = false },
+]
+
+# Question 12: Work Distribution Strategy
+[[slides]]
+[slides.MultipleChoice]
+title = "You have a loop with known bounds where iterations are independent, but some take much longer than others (e.g., pixels near a fractal boundary). What work distribution strategy should you use?"
+introduce_question = 5000
+time_limit = 30000
+points_awarded = 1000
+answers = [
+    { content.Text = "Dynamic distribution - assign work units on-demand", correct = true },
+    { content.Text = "Static distribution - divide work equally upfront", correct = false },
+    { content.Text = "Reduction", correct = false },
+    { content.Text = "Domain decomposition with halo exchange", correct = false },
+]
