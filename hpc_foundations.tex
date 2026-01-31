@@ -695,6 +695,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Race Conditions \& Thread Safety}
+	\vspace{-1em}
 	\footnotesize
 	\textbf{What is a race condition?}
 	When multiple threads access shared data simultaneously and at least one modifies it, the outcome depends on timing---making results \textbf{unpredictable}.
@@ -741,7 +742,8 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Synchronization Primitives}
-	\footnotesize
+	\vspace{-1em}
+	\scriptsize
 	\textbf{Tools to prevent race conditions:}
 	\vskip0.5em
 	\begin{center}
@@ -773,10 +775,11 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Deadlocks}
-	\footnotesize
+	\vspace{-1em}
+	\scriptsize
 	\textbf{What is a deadlock?}
 	Two or more threads stuck forever, each waiting for a resource held by another.
-	\vskip0.5em
+	\vskip0.1em
 	\begin{columns}[T]
 		\begin{column}{0.5\textwidth}
 			\textbf{Classic example (pseudocode):}
@@ -795,6 +798,7 @@ for (int i = 0; i < N; i++) {
 			Both threads wait forever.
 		\end{column}
 		\begin{column}{0.5\textwidth}
+			\vspace{2em}
 			\centering
 			\begin{tikzpicture}[scale=0.8]
 				\node[draw, rounded corners, fill=green!20, minimum width=1.5cm] (A) at (0, 2) {Thread A};
