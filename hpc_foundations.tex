@@ -694,6 +694,132 @@ for (int i = 0; i < N; i++) {
     \end{columns}
 \end{frame}
 
+\begin{frame}{Race Conditions \& Thread Safety}
+	\footnotesize
+	\textbf{What is a race condition?}
+	When multiple threads access shared data simultaneously and at least one modifies it, the outcome depends on timing---making results \textbf{unpredictable}.
+	\vskip0.5em
+	\begin{columns}[T]
+		\begin{column}{0.45\textwidth}
+			\textbf{Example (pseudocode):}
+			\begin{center}
+			\texttt{\scriptsize
+			\begin{tabular}{l}
+			shared counter = 0 \\
+			\\
+			parallel for i = 1 to 1000000: \\
+			\quad counter = counter + 1 \\
+			\\
+			print(counter) \\
+			// Expected: 1000000 \\
+			// Actual: ??? \\
+			\end{tabular}
+			}
+			\end{center}
+		\end{column}
+		\begin{column}{0.55\textwidth}
+			\textbf{What goes wrong---interleaved execution:}
+			\begin{center}
+			\scriptsize
+			\begin{tabular}{c|l|l|c}
+			\textbf{Time} & \textbf{Thread A} & \textbf{Thread B} & \textbf{counter} \\
+			\hline
+			1 & read (0) & & 0 \\
+			2 & & read (0) & 0 \\
+			3 & compute 0+1 & & 0 \\
+			4 & & compute 0+1 & 0 \\
+			5 & write 1 & & 1 \\
+			6 & & write 1 & \textcolor{red}{1} \\
+			\end{tabular}
+			\end{center}
+			\vskip0.3em
+			\textcolor{red}{Lost update!} Both incremented, but counter is 1, not 2.
+		\end{column}
+	\end{columns}
+	\vskip0.5em
+	\textbf{Thread-safe code:} Code that functions correctly when accessed by multiple threads simultaneously, without race conditions or data corruption.
+\end{frame}
+
+\begin{frame}{Synchronization Primitives}
+	\footnotesize
+	\textbf{Tools to prevent race conditions:}
+	\vskip0.5em
+	\begin{center}
+	\begin{tabular}{|l|p{4.5cm}|p{4cm}|}
+		\hline
+		\textbf{Primitive} & \textbf{Description} & \textbf{Use case} \\
+		\hline
+		\textbf{Mutex (Lock)} & Only one thread can hold it; same thread locks and unlocks & Protecting shared data structures \\
+		\hline
+		\textbf{Semaphore} & Signaling mechanism; one thread can wake another waiting on it & Producer-consumer, resource pools \\
+		\hline
+		\textbf{Atomic ops} & Hardware-guaranteed indivisible read-modify-write & Simple counters, flags \\
+		\hline
+		\textbf{Critical section} & Code region executed by one thread at a time & Short protected blocks \\
+		\hline
+		\textbf{Barrier} & All threads wait until everyone reaches this point & Synchronizing phases \\
+		\hline
+	\end{tabular}
+	\end{center}
+	\vskip0.5em
+	\textbf{Semaphores in detail:}
+	\begin{itemize}
+		\item \texttt{wait()}: block until signaled, then proceed
+		\item \texttt{signal()}: wake up a waiting thread
+		\item Unlike mutexes, the signaling thread can differ from the waiting thread
+	\end{itemize}
+	\vskip0.3em
+	\textbf{Trade-off:} More synchronization = correctness, but also less parallelism.
+\end{frame}
+
+\begin{frame}{Deadlocks}
+	\footnotesize
+	\textbf{What is a deadlock?}
+	Two or more threads stuck forever, each waiting for a resource held by another.
+	\vskip0.5em
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\textbf{Classic example (pseudocode):}
+			\begin{center}
+			\texttt{\scriptsize
+			\begin{tabular}{l|l}
+			\textbf{Thread A} & \textbf{Thread B} \\
+			\hline
+			lock(resource\_1) & lock(resource\_2) \\
+			lock(resource\_2) & lock(resource\_1) \\
+			\quad $\uparrow$ waits & \quad $\uparrow$ waits \\
+			... & ... \\
+			\end{tabular}
+			}
+			\end{center}
+			Both threads wait forever.
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\centering
+			\begin{tikzpicture}[scale=0.8]
+				\node[draw, rounded corners, fill=green!20, minimum width=1.5cm] (A) at (0, 2) {Thread A};
+				\node[draw, rounded corners, fill=green!20, minimum width=1.5cm] (B) at (4, 2) {Thread B};
+				\node[draw, fill=blue!20, minimum width=1.5cm] (R1) at (0, 0) {Resource 1};
+				\node[draw, fill=blue!20, minimum width=1.5cm] (R2) at (4, 0) {Resource 2};
+				\draw[->, thick] (A) -- (R1) node[midway, left] {\tiny holds};
+				\draw[->, thick] (B) -- (R2) node[midway, right] {\tiny holds};
+				\draw[->, thick, dashed, red] (A) -- (R2) node[midway, above] {\tiny wants};
+				\draw[->, thick, dashed, red] (B) -- (R1) node[midway, above] {\tiny wants};
+			\end{tikzpicture}
+		\end{column}
+	\end{columns}
+	\vskip0.5em
+	\textbf{Four conditions for deadlock} (all must be present):
+	\begin{enumerate}
+		\item \textbf{Mutual exclusion}---resources can't be shared
+		\item \textbf{Hold and wait}---holding one resource while waiting for another
+		\item \textbf{No preemption}---resources can't be forcibly taken
+		\item \textbf{Circular wait}---A waits for B, B waits for A
+	\end{enumerate}
+	\vskip0.3em
+	\textbf{Prevention:} Lock ordering $\cdot$ Timeouts $\cdot$ Lock-free algorithms
+\end{frame}
+
 \begin{frame}{Message Passing (Distributed Memory)}
     \footnotesize
     \begin{columns}[T]
