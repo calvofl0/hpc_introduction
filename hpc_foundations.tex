@@ -26,6 +26,24 @@
 % TikZ libraries for diagrams
 \usetikzlibrary{shapes,arrows,positioning,calc,fit,backgrounds,decorations.pathreplacing}
 
+% =============================================================================
+% PRESENTATION MODE TOGGLE
+% Set to true for presentation (blurs some slides), false for full content
+% =============================================================================
+\newif\ifpresentationmode
+\presentationmodetrue  % <-- Change to \presentationmodefalse for notes/full mode
+
+% Blur overlay command (frosted glass effect over slide content, keeps title visible)
+\newcommand{\bluroverlay}{%
+  \ifpresentationmode
+    \begin{tikzpicture}[remember picture, overlay]
+      \fill[white, opacity=0.85]
+        ([yshift=-1.3cm]current page.north west) rectangle (current page.south east);
+      \node[opacity=0.5] at (current page.center) {\Large\textit{Available in extended version}};
+    \end{tikzpicture}
+  \fi
+}
+
 % PGFPlots version
 \pgfplotsset{compat=1.17}
 
@@ -2087,6 +2105,7 @@ n_cores = int(os.getenv(
             \end{lstlisting}
         \end{column}
     \end{columns}
+    \bluroverlay
 \end{frame}
 
 \begin{frame}[fragile]{Python: MPI with mpi4py}
@@ -2143,6 +2162,7 @@ mpirun python my_mpi_script.py
             \end{itemize}
         \end{column}
     \end{columns}
+    \bluroverlay
 \end{frame}
 
 \begin{frame}[fragile]{Julia: Multi-threading}
@@ -2196,6 +2216,7 @@ julia my_script.jl
             \end{itemize}
         \end{column}
     \end{columns}
+    \bluroverlay
 \end{frame}
 
 \begin{frame}[fragile]{Julia: Distributed Computing}
@@ -2247,6 +2268,7 @@ end
     \end{columns}
     \vskip0.8em
     \textbf{Choice:} Use Distributed.jl for within-cluster, MPI.jl for large-scale HPC
+    \bluroverlay
 \end{frame}
 
 \begin{frame}[fragile]{R: Parallel Package - Part 1}
@@ -2294,6 +2316,7 @@ results <- unlist(results)
     \end{columns}
     \vskip1em
     \textbf{Note:} \texttt{mclapply} uses forking (Unix only), \texttt{foreach} works cross-platform
+    \bluroverlay
 \end{frame}
 
 \begin{frame}[fragile]{R: Parallel Package - Part 2}
@@ -2340,6 +2363,7 @@ stopCluster(cl)
         \item Remember to stop clusters when done
         \item Use \texttt{.combine} to control result aggregation
     \end{itemize}
+    \bluroverlay
 \end{frame}
 
 \begin{frame}{Debugging Parallel Programs}
