@@ -136,12 +136,77 @@
             \item Execute these smaller tasks simultaneously
             \item Combine results to get the final solution
         \end{itemize}
-        \item \textbf{Concurrency vs Parallelism:}
+        \item \textbf{Concurrency is not Parallelism!}
         \begin{itemize}
             \item \textit{Concurrency}: managing multiple tasks at once (may interleave on one core)
             \item \textit{Parallelism}: executing multiple tasks simultaneously (requires multiple cores)
         \end{itemize}
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Parallelism vs Concurrency}
+	\vspace{-1em}
+	\footnotesize
+	\begin{columns}[T]
+		\begin{column}{0.5\textwidth}
+			\textbf{Concurrency:} Tasks that \emph{appear} to happen simultaneously but don't actually overlap
+			\vskip1em
+			\textbf{Example: Biking while texting on phone}
+			\begin{tikzpicture}[scale=0.85]
+				% Time axis
+				\draw[->, thick] (0,0) -- (6,0) node[right] {Time};
+
+				% Biking task (learning - needs full attention)
+				\node[left] at (0, 1.5) {\tiny Biking:};
+				\draw[thick, fill=green!40] (0,1.2) rectangle (1.8,1.8);
+				\node at (0.9, 1.5) {\tiny Pedal};
+				\draw[thick, fill=green!40] (2.2,1.2) rectangle (3.6,1.8);
+				\node at (2.9, 1.5) {\tiny Steer};
+				\draw[thick, fill=green!40] (4.0,1.2) rectangle (5.5,1.8);
+				\node at (4.75, 1.5) {\tiny Balance};
+
+				% Phone task (brief responses)
+				\node[left] at (0, 0.7) {\tiny Phone:};
+				\draw[thick, fill=blue!40] (1.8,0.4) rectangle (2.2,1.0);
+				\node at (2.0, 0.7) {\tiny T};
+				\draw[thick, fill=blue!40] (3.6,0.4) rectangle (4.0,1.0);
+				\node at (3.8, 0.7) {\tiny T};
+
+				% No overlap indicator
+				\node[red] at (3, 2.3) {\tiny No overlap in execution};
+			\end{tikzpicture}
+			\vskip0.5em
+			Tasks alternate - only one executes at a time
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\textbf{Parallelism:} Tasks that \emph{actually} execute at the same time
+			\vskip1em
+			\textbf{Example: Biking while talking on phone}
+			\vskip.2em
+			\begin{tikzpicture}[scale=0.85]
+				% Time axis
+				\draw[->, thick] (0,0) -- (6,0) node[right] {Time};
+
+				% Biking task (continuous - experienced rider)
+				\node[left] at (0, 1.5) {\tiny Biking:};
+				\draw[thick, fill=green!40] (0,1.2) rectangle (5.5,1.8);
+				\node at (2.75, 1.5) {\tiny Pedaling continuously};
+
+				% Phone task (full conversation - overlapping)
+				\node[left] at (0, 0.7) {\tiny Phone:};
+				\draw[thick, fill=blue!40] (0.5,0.4) rectangle (5.0,1.0);
+				\node at (2.75, 0.7) {\tiny Full conversation};
+
+				% Overlap indicator
+				\draw[red, thick, <->] (0.5, 2.3) -- (5.0, 2.3);
+				\node[red] at (2.75, 2.6) {\tiny Complete overlap};
+			\end{tikzpicture}
+			\vskip0.5em
+			Tasks execute simultaneously - true parallelism
+		\end{column}
+	\end{columns}
+	\vskip1em
+	\textbf{Key Distinction:} Concurrency is about \emph{dealing with} multiple things; parallelism is about \emph{doing} multiple things at once
 \end{frame}
 
 \begin{frame}{CPU Architecture Basics}
