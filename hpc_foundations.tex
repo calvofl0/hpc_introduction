@@ -129,6 +129,7 @@
 \end{frame}
 
 \begin{frame}{CPU Architecture Basics}
+	\vspace{-1em}
 	\footnotesize
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -1337,6 +1338,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Parallel Patterns: The Big Picture}
+    \vspace{-1em}
 	\footnotesize
 	\textbf{Key insight:} Most parallel problems fit one of these communication patterns:
 	\vskip0.5em
@@ -1661,6 +1663,7 @@ for (int i = 0; i < N; i++) {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}{What is SLURM?}
+    \vspace{-1em}
 	\footnotesize
     \textbf{Simple Linux Utility for Resource Management}
     \vskip1em
@@ -1699,6 +1702,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{Common SLURM Commands}
+    \vspace{-1em}
 	\scriptsize
     \begin{tabular}{p{4.5cm}p{6.5cm}}
         \toprule
@@ -1726,6 +1730,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}[fragile]{Anatomy of a SLURM Job Script}
+    \vspace{-1em}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Basic Structure:}
@@ -1775,6 +1780,7 @@ python my_script.py
 \end{frame}
 
 \begin{frame}[fragile]{Example: Serial Job}
+    \vspace{-1em}
     \footnotesize
     \textbf{Simplest case: Single core job}
     \vskip0.4em
@@ -1798,6 +1804,7 @@ python my_serial_script.py
 \end{frame}
 
 \begin{frame}[fragile]{Example: Multi-threaded {\LARGE (OpenMP)} Job}
+    \vspace{-1em}
     \footnotesize
     \textbf{Using multiple cores on a single node}
     \vskip0.2em
@@ -1822,6 +1829,7 @@ echo "Using $OMP_NUM_THREADS OpenMP threads"
 \end{frame}
 
 \begin{frame}[fragile]{Example: MPI Job (Distributed)}
+    \vspace{-1em}
     \footnotesize
     \textbf{Multiple tasks across nodes}
     \vskip0.8em
@@ -1847,6 +1855,7 @@ mpirun ./my_mpi_program
 \end{frame}
 
 \begin{frame}[fragile]{Example: Hybrid MPI + OpenMP Job}
+    \vspace{-1em}
     \footnotesize
     \textbf{Combining distributed and shared memory parallelism}
     \vskip0.8em
@@ -1874,6 +1883,7 @@ mpirun ./my_hybrid_program
 
 
 \begin{frame}{Resource Allocation Strategies}
+    \vspace{-1em}
 	\footnotesize
     \textbf{Choosing the Right Configuration}
     \vskip1em
@@ -1910,6 +1920,7 @@ mpirun ./my_hybrid_program
 \end{frame}
 
 \begin{frame}[fragile]{Job Arrays: Running Many Similar Jobs}
+    \vspace{-1em}
 	\footnotesize
     \textbf{Scenario:} Need to run same program with different parameters
     \vskip.2em
@@ -1935,6 +1946,7 @@ python process.py --id $PARAM
 \end{frame}
 
 \begin{frame}{Job Arrays: Advanced Features}
+    \vspace{-1em}
     \begin{columns}[T]
 	\begin{column}{0.5\textwidth}
 	\footnotesize
@@ -1969,6 +1981,7 @@ python process.py --id $PARAM
 \end{frame}
 
 \begin{frame}[fragile]{Interactive Jobs with srun}
+    \vspace{-1em}
     \footnotesize
     \textbf{Run a single command interactively:}
     \vskip0.8em
@@ -1991,6 +2004,7 @@ srun --ntasks=1 \
 \end{frame}
 
 \begin{frame}[fragile]{Interactive Jobs with salloc}
+    \vspace{-1em}
     \footnotesize
     \textbf{Allocate resources for interactive shell:}
     \vskip0.2em
