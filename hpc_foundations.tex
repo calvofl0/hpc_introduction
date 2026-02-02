@@ -44,6 +44,22 @@
   \fi
 }
 
+% Blur overlay command (frosted glass effect over slide content, keeps title visible)
+\newcommand{\quiztime}{%
+  \vfill
+  \centering
+  {\Huge \textbf{Quiz Time!}}
+  \vskip1.5em
+  {\Large Understanding Parallelism}
+  \vskip2em
+  \ifpresentationmode
+    {\large \href{https://fuiz.us/create}{\beamergotobutton{Start Quiz}}}
+  \else
+    {\large \href{https://fuiz.us/play}{\beamergotobutton{Start Quiz}}}
+  \fi
+  \vfill
+}
+
 % PGFPlots version
 \pgfplotsset{compat=1.17}
 
@@ -517,14 +533,7 @@
 \end{frame}
 
 \begin{frame}{}
-	\vfill
-	\centering
-	{\Huge \textbf{Quiz Time!}}
-	\vskip1.5em
-	{\Large Demystifying HPC Hardware}
-	\vskip2em
-	{\large \href{https://fuiz.us/create}{\beamergotobutton{Start Quiz}}}
-	\vfill
+	\quiztime
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1648,14 +1657,7 @@ for (int i = 0; i < N; i++) {
 \end{frame}
 
 \begin{frame}{}
-	\vfill
-	\centering
-	{\Huge \textbf{Quiz Time!}}
-	\vskip1.5em
-	{\Large Understanding Parallelism}
-	\vskip2em
-	{\large \href{https://fuiz.us/create}{\beamergotobutton{Start Quiz}}}
-	\vfill
+	\quiztime
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
